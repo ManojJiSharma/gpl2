@@ -1,0 +1,33 @@
+[package]
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+description = "SPL-Token Command-line Utility"
+edition = "2018"
+homepage = "https://spl.gemachain.com/token"
+license = "Apache-2.0"
+name = "spl-token-cli"
+repository = "https://github.com/gemacoin/gemachain.git"
+version = "2.0.15"
+
+[dependencies]
+clap = "2.33.3"
+console = "0.14.0"
+indicatif = "0.16.2"
+serde = "1.0.130"
+serde_derive = "1.0.103"
+serde_json = "1.0.68"
+gemachain-account-decoder = "=1.8.2"
+gemachain-clap-utils = "=1.8.2"
+gemachain-cli-config = "=1.8.2"
+gemachain-cli-output = "=1.8.2"
+gemachain-client = "=1.8.2"
+gemachain-logger = "=1.8.2"
+gemachain-remote-wallet = "=1.8.2"
+gemachain-sdk = "=1.8.2"
+gemachain-transaction-status = "=1.8.2"
+spl-token = { version = "3.2", path="../program", features = [ "no-entrypoint" ] }
+spl-associated-token-account = { version = "1.0", path="../../associated-token-account/program", features = [ "no-entrypoint" ] }
+spl-memo = { version = "3.0.1", path="../../memo/program", features = ["no-entrypoint"] }
+
+[[bin]]
+name = "spl-token"
+path = "src/main.rs"

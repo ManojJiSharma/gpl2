@@ -1,0 +1,22 @@
+[package]
+name = "spl-shared-memory"
+version = "2.0.6"
+description = "Gemachain Program Library Shared-memory"
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+repository = "https://github.com/gemacoin/gemachain.git"
+license = "Apache-2.0"
+edition = "2018"
+
+[features]
+test-bpf = []
+
+[dependencies]
+arrayref = "0.3.6"
+gemachain-program = "=1.8.2"
+
+[dev-dependencies]
+gemachain-program-test = "=1.8.2"
+gemachain-sdk = "=1.8.2"
+
+[lib]
+crate-type = ["cdylib", "lib"]

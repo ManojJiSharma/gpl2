@@ -1,0 +1,28 @@
+[package]
+name = "spl-binary-oracle-pair"
+version = "0.1.0"
+description = "Gemachain Program Library Binary Oracle Pair"
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+repository = "https://github.com/gemacoin/gemachain.git"
+license = "Apache-2.0"
+edition = "2018"
+
+[features]
+test-bpf = []
+
+[dependencies]
+num-derive = "0.3"
+num-traits = "0.2"
+gemachain-program = "1.8.2"
+spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+thiserror = "1.0"
+uint = "0.9"
+arbitrary = { version = "0.4", features = ["derive"], optional = true }
+borsh = "0.9.1"
+
+[dev-dependencies]
+gemachain-program-test = "1.8.2"
+gemachain-sdk = "1.8.2"
+
+[lib]
+crate-type = ["cdylib", "lib"]

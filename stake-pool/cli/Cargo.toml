@@ -1,0 +1,31 @@
+[package]
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+description = "SPL-Stake-Pool Command-line Utility"
+edition = "2018"
+homepage = "https://spl.gemachain.com/stake-pool"
+license = "Apache-2.0"
+name = "spl-stake-pool-cli"
+repository = "https://github.com/gemacoin/gemachain.git"
+version = "0.6.2"
+
+[dependencies]
+borsh = "0.9"
+clap = "2.33.3"
+serde_json = "1.0.68"
+gemachain-account-decoder = "=1.8.2"
+gemachain-clap-utils = "=1.8.2"
+gemachain-cli-config = "=1.8.2"
+gemachain-client = "=1.8.2"
+gemachain-logger = "=1.8.2"
+gemachain-program = "=1.8.2"
+gemachain-remote-wallet = "=1.8.2"
+gemachain-sdk = "=1.8.2"
+spl-associated-token-account = { version = "1.0", path="../../associated-token-account/program", features = [ "no-entrypoint" ] }
+spl-stake-pool = { version = "0.6", path="../program", features = [ "no-entrypoint" ] }
+spl-token = { version = "3.2", path="../../token/program", features = [ "no-entrypoint" ]  }
+bs58 = "0.4.0"
+bincode = "1.3.1"
+
+[[bin]]
+name = "spl-stake-pool"
+path = "src/main.rs"

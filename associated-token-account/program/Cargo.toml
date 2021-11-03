@@ -1,0 +1,27 @@
+[package]
+name = "spl-associated-token-account"
+version = "1.0.4"
+description = "Gemachain Program Library Associated Token Account"
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+repository = "https://github.com/gemacoin/gemachain.git"
+license = "Apache-2.0"
+edition = "2018"
+
+[features]
+no-entrypoint = []
+test-bpf = []
+
+[dependencies]
+borsh = "0.9.1"
+gemachain-program = "1.8.2" 
+spl-token = { version = "3.2", path = "../../token/program", features = ["no-entrypoint"] }
+
+[dev-dependencies]
+gemachain-program-test = "1.8.2"
+gemachain-sdk = "1.8.2"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]

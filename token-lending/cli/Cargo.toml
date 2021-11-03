@@ -1,0 +1,24 @@
+[package]
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+description = "SPL Token Lending CLI"
+edition = "2018"
+homepage = "https://spl.gemachain.com/token-lending"
+license = "Apache-2.0"
+name = "spl-token-lending-cli"
+repository = "https://github.com/gemacoin/gemachain.git"
+version = "0.1.0"
+
+[dependencies]
+clap = "2.33.3"
+gemachain-clap-utils = "1.8.2"
+gemachain-cli-config = "1.8.2"
+gemachain-client = "1.8.2"
+gemachain-logger = "1.8.2"
+gemachain-sdk = "1.8.2"
+gemachain-program = "1.8.2"
+spl-token-lending = { path="../program", features = [ "no-entrypoint" ] }
+spl-token = { path="../../token/program", features = [ "no-entrypoint" ]  }
+
+[[bin]]
+name = "spl-token-lending"
+path = "src/main.rs"

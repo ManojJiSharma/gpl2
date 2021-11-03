@@ -1,0 +1,35 @@
+[package]
+name = "spl-stake-pool"
+version = "0.6.1"
+description = "Gemachain Program Library Stake Pool"
+authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
+repository = "https://github.com/gemacoin/gemachain.git"
+license = "Apache-2.0"
+edition = "2018"
+
+[features]
+no-entrypoint = []
+test-bpf = []
+
+[dependencies]
+arrayref = "0.3.6"
+borsh = "0.9"
+num-derive = "0.3"
+num-traits = "0.2"
+num_enum = "0.5.4"
+serde = "1.0.130"
+serde_derive = "1.0.103"
+gemachain-program = "1.8.2"
+spl-math = { version = "0.1", path = "../../libraries/math", features = [ "no-entrypoint" ] }
+spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+thiserror = "1.0"
+bincode = "1.3.1"
+
+[dev-dependencies]
+proptest = "1.0"
+gemachain-program-test = "1.8.2"
+gemachain-sdk = "1.8.2"
+gemachain-vote-program = "1.8.2"
+
+[lib]
+crate-type = ["cdylib", "lib"]
