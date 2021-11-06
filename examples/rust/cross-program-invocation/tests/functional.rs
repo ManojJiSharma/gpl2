@@ -10,7 +10,7 @@ use {
     },
     gemachain_program_test::*,
     gemachain_sdk::{account::Account, signature::Signer, transaction::Transaction},
-    spl_example_cross_program_invocation::processor::{process_instruction, SIZE},
+    gpl_example_cross_program_invocation::processor::{process_instruction, SIZE},
     std::str::FromStr,
 };
 
@@ -20,7 +20,7 @@ async fn test_cross_program_invocation() {
     let (allocated_pubkey, bump_seed) =
         Pubkey::find_program_address(&[b"You pass butter"], &program_id);
     let mut program_test = ProgramTest::new(
-        "spl_example_cross_program_invocation",
+        "gpl_example_cross_program_invocation",
         program_id,
         processor!(process_instruction),
     );

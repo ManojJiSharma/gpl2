@@ -15,7 +15,7 @@ use {
         instruction::InstructionError, signature::Keypair, signature::Signer,
         transaction::Transaction, transaction::TransactionError, transport::TransportError,
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         error, find_deposit_authority_program_address, id,
         instruction::{self, FundingType},
         state,

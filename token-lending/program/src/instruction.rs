@@ -29,7 +29,7 @@ pub enum LendingInstruction {
         /// Owner authority which can add new reserves
         owner: Pubkey,
         /// Currency market prices are quoted in
-        /// e.g. "USD" null padded (`*b"USD\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"`) or SPL token mint pubkey
+        /// e.g. "USD" null padded (`*b"USD\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"`) or GPL token mint pubkey
         quote_currency: [u8; 32],
     },
 
@@ -54,10 +54,10 @@ pub enum LendingInstruction {
     ///                     $authority can transfer $liquidity_amount.
     ///   1. `[writable]` Destination collateral token account - uninitialized.
     ///   2. `[writable]` Reserve account - uninitialized.
-    ///   3. `[]` Reserve liquidity SPL Token mint.
-    ///   4. `[writable]` Reserve liquidity supply SPL Token account - uninitialized.
+    ///   3. `[]` Reserve liquidity GPL Token mint.
+    ///   4. `[writable]` Reserve liquidity supply GPL Token account - uninitialized.
     ///   5. `[writable]` Reserve liquidity fee receiver - uninitialized.
-    ///   6. `[writable]` Reserve collateral SPL Token mint - uninitialized.
+    ///   6. `[writable]` Reserve collateral GPL Token mint - uninitialized.
     ///   7. `[writable]` Reserve collateral token supply - uninitialized.
     ///   8. `[]` Pyth product account.
     ///   9. `[]` Pyth price account.
@@ -97,8 +97,8 @@ pub enum LendingInstruction {
     ///                     $authority can transfer $liquidity_amount.
     ///   1. `[writable]` Destination collateral token account.
     ///   2. `[writable]` Reserve account.
-    ///   3. `[writable]` Reserve liquidity supply SPL Token account.
-    ///   4. `[writable]` Reserve collateral SPL Token mint.
+    ///   3. `[writable]` Reserve liquidity supply GPL Token account.
+    ///   4. `[writable]` Reserve collateral GPL Token mint.
     ///   5. `[]` Lending market account.
     ///   6. `[]` Derived lending market authority.
     ///   7. `[signer]` User transfer authority ($authority).
@@ -118,8 +118,8 @@ pub enum LendingInstruction {
     ///                     $authority can transfer $collateral_amount.
     ///   1. `[writable]` Destination liquidity token account.
     ///   2. `[writable]` Reserve account.
-    ///   3. `[writable]` Reserve collateral SPL Token mint.
-    ///   4. `[writable]` Reserve liquidity supply SPL Token account.
+    ///   3. `[writable]` Reserve collateral GPL Token mint.
+    ///   4. `[writable]` Reserve liquidity supply GPL Token account.
     ///   5. `[]` Lending market account.
     ///   6. `[]` Derived lending market authority.
     ///   7. `[signer]` User transfer authority ($authority).
@@ -164,7 +164,7 @@ pub enum LendingInstruction {
     ///   0. `[writable]` Source collateral token account.
     ///                     Minted by deposit reserve collateral mint.
     ///                     $authority can transfer $collateral_amount.
-    ///   1. `[writable]` Destination deposit reserve collateral supply SPL Token account.
+    ///   1. `[writable]` Destination deposit reserve collateral supply GPL Token account.
     ///   2. `[]` Deposit reserve account - refreshed.
     ///   3. `[writable]` Obligation account.
     ///   4. `[]` Lending market account.
@@ -182,7 +182,7 @@ pub enum LendingInstruction {
     ///
     /// Accounts expected by this instruction:
     ///
-    ///   0. `[writable]` Source withdraw reserve collateral supply SPL Token account.
+    ///   0. `[writable]` Source withdraw reserve collateral supply GPL Token account.
     ///   1. `[writable]` Destination collateral token account.
     ///                     Minted by withdraw reserve collateral mint.
     ///   2. `[]` Withdraw reserve account - refreshed.
@@ -203,7 +203,7 @@ pub enum LendingInstruction {
     ///
     /// Accounts expected by this instruction:
     ///
-    ///   0. `[writable]` Source borrow reserve liquidity supply SPL Token account.
+    ///   0. `[writable]` Source borrow reserve liquidity supply GPL Token account.
     ///   1. `[writable]` Destination liquidity token account.
     ///                     Minted by borrow reserve liquidity mint.
     ///   2. `[writable]` Borrow reserve account - refreshed.
@@ -230,7 +230,7 @@ pub enum LendingInstruction {
     ///   0. `[writable]` Source liquidity token account.
     ///                     Minted by repay reserve liquidity mint.
     ///                     $authority can transfer $liquidity_amount.
-    ///   1. `[writable]` Destination repay reserve liquidity supply SPL Token account.
+    ///   1. `[writable]` Destination repay reserve liquidity supply GPL Token account.
     ///   2. `[writable]` Repay reserve account - refreshed.
     ///   3. `[writable]` Obligation account - refreshed.
     ///   4. `[]` Lending market account.
@@ -254,9 +254,9 @@ pub enum LendingInstruction {
     ///   1. `[writable]` Destination collateral token account.
     ///                     Minted by withdraw reserve collateral mint.
     ///   2. `[writable]` Repay reserve account - refreshed.
-    ///   3. `[writable]` Repay reserve liquidity supply SPL Token account.
+    ///   3. `[writable]` Repay reserve liquidity supply GPL Token account.
     ///   4. `[]` Withdraw reserve account - refreshed.
-    ///   5. `[writable]` Withdraw reserve collateral supply SPL Token account.
+    ///   5. `[writable]` Withdraw reserve collateral supply GPL Token account.
     ///   6. `[writable]` Obligation account - refreshed.
     ///   7. `[]` Lending market account.
     ///   8. `[]` Derived lending market authority.
@@ -560,7 +560,7 @@ pub fn init_lending_market(
         accounts: vec![
             AccountMeta::new(lending_market_pubkey, false),
             AccountMeta::new_readonly(sysvar::rent::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
             AccountMeta::new_readonly(oracle_program_id, false),
         ],
         data: LendingInstruction::InitLendingMarket {
@@ -629,7 +629,7 @@ pub fn init_reserve(
         AccountMeta::new_readonly(user_transfer_authority_pubkey, true),
         AccountMeta::new_readonly(sysvar::clock::id(), false),
         AccountMeta::new_readonly(sysvar::rent::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
     ];
     Instruction {
         program_id,
@@ -689,7 +689,7 @@ pub fn deposit_reserve_liquidity(
             AccountMeta::new_readonly(lending_market_authority_pubkey, false),
             AccountMeta::new_readonly(user_transfer_authority_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::DepositReserveLiquidity { liquidity_amount }.pack(),
     }
@@ -724,7 +724,7 @@ pub fn redeem_reserve_collateral(
             AccountMeta::new_readonly(lending_market_authority_pubkey, false),
             AccountMeta::new_readonly(user_transfer_authority_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::RedeemReserveCollateral { collateral_amount }.pack(),
     }
@@ -746,7 +746,7 @@ pub fn init_obligation(
             AccountMeta::new_readonly(obligation_owner_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
             AccountMeta::new_readonly(sysvar::rent::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::InitObligation.pack(),
     }
@@ -799,7 +799,7 @@ pub fn deposit_obligation_collateral(
             AccountMeta::new_readonly(obligation_owner_pubkey, true),
             AccountMeta::new_readonly(user_transfer_authority_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::DepositObligationCollateral { collateral_amount }.pack(),
     }
@@ -832,7 +832,7 @@ pub fn withdraw_obligation_collateral(
             AccountMeta::new_readonly(lending_market_authority_pubkey, false),
             AccountMeta::new_readonly(obligation_owner_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::WithdrawObligationCollateral { collateral_amount }.pack(),
     }
@@ -866,7 +866,7 @@ pub fn borrow_obligation_liquidity(
         AccountMeta::new_readonly(lending_market_authority_pubkey, false),
         AccountMeta::new_readonly(obligation_owner_pubkey, true),
         AccountMeta::new_readonly(sysvar::clock::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
     ];
     if let Some(host_fee_receiver_pubkey) = host_fee_receiver_pubkey {
         accounts.push(AccountMeta::new(host_fee_receiver_pubkey, false));
@@ -900,7 +900,7 @@ pub fn repay_obligation_liquidity(
             AccountMeta::new_readonly(lending_market_pubkey, false),
             AccountMeta::new_readonly(user_transfer_authority_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::RepayObligationLiquidity { liquidity_amount }.pack(),
     }
@@ -939,7 +939,7 @@ pub fn liquidate_obligation(
             AccountMeta::new_readonly(lending_market_authority_pubkey, false),
             AccountMeta::new_readonly(user_transfer_authority_pubkey, true),
             AccountMeta::new_readonly(sysvar::clock::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
         ],
         data: LendingInstruction::LiquidateObligation { liquidity_amount }.pack(),
     }
@@ -971,7 +971,7 @@ pub fn flash_loan(
         AccountMeta::new(host_fee_receiver_pubkey, false),
         AccountMeta::new_readonly(lending_market_pubkey, false),
         AccountMeta::new_readonly(lending_market_authority_pubkey, false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(flash_loan_receiver_program_id, false),
     ];
     accounts.extend(flash_loan_receiver_program_accounts);

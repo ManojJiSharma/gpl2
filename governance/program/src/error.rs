@@ -182,39 +182,39 @@ pub enum GovernanceError {
     #[error("Mint has no authority")]
     MintHasNoAuthority,
 
-    /// ---- SPL Token Tools Errors ----
+    /// ---- GPL Token Tools Errors ----
 
     /// Invalid Token account owner
     #[error("Invalid Token account owner")]
-    SplTokenAccountWithInvalidOwner,
+    GplTokenAccountWithInvalidOwner,
 
     /// Invalid Mint account owner
     #[error("Invalid Mint account owner")]
-    SplTokenMintWithInvalidOwner,
+    GplTokenMintWithInvalidOwner,
 
     /// Token Account is not initialized
     #[error("Token Account is not initialized")]
-    SplTokenAccountNotInitialized,
+    GplTokenAccountNotInitialized,
 
     /// Token Account doesn't exist
     #[error("Token Account doesn't exist")]
-    SplTokenAccountDoesNotExist,
+    GplTokenAccountDoesNotExist,
 
     /// Token account data is invalid
     #[error("Token account data is invalid")]
-    SplTokenInvalidTokenAccountData,
+    GplTokenInvalidTokenAccountData,
 
     /// Token mint account data is invalid
     #[error("Token mint account data is invalid")]
-    SplTokenInvalidMintAccountData,
+    GplTokenInvalidMintAccountData,
 
     /// Token Mint is not initialized
     #[error("Token Mint account is not initialized")]
-    SplTokenMintNotInitialized,
+    GplTokenMintNotInitialized,
 
     /// Token Mint account doesn't exist
     #[error("Token Mint account doesn't exist")]
-    SplTokenMintDoesNotExist,
+    GplTokenMintDoesNotExist,
 
     /// ---- Bpf Upgradable Loader Tools Errors ----
 

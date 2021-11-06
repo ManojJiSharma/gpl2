@@ -6,13 +6,13 @@ use {
         program::{invoke, invoke_signed},
         pubkey::Pubkey,
     },
-    spl_token::instruction::{
+    gpl_token::instruction::{
         approve_checked, burn, initialize_account, initialize_mint, mint_to, set_authority,
         transfer, AuthorityType,
     },
 };
 
-pub fn spl_initialize<'a>(
+pub fn gpl_initialize<'a>(
     token_program: &AccountInfo<'a>,
     new_account: &AccountInfo<'a>,
     mint: &AccountInfo<'a>,
@@ -33,7 +33,7 @@ pub fn spl_initialize<'a>(
     Ok(())
 }
 
-pub fn spl_mint_initialize<'a>(
+pub fn gpl_mint_initialize<'a>(
     token_program: &AccountInfo<'a>,
     mint: &AccountInfo<'a>,
     mint_authority: &AccountInfo<'a>,
@@ -55,7 +55,7 @@ pub fn spl_mint_initialize<'a>(
     Ok(())
 }
 
-pub fn spl_approve<'a>(
+pub fn gpl_approve<'a>(
     token_program: &AccountInfo<'a>,
     source_account: &AccountInfo<'a>,
     mint: &AccountInfo<'a>,
@@ -87,7 +87,7 @@ pub fn spl_approve<'a>(
     Ok(())
 }
 
-pub fn spl_burn<'a>(
+pub fn gpl_burn<'a>(
     token_program: &AccountInfo<'a>,
     burn_account: &AccountInfo<'a>,
     mint: &AccountInfo<'a>,
@@ -116,7 +116,7 @@ pub fn spl_burn<'a>(
     Ok(())
 }
 
-pub fn spl_burn_signed<'a>(
+pub fn gpl_burn_signed<'a>(
     token_program: &AccountInfo<'a>,
     burn_account: &AccountInfo<'a>,
     mint: &AccountInfo<'a>,
@@ -148,7 +148,7 @@ pub fn spl_burn_signed<'a>(
     Ok(())
 }
 
-pub fn spl_mint_to<'a>(
+pub fn gpl_mint_to<'a>(
     token_program: &AccountInfo<'a>,
     dest_account: &AccountInfo<'a>,
     mint: &AccountInfo<'a>,
@@ -177,7 +177,7 @@ pub fn spl_mint_to<'a>(
     Ok(())
 }
 
-pub fn spl_token_transfer<'a>(
+pub fn gpl_token_transfer<'a>(
     token_program: &AccountInfo<'a>,
     source: &AccountInfo<'a>,
     destination: &AccountInfo<'a>,
@@ -206,7 +206,7 @@ pub fn spl_token_transfer<'a>(
     Ok(())
 }
 
-pub fn spl_token_transfer_signed<'a>(
+pub fn gpl_token_transfer_signed<'a>(
     token_program: &AccountInfo<'a>,
     source: &AccountInfo<'a>,
     destination: &AccountInfo<'a>,
@@ -237,7 +237,7 @@ pub fn spl_token_transfer_signed<'a>(
     Ok(())
 }
 
-pub fn spl_set_authority<'a>(
+pub fn gpl_set_authority<'a>(
     token_program: &AccountInfo<'a>,
     account_to_transfer_ownership: &AccountInfo<'a>,
     new_authority: Option<Pubkey>,

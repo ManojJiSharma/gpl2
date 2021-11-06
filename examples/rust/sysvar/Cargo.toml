@@ -1,5 +1,5 @@
 [package]
-name = "spl-example-sysvar"
+name = "gpl-example-sysvar"
 version = "1.0.0"
 description = "Gemachain Program Library Sysvar Example"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

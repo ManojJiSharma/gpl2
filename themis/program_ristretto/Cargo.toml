@@ -1,5 +1,5 @@
 [package]
-name = "spl-themis-ristretto"
+name = "gpl-themis-ristretto"
 version = "0.1.0"
 description = "Gemachain Program Library THEMIS"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

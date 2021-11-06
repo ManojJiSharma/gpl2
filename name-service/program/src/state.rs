@@ -21,7 +21,7 @@ pub struct NameRecordHeader {
     // The owner of this name
     pub owner: Pubkey,
 
-    // The class of data this account represents (DNS record, twitter handle, SPL Token name/symbol, etc)
+    // The class of data this account represents (DNS record, twitter handle, GPL Token name/symbol, etc)
     //
     // If `Pubkey::default()` the data is unspecified.
     pub class: Pubkey,
@@ -59,7 +59,7 @@ pub fn write_data(account: &AccountInfo, input: &[u8], offset: usize) {
 
 ////////////////////////////////////////////////////////////
 
-pub const HASH_PREFIX: &str = "SPL Name Service";
+pub const HASH_PREFIX: &str = "GPL Name Service";
 
 ////////////////////////////////////////////////////////////
 

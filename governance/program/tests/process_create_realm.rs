@@ -5,7 +5,7 @@ use gemachain_program_test::*;
 mod program_test;
 
 use program_test::*;
-use spl_governance::state::{enums::MintMaxVoteWeightSource, realm::RealmConfigArgs};
+use gpl_governance::state::{enums::MintMaxVoteWeightSource, realm::RealmConfigArgs};
 
 #[tokio::test]
 async fn test_create_realm() {

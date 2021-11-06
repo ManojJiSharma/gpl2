@@ -4,7 +4,7 @@ use gemachain_program::{program_error::ProgramError, pubkey::Pubkey};
 use gemachain_program_test::processor;
 
 use gemachain_sdk::{signature::Keypair, signer::Signer};
-use spl_governance::{
+use gpl_governance::{
     instruction::{
         create_account_governance, create_proposal, create_realm, deposit_governing_tokens,
     },
@@ -16,12 +16,12 @@ use spl_governance::{
         token_owner_record::get_token_owner_record_address,
     },
 };
-use spl_governance_chat::{
+use gpl_governance_chat::{
     instruction::post_message,
     processor::process_instruction,
     state::{ChatMessage, GovernanceChatAccountType, MessageBody},
 };
-use spl_governance_test_sdk::{ProgramTestBench, TestBenchProgram};
+use gpl_governance_test_sdk::{ProgramTestBench, TestBenchProgram};
 
 use crate::program_test::cookies::{ChatMessageCookie, ProposalCookie};
 
@@ -40,7 +40,7 @@ impl GovernanceChatProgramTest {
         let program_id = Pubkey::from_str("GovernanceChat11111111111111111111111111111").unwrap();
 
         let chat_program = TestBenchProgram {
-            program_name: "spl_governance_chat",
+            program_name: "gpl_governance_chat",
             program_id: program_id,
             process_instruction: processor!(process_instruction),
         };
@@ -48,9 +48,9 @@ impl GovernanceChatProgramTest {
         let governance_program_id =
             Pubkey::from_str("Governance111111111111111111111111111111111").unwrap();
         let governance_program = TestBenchProgram {
-            program_name: "spl_governance",
+            program_name: "gpl_governance",
             program_id: governance_program_id,
-            process_instruction: processor!(spl_governance::processor::process_instruction),
+            process_instruction: processor!(gpl_governance::processor::process_instruction),
         };
 
         let bench = ProgramTestBench::start_new(&[chat_program, governance_program]).await;
@@ -141,7 +141,7 @@ impl GovernanceChatProgramTest {
             min_instruction_hold_up_time: 10,
             max_voting_time: 10,
             vote_threshold_percentage: VoteThresholdPercentage::YesVote(60),
-            vote_weight_source: spl_governance::state::enums::VoteWeightSource::Deposit,
+            vote_weight_source: gpl_governance::state::enums::VoteWeightSource::Deposit,
             proposal_cool_off_time: 0,
         };
 

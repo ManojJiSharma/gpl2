@@ -10,7 +10,7 @@ use gemachain_sdk::{
     transaction::Transaction,
     transport::TransportError,
 };
-use spl_name_service::{
+use gpl_name_service::{
     entrypoint::process_instruction,
     instruction::{create, delete, transfer, update, NameRegistryInstruction},
     state::{get_seeds_and_key, NameRecordHeader, HASH_PREFIX},
@@ -22,7 +22,7 @@ async fn test_name_service() {
     let program_id = Pubkey::from_str("XCWuBvfNamesXCWuBvfkegQfZyiNwAJb9Ss623VQ5DA").unwrap();
 
     let program_test = ProgramTest::new(
-        "spl_name_service",
+        "gpl_name_service",
         program_id,
         processor!(process_instruction),
     );

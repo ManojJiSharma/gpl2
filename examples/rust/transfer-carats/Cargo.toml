@@ -1,5 +1,5 @@
 [package]
-name = "spl-example-transfer-carats"
+name = "gpl-example-transfer-carats"
 version = "1.0.0"
 description = "Gemachain Program Library Transfer Carats Example"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

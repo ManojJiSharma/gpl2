@@ -28,7 +28,7 @@ pub(crate) fn sort_and_parse_token_accounts(
         let address = keyed_account.pubkey;
 
         if let UiAccountData::Json(parsed_account) = keyed_account.account.data {
-            if parsed_account.program != "spl-token" {
+            if parsed_account.program != "gpl-token" {
                 unsupported_accounts.push(UnsupportedAccount {
                     address,
                     err: format!("Unsupported account program: {}", parsed_account.program),

@@ -1,5 +1,5 @@
 [package]
-name = "spl-token-swap"
+name = "gpl-token-swap"
 version = "2.1.0"
 description = "Gemachain Program Library Token Swap"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -18,8 +18,8 @@ enum_dispatch = "0.3.7"
 num-derive = "0.3"
 num-traits = "0.2"
 gemachain-program = "1.8.2"
-spl-math = { version = "0.1", path = "../../libraries/math", features = [ "no-entrypoint" ] }
-spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-math = { version = "0.1", path = "../../libraries/math", features = [ "no-entrypoint" ] }
+gpl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
 thiserror = "1.0"
 arbitrary = { version = "0.4", features = ["derive"], optional = true }
 roots = { version = "0.0.7", optional = true }

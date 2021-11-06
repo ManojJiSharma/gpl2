@@ -1,5 +1,5 @@
 [package]
-name = "spl-governance-tools"
+name = "gpl-governance-tools"
 version = "0.1.0"
 description = "Gemachain Program Library Governance Tools"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -16,5 +16,5 @@ num-traits = "0.2"
 serde = "1.0.127"
 serde_derive = "1.0.103"
 gemachain-program = "1.8.2"
-spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
 thiserror = "1.0"

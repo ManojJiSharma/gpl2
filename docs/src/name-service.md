@@ -2,7 +2,7 @@
 title: Name Service
 ---
 
-A SPL program for issuing and managing ownership of: domain names, Gemachain Pubkeys, URLs, Twitter handles, ipfs cid's etc..
+A GPL program for issuing and managing ownership of: domain names, Gemachain Pubkeys, URLs, Twitter handles, ipfs cid's etc..
 
 This program could be used for dns, pubkey etc lookups via a browser extension
 for example, the goal is to create an easy way to identify Gemachain public keys
@@ -31,7 +31,7 @@ Remarks and use cases:
   the issuance of the `"something.gema"` sub-domains that way (by setting the
   parent name to the address of the `".gema"` registry).
 
-An off-chain browser extension could then, similarly to DNS, parse the user SPL
+An off-chain browser extension could then, similarly to DNS, parse the user GPL
 name service URL input and descend the chain of names, verifying that the names
 exist with the correct parenthood, and finally use the data of the last child
 name (or also a combination of the parents data) in order to resolve this call

@@ -49,7 +49,7 @@ pub enum GovernanceInstruction {
     ///     The account will be created with the Realm PDA as its owner
     /// 4. `[signer]` Payer
     /// 5. `[]` System
-    /// 6. `[]` SPL Token
+    /// 6. `[]` GPL Token
     /// 7. `[]` Sysvar Rent
 
     /// 8. `[]` Council Token Mint - optional
@@ -80,7 +80,7 @@ pub enum GovernanceInstruction {
     ///  5. `[writable]` Token Owner Record account. PDA seeds: ['governance',realm, governing_token_mint, governing_token_owner]
     ///  6. `[signer]` Payer
     ///  7. `[]` System
-    ///  8. `[]` SPL Token
+    ///  8. `[]` GPL Token
     ///  9. `[]` Sysvar Rent
     DepositGoverningTokens {
         /// The amount to deposit into the realm
@@ -97,7 +97,7 @@ pub enum GovernanceInstruction {
     ///  2. `[writable]` Governing Token Destination account. All tokens will be transferred to this account
     ///  3. `[signer]` Governing Token Owner account
     ///  4. `[writable]` Token Owner  Record account. PDA seeds: ['governance',realm, governing_token_mint, governing_token_owner]
-    ///  5. `[]` SPL Token
+    ///  5. `[]` GPL Token
     WithdrawGoverningTokens {},
 
     /// Sets Governance Delegate for the given Realm and Governing Token Mint (Community or Council)
@@ -334,7 +334,7 @@ pub enum GovernanceInstruction {
     ///   3. `[signer]` Current Mint Authority
     ///   4. `[]` Governing TokenOwnerRecord account    
     ///   5. `[signer]` Payer
-    ///   6. `[]` SPL Token program
+    ///   6. `[]` GPL Token program
     ///   7. `[]` System program
     ///   8. `[]` Sysvar Rent
     ///   8. `[signer]` Governance authority
@@ -360,7 +360,7 @@ pub enum GovernanceInstruction {
     ///   3. `[signer]` Current Token account
     ///   4. `[]` Governing TokenOwnerRecord account        
     ///   5. `[signer]` Payer
-    ///   6. `[]` SPL Token program
+    ///   6. `[]` GPL Token program
     ///   7. `[]` System program
     ///   8. `[]` Sysvar Rent
     ///   9. `[signer]` Governance authority
@@ -467,7 +467,7 @@ pub fn create_realm(
         AccountMeta::new(community_token_holding_address, false),
         AccountMeta::new_readonly(*payer, true),
         AccountMeta::new_readonly(system_program::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(sysvar::rent::id(), false),
     ];
 
@@ -546,7 +546,7 @@ pub fn deposit_governing_tokens(
         AccountMeta::new(token_owner_record_address, false),
         AccountMeta::new_readonly(*payer, true),
         AccountMeta::new_readonly(system_program::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(sysvar::rent::id(), false),
     ];
 
@@ -585,7 +585,7 @@ pub fn withdraw_governing_tokens(
         AccountMeta::new(*governing_token_destination, false),
         AccountMeta::new_readonly(*governing_token_owner, true),
         AccountMeta::new(token_owner_record_address, false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
     ];
 
     let instruction = GovernanceInstruction::WithdrawGoverningTokens {};
@@ -743,7 +743,7 @@ pub fn create_mint_governance(
         AccountMeta::new_readonly(*governed_mint_authority, true),
         AccountMeta::new_readonly(*token_owner_record, false),
         AccountMeta::new_readonly(*payer, true),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(system_program::id(), false),
         AccountMeta::new_readonly(sysvar::rent::id(), false),
         AccountMeta::new_readonly(*governance_authority, true),
@@ -788,7 +788,7 @@ pub fn create_token_governance(
         AccountMeta::new_readonly(*governed_token_owner, true),
         AccountMeta::new_readonly(*token_owner_record, false),
         AccountMeta::new_readonly(*payer, true),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(system_program::id(), false),
         AccountMeta::new_readonly(sysvar::rent::id(), false),
         AccountMeta::new_readonly(*governance_authority, true),

@@ -1,4 +1,4 @@
-import { TOKEN_PROGRAM_ID } from '@gemachain/spl-token';
+import { TOKEN_PROGRAM_ID } from '@gemachain/gpl-token';
 import { PublicKey, SYSVAR_RENT_PUBKEY, TransactionInstruction } from '@gemachain/web3.js';
 import { blob, struct, u8 } from 'buffer-layout';
 import { LENDING_PROGRAM_ID, ORACLE_PROGRAM_ID } from '../constants';

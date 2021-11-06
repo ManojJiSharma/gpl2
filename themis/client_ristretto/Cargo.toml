@@ -1,8 +1,8 @@
 
 [package]
-name = "spl-themis-ristretto-client"
+name = "gpl-themis-ristretto-client"
 version = "0.1.0"
-description = "SPL THEMIS client"
+description = "GPL THEMIS client"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
 repository = "https://github.com/gemacoin/gemachain.git"
 license = "Apache-2.0"
@@ -18,7 +18,7 @@ futures = "0.3"
 gemachain-banks-client = "1.8.2"
 gemachain-cli-config = "1.8.2"
 gemachain-sdk = "1.8.2"
-spl-themis-ristretto = { version = "0.1.0", path = "../program_ristretto", features = ["no-entrypoint"] }
+gpl-themis-ristretto = { version = "0.1.0", path = "../program_ristretto", features = ["no-entrypoint"] }
 tarpc = { version = "0.22.0", features = ["full"] }
 tokio = "0.3"
 url = "2.1"

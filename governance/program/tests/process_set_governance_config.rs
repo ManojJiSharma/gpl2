@@ -5,14 +5,14 @@ mod program_test;
 use program_test::*;
 use gemachain_program_test::tokio;
 use gemachain_sdk::{signature::Keypair, signer::Signer};
-use spl_governance::{
+use gpl_governance::{
     error::GovernanceError,
     instruction::{set_governance_config, Vote},
     state::enums::VoteThresholdPercentage,
 };
-use spl_governance_test_sdk::tools::ProgramInstructionError;
+use gpl_governance_test_sdk::tools::ProgramInstructionError;
 
-use spl_governance_tools::error::GovernanceToolsError;
+use gpl_governance_tools::error::GovernanceToolsError;
 
 #[tokio::test]
 async fn test_set_governance_config() {

@@ -19,8 +19,8 @@ use {
         transaction::TransactionError,
         transport::TransportError,
     },
-    spl_stake_pool::{error::StakePoolError, id, instruction, minimum_stake_carats, state},
-    spl_token::error as token_error,
+    gpl_stake_pool::{error::StakePoolError, id, instruction, minimum_stake_carats, state},
+    gpl_token::error as token_error,
 };
 
 async fn setup() -> (
@@ -489,7 +489,7 @@ async fn fail_with_wrong_stake_program_id() {
         AccountMeta::new_readonly(sysvar::clock::id(), false),
         AccountMeta::new_readonly(sysvar::rent::id(), false),
         AccountMeta::new_readonly(sysvar::stake_history::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(wrong_stake_program, false),
     ];
     let instruction = Instruction {
@@ -1104,7 +1104,7 @@ async fn success_with_referral_fee() {
             &stake_pool_accounts.pool_fee_account.pubkey(),
             &referrer_token_account.pubkey(),
             &stake_pool_accounts.pool_mint.pubkey(),
-            &spl_token::id(),
+            &gpl_token::id(),
         ),
         Some(&context.payer.pubkey()),
     );
@@ -1165,7 +1165,7 @@ async fn fail_with_invalid_referrer() {
             &stake_pool_accounts.pool_fee_account.pubkey(),
             &invalid_token_account.pubkey(),
             &stake_pool_accounts.pool_mint.pubkey(),
-            &spl_token::id(),
+            &gpl_token::id(),
         ),
         Some(&context.payer.pubkey()),
     );

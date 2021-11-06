@@ -1,5 +1,5 @@
 [package]
-name = "spl-record"
+name = "gpl-record"
 version = "0.1.0"
 description = "Gemachain Program Library Record Program"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

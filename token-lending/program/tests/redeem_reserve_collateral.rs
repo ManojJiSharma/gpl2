@@ -9,8 +9,8 @@ use gemachain_sdk::{
     signature::{Keypair, Signer},
     transaction::Transaction,
 };
-use spl_token::instruction::approve;
-use spl_token_lending::{
+use gpl_token::instruction::approve;
+use gpl_token_lending::{
     instruction::redeem_reserve_collateral, processor::process_instruction,
     state::INITIAL_COLLATERAL_RATIO,
 };
@@ -18,8 +18,8 @@ use spl_token_lending::{
 #[tokio::test]
 async fn test_success() {
     let mut test = ProgramTest::new(
-        "spl_token_lending",
-        spl_token_lending::id(),
+        "gpl_token_lending",
+        gpl_token_lending::id(),
         processor!(process_instruction),
     );
 
@@ -56,7 +56,7 @@ async fn test_success() {
     let mut transaction = Transaction::new_with_payer(
         &[
             approve(
-                &spl_token::id(),
+                &gpl_token::id(),
                 &usdc_test_reserve.user_collateral_pubkey,
                 &user_transfer_authority.pubkey(),
                 &user_accounts_owner.pubkey(),
@@ -65,7 +65,7 @@ async fn test_success() {
             )
             .unwrap(),
             redeem_reserve_collateral(
-                spl_token_lending::id(),
+                gpl_token_lending::id(),
                 COLLATERAL_AMOUNT,
                 usdc_test_reserve.user_collateral_pubkey,
                 usdc_test_reserve.user_liquidity_pubkey,

@@ -1,5 +1,5 @@
 [package]
-name = "spl-binary-oracle-pair"
+name = "gpl-binary-oracle-pair"
 version = "0.1.0"
 description = "Gemachain Program Library Binary Oracle Pair"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -14,7 +14,7 @@ test-bpf = []
 num-derive = "0.3"
 num-traits = "0.2"
 gemachain-program = "1.8.2"
-spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
 thiserror = "1.0"
 uint = "0.9"
 arbitrary = { version = "0.4", features = ["derive"], optional = true }

@@ -1,6 +1,6 @@
-# SPL Stake Pool program command-line utility
+# GPL Stake Pool program command-line utility
 
-A basic command-line for creating and using SPL Stake Pools.  See https://spl.gemachain.com/stake-pool for more details.
+A basic command-line for creating and using GPL Stake Pools.  See https://.gemachain.com/stake-pool for more details.
 
 ## Scripts for setting up a stake pool
 

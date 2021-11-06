@@ -7,7 +7,7 @@ if [[ -d .vercel ]]; then
 fi
 
 CONFIG_FILE=vercel.json
-PROJECT_NAME=spl-gemachain-com
+PROJECT_NAME=gpl-gemachain-com
 
 PRODUCTION=
 if [[ -n "$CI" ]]; then

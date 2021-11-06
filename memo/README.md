@@ -6,4 +6,4 @@ signers of the transaction, and if so, logs their addresses. It can be used to
 record a string on-chain, stored in the instruction data of a successful
 transaction, and optionally verify the originator.
 
-Full documentation is available at https://spl.gemachain.com/memo
+Full documentation is available at https://gpl.gemachain.com/memo

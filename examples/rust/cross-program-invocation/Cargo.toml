@@ -1,5 +1,5 @@
 [package]
-name = "spl-example-cross-program-invocation"
+name = "gpl-example-cross-program-invocation"
 version = "1.0.0"
 description = "Gemachain Program Library Cross Program Invocation Example"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

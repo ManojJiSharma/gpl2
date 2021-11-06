@@ -2,7 +2,7 @@ module.exports = {
   title: "Gemachain Program Library Docs",
   tagline:
     "Gemachain is an open source project implementing a new, high-performance, permissionless blockchain.",
-  url: "https://spl.gemachain.com",
+  url: "https://gpl.gemachain.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
   organizationName: "gemachain-labs", // Usually your GitHub org/user name.

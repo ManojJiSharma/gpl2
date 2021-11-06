@@ -3,7 +3,7 @@ use gemachain_program::{
 };
 
 use crate::helpers::flash_loan_receiver::FlashLoanReceiverError::InvalidInstruction;
-use spl_token::{
+use gpl_token::{
     gemachain_program::{
         account_info::next_account_info, program::invoke_signed, program_error::ProgramError,
         program_pack::Pack,
@@ -84,7 +84,7 @@ impl Processor {
         let balance_in_token_account =
             Account::unpack_from_slice(&source_liquidity_token_account_info.try_borrow_data()?)?
                 .amount;
-        let transfer_ix = spl_token::instruction::transfer(
+        let transfer_ix = gpl_token::instruction::transfer(
             token_program_id.key,
             source_liquidity_token_account_info.key,
             destination_liquidity_token_account_info.key,

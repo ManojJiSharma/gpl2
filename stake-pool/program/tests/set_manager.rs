@@ -15,7 +15,7 @@ use {
         instruction::InstructionError, signature::Keypair, signature::Signer,
         transaction::Transaction, transaction::TransactionError, transport::TransportError,
     },
-    spl_stake_pool::{error, id, instruction, state},
+    gpl_stake_pool::{error, id, instruction, state},
 };
 
 async fn setup() -> (

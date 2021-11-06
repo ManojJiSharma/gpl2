@@ -15,7 +15,7 @@ use crate::{
             get_token_owner_record_address_seeds, get_token_owner_record_data_for_seeds,
         },
     },
-    tools::spl_token::{get_spl_token_mint, transfer_spl_tokens_signed},
+    tools::gpl_token::{get_gpl_token_mint, transfer_gpl_tokens_signed},
 };
 
 /// Processes WithdrawGoverningTokens instruction
@@ -30,14 +30,14 @@ pub fn process_withdraw_governing_tokens(
     let governing_token_destination_info = next_account_info(account_info_iter)?; // 2
     let governing_token_owner_info = next_account_info(account_info_iter)?; // 3
     let token_owner_record_info = next_account_info(account_info_iter)?; // 4
-    let spl_token_info = next_account_info(account_info_iter)?; // 5
+    let gpl_token_info = next_account_info(account_info_iter)?; // 5
 
     if !governing_token_owner_info.is_signer {
         return Err(GovernanceError::GoverningTokenOwnerMustSign.into());
     }
 
     let realm_data = get_realm_data(program_id, realm_info)?;
-    let governing_token_mint = get_spl_token_mint(governing_token_holding_info)?;
+    let governing_token_mint = get_gpl_token_mint(governing_token_holding_info)?;
 
     realm_data.assert_is_valid_governing_token_mint_and_holding(
         program_id,
@@ -60,14 +60,14 @@ pub fn process_withdraw_governing_tokens(
 
     token_owner_record_data.assert_can_withdraw_governing_tokens()?;
 
-    transfer_spl_tokens_signed(
+    transfer_gpl_tokens_signed(
         governing_token_holding_info,
         governing_token_destination_info,
         realm_info,
         &get_realm_address_seeds(&realm_data.name),
         program_id,
         token_owner_record_data.governing_token_deposit_amount,
-        spl_token_info,
+        gpl_token_info,
     )?;
 
     token_owner_record_data.governing_token_deposit_amount = 0;

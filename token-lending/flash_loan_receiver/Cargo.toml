@@ -6,7 +6,7 @@ edition = "2018"
 [dependencies]
 arrayref = "0.3.6"
 gemachain-program = "1.8.2"
-spl-token = { version="3.2.0", features=["no-entrypoint"] }
+gpl-token = { version="3.2.0", features=["no-entrypoint"] }
 
 [lib]
 crate-type = ["cdylib", "lib"]

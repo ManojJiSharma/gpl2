@@ -6,7 +6,7 @@ use gemachain_program::{
     entrypoint::ProgramResult,
     pubkey::Pubkey,
 };
-use spl_governance_tools::account::dispose_account;
+use gpl_governance_tools::account::dispose_account;
 
 use crate::state::{
     proposal::get_proposal_data, signatory_record::get_signatory_record_data_for_seeds,

@@ -31,7 +31,7 @@ use {
         stake, system_instruction, system_program,
         sysvar::Sysvar,
     },
-    spl_token::state::Mint,
+    gpl_token::state::Mint,
 };
 
 /// Deserialize the stake state from AccountInfo
@@ -406,7 +406,7 @@ impl Processor {
         )
     }
 
-    /// Issue a spl_token `Burn` instruction.
+    /// Issue a gpl_token `Burn` instruction.
     #[allow(clippy::too_many_arguments)]
     fn token_burn<'a>(
         token_program: AccountInfo<'a>,
@@ -415,7 +415,7 @@ impl Processor {
         authority: AccountInfo<'a>,
         amount: u64,
     ) -> Result<(), ProgramError> {
-        let ix = spl_token::instruction::burn(
+        let ix = gpl_token::instruction::burn(
             token_program.key,
             burn_account.key,
             mint.key,
@@ -427,7 +427,7 @@ impl Processor {
         invoke(&ix, &[burn_account, mint, authority, token_program])
     }
 
-    /// Issue a spl_token `MintTo` instruction.
+    /// Issue a gpl_token `MintTo` instruction.
     #[allow(clippy::too_many_arguments)]
     fn token_mint_to<'a>(
         stake_pool: &Pubkey,
@@ -443,7 +443,7 @@ impl Processor {
         let authority_signature_seeds = [&me_bytes[..32], authority_type, &[bump_seed]];
         let signers = &[&authority_signature_seeds[..]];
 
-        let ix = spl_token::instruction::mint_to(
+        let ix = gpl_token::instruction::mint_to(
             token_program.key,
             mint.key,
             destination.key,
@@ -455,7 +455,7 @@ impl Processor {
         invoke_signed(&ix, &[mint, destination, authority, token_program], signers)
     }
 
-    /// Issue a spl_token `Transfer` instruction.
+    /// Issue a gpl_token `Transfer` instruction.
     #[allow(clippy::too_many_arguments)]
     fn token_transfer<'a>(
         token_program: AccountInfo<'a>,
@@ -464,7 +464,7 @@ impl Processor {
         authority: AccountInfo<'a>,
         amount: u64,
     ) -> Result<(), ProgramError> {
-        let ix = spl_token::instruction::transfer(
+        let ix = gpl_token::instruction::transfer(
             token_program.key,
             source.key,
             destination.key,
@@ -569,10 +569,10 @@ impl Processor {
             return Err(StakePoolError::FeeTooHigh.into());
         }
 
-        if *token_program_info.key != spl_token::id() {
+        if *token_program_info.key != gpl_token::id() {
             msg!(
-                "Only the SPL token program is currently supported, expected {}, received {}",
-                spl_token::id(),
+                "Only the GPL token program is currently supported, expected {}, received {}",
+                gpl_token::id(),
                 *token_program_info.key
             );
             return Err(ProgramError::IncorrectProgramId);
@@ -587,7 +587,7 @@ impl Processor {
         }
 
         if *pool_mint_info.key
-            != spl_token::state::Account::unpack_from_slice(&manager_fee_info.data.borrow())?.mint
+            != gpl_token::state::Account::unpack_from_slice(&manager_fee_info.data.borrow())?.mint
         {
             return Err(StakePoolError::WrongAccountMint.into());
         }
@@ -2567,7 +2567,7 @@ impl Processor {
         }
 
         if stake_pool.pool_mint
-            != spl_token::state::Account::unpack_from_slice(&new_manager_fee_info.data.borrow())?
+            != gpl_token::state::Account::unpack_from_slice(&new_manager_fee_info.data.borrow())?
                 .mint
         {
             return Err(StakePoolError::WrongAccountMint.into());

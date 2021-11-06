@@ -8,7 +8,7 @@ use gemachain_program::{
     rent::Rent,
     sysvar::Sysvar,
 };
-use spl_governance_tools::account::create_and_serialize_account_signed;
+use gpl_governance_tools::account::create_and_serialize_account_signed;
 
 use crate::{
     error::GovernanceError,
@@ -20,7 +20,7 @@ use crate::{
             TokenOwnerRecord,
         },
     },
-    tools::spl_token::{get_spl_token_mint, get_spl_token_owner, transfer_spl_tokens},
+    tools::gpl_token::{get_gpl_token_mint, get_gpl_token_owner, transfer_gpl_tokens},
 };
 
 /// Processes DepositGoverningTokens instruction
@@ -39,13 +39,13 @@ pub fn process_deposit_governing_tokens(
     let token_owner_record_info = next_account_info(account_info_iter)?; // 5
     let payer_info = next_account_info(account_info_iter)?; // 6
     let system_info = next_account_info(account_info_iter)?; // 7
-    let spl_token_info = next_account_info(account_info_iter)?; // 8
+    let gpl_token_info = next_account_info(account_info_iter)?; // 8
 
     let rent_sysvar_info = next_account_info(account_info_iter)?; // 9
     let rent = &Rent::from_account_info(rent_sysvar_info)?;
 
     let realm_data = get_realm_data(program_id, realm_info)?;
-    let governing_token_mint = get_spl_token_mint(governing_token_holding_info)?;
+    let governing_token_mint = get_gpl_token_mint(governing_token_holding_info)?;
 
     realm_data.asset_governing_tokens_deposits_allowed(&governing_token_mint)?;
 
@@ -56,12 +56,12 @@ pub fn process_deposit_governing_tokens(
         governing_token_holding_info.key,
     )?;
 
-    transfer_spl_tokens(
+    transfer_gpl_tokens(
         governing_token_source_info,
         governing_token_holding_info,
         governing_token_transfer_authority_info,
         amount,
-        spl_token_info,
+        gpl_token_info,
     )?;
 
     let token_owner_record_address_seeds = get_token_owner_record_address_seeds(
@@ -72,7 +72,7 @@ pub fn process_deposit_governing_tokens(
 
     if token_owner_record_info.data_is_empty() {
         // Deposited tokens can only be withdrawn by the owner so let's make sure the owner signed the transaction
-        let governing_token_owner = get_spl_token_owner(governing_token_source_info)?;
+        let governing_token_owner = get_gpl_token_owner(governing_token_source_info)?;
 
         if !(governing_token_owner == *governing_token_owner_info.key
             && governing_token_owner_info.is_signer)

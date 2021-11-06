@@ -3,7 +3,7 @@
 
 [libs]
 node_modules/@gemachain/web3.js/module.flow.js
-node_modules/@gemachain/spl-token/module.flow.js
+node_modules/@gemachain/gpl-token/module.flow.js
 flow-typed/
 
 [options]

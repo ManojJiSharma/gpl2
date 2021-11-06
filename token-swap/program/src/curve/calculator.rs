@@ -1,6 +1,6 @@
 //! Swap calculations
 
-use {crate::error::SwapError, spl_math::precise_number::PreciseNumber, std::fmt::Debug};
+use {crate::error::SwapError, gpl_math::precise_number::PreciseNumber, std::fmt::Debug};
 
 #[cfg(feature = "fuzz")]
 use arbitrary::Arbitrary;
@@ -196,7 +196,7 @@ pub trait CurveCalculator: Debug + DynPack {
 pub mod test {
     use super::*;
     use proptest::prelude::*;
-    use spl_math::uint::U256;
+    use gpl_math::uint::U256;
 
     /// The epsilon for most curves when performing the conversion test,
     /// comparing a one-sided deposit to a swap + deposit.

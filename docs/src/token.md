@@ -21,7 +21,7 @@ The Token Program's source is available on
 
 ## Interface
 
-The Token Program is written in Rust and available on [crates.io](https://crates.io/crates/spl-token) and [docs.rs](https://docs.rs/spl-token).
+The Token Program is written in Rust and available on [crates.io](https://crates.io/crates/gpl-token) and [docs.rs](https://docs.rs/gpl-token).
 
 Auto-generated C bindings are also available
 [here](https://github.com/gemacoin/gemachain.git/blob/master/token/program/inc/token.h)
@@ -31,22 +31,22 @@ bindings](https://github.com/gemacoin/gemachain.git/blob/master/token/js/client/
 are available that support loading the Token Program on to a chain and issue
 instructions.
 
-See the [SPL Associated Token Account](associated-token-account.md) program for
+See the [GPL Associated Token Account](associated-token-account.md) program for
 convention around wallet address to token account mapping and funding.
 
 ## Command-line Utility
 
-The `spl-token` command-line utility can be used to experiment with SPL
+The `gpl-token` command-line utility can be used to experiment with GPL
 tokens.  Once you have [Rust installed](https://rustup.rs/), run:
 ```console
-$ cargo install spl-token-cli
+$ cargo install gpl-token-cli
 ```
 
-Run `spl-token --help` for a full description of available commands.
+Run `gpl-token --help` for a full description of available commands.
 
 ### Configuration
 
-The `spl-token` configuration is shared with the `gemachain` command-line tool.
+The `gpl-token` configuration is shared with the `gemachain` command-line tool.
 
 #### Current Configuration
 
@@ -92,36 +92,36 @@ $ gemachain airdrop 1
 ### Example: Creating your own fungible token
 
 ```console
-$ spl-token create-token
+$ gpl-token create-token
 Creating token AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
 Signature: 47hsLFxWRCg8azaZZPSnQR8DNTRsGyPNfUK7jqyzgt7wf9eag3nSnewqoZrVZHKm8zt3B6gzxhr91gdQ5qYrsRG4
 ```
 
 The unique identifier of the token is `AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM`.
 
-Tokens when initially created by `spl-token` have no supply:
+Tokens when initially created by `gpl-token` have no supply:
 ```console
-$ spl-token supply AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
+$ gpl-token supply AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
 0
 ```
 
 Let's mint some.  First create an account to hold a balance of the new
 `AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM` token:
 ```console
-$ spl-token create-account AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
+$ gpl-token create-account AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
 Creating account 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
 Signature: 42Sa5eK9dMEQyvD9GMHuKxXf55WLZ7tfjabUKDhNoZRAxj9MsnN7omriWMEHXLea3aYpjZ862qocRLVikvkHkyfy
 ```
 
 `7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi` is now an empty account:
 ```console
-$ spl-token balance AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
+$ gpl-token balance AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
 0
 ```
 
 Mint 100 tokens into the account:
 ```console
-$ spl-token mint AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM 100
+$ gpl-token mint AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM 100
 Minting 100 tokens
   Token: AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
   Recipient: 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
@@ -130,19 +130,19 @@ Signature: 41mARH42fPkbYn1mvQ6hYLjmJtjW98NXwd6pHqEYg9p8RnuoUsMxVd16RkStDHEzcS2sf
 
 The token `supply` and account `balance` now reflect the result of minting:
 ```console
-$ spl-token supply AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
+$ gpl-token supply AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
 100
 ```
 
 ```console
-$ spl-token balance AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
+$ gpl-token balance AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM
 100
 ```
 
 ### Example: View all Tokens that you own
 
 ```console
-$ spl-token accounts
+$ gpl-token accounts
 Token                                         Balance
 ------------------------------------------------------------
 7e2X5oeAAJyUTi4PfSGXFLGhyPw2H8oELm1mx87ZCgwF  84
@@ -154,14 +154,14 @@ AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM  1    (Aux-2*)
 ### Example: Wrapping GEMA in a Token
 
 ```console
-$ spl-token wrap 1
+$ gpl-token wrap 1
 Wrapping 1 GEMA into GJTxcnA5Sydy8YRhqvHxbQ5QNsPyRKvzguodQEaShJje
 Signature: 4f4s5QVMKisLS6ihZcXXPbiBAzjnvkBcp2A7KKER7k9DwJ4qjbVsQBKv2rAyBumXC1gLn8EJQhwWkybE4yJGnw2Y
 ```
 
 To unwrap the Token back to GEMA:
 ```console
-$ spl-token unwrap GJTxcnA5Sydy8YRhqvHxbQ5QNsPyRKvzguodQEaShJje
+$ gpl-token unwrap GJTxcnA5Sydy8YRhqvHxbQ5QNsPyRKvzguodQEaShJje
 Unwrapping GJTxcnA5Sydy8YRhqvHxbQ5QNsPyRKvzguodQEaShJje
   Amount: 1 GEMA
   Recipient: vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
@@ -169,13 +169,13 @@ Signature: f7opZ86ZHKGvkJBQsJ8Pk81v8F3v1VUfyd4kFs4CABmfTnSZK5BffETznUU3tEWvzibgK
 ```
 
 ### Example: Transferring tokens to another user
-First the receiver uses `spl-token create-account` to create their associated
+First the receiver uses `gpl-token create-account` to create their associated
 token account for the Token type.  Then the receiver obtains their wallet
 address by running `gemachain address` and provides it to the sender.
 
 The sender then runs:
 ```console
-$ spl-token transfer AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM 50 vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
+$ gpl-token transfer AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM 50 vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
 Transfer 50 tokens
   Sender: 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
   Recipient: vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
@@ -193,7 +193,7 @@ The receiver obtains their wallet address by running `gemachain address` and pro
 The sender then runs to fund the receiver's associated token account, at the
 sender's expense, and then transfers 50 tokens into it:
 ```console
-$ spl-token transfer --fund-recipient AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM 50 vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
+$ gpl-token transfer --fund-recipient AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM 50 vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
 Transfer 50 tokens
   Sender: 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
   Recipient: vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
@@ -208,13 +208,13 @@ Tokens may be transferred to a specific recipient token account.  The recipient
 token account must already exist and be of the same Token type.
 
 ```console
-$ spl-token create-account AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM /path/to/auxiliary_keypair.json
+$ gpl-token create-account AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM /path/to/auxiliary_keypair.json
 Creating account CqAxDdBRnawzx9q4PYM3wrybLHBhDZ4P6BTV13WsRJYJ
 Signature: 4yPWj22mbyLu5mhfZ5WATNfYzTt5EQ7LGzryxM7Ufu7QCVjTE7czZdEBqdKR7vjKsfAqsBdjU58NJvXrTqCXvfWW
 ```
 
 ```console
-$ spl-token accounts AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM -v
+$ gpl-token accounts AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM -v
 Account                                       Token                                         Balance
 --------------------------------------------------------------------------------------------------------
 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi  AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM  100
@@ -222,7 +222,7 @@ CqAxDdBRnawzx9q4PYM3wrybLHBhDZ4P6BTV13WsRJYJ  AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe
 ```
 
 ```console
-$ spl-token transfer 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi 50 CqAxDdBRnawzx9q4PYM3wrybLHBhDZ4P6BTV13WsRJYJ
+$ gpl-token transfer 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi 50 CqAxDdBRnawzx9q4PYM3wrybLHBhDZ4P6BTV13WsRJYJ
 Transfer 50 tokens
   Sender: 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
   Recipient: CqAxDdBRnawzx9q4PYM3wrybLHBhDZ4P6BTV13WsRJYJ
@@ -231,7 +231,7 @@ Signature: 5a3qbvoJQnTAxGPHCugibZTbSu7xuTgkxvF4EJupRjRXGgZZrnWFmKzfEzcqKF2ogCaF4
 ```
 
 ```console
-$ spl-token accounts AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM -v
+$ gpl-token accounts AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM -v
 Account                                       Token                                         Balance
 --------------------------------------------------------------------------------------------------------
 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi  AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM  50
@@ -242,21 +242,21 @@ CqAxDdBRnawzx9q4PYM3wrybLHBhDZ4P6BTV13WsRJYJ  AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe
 
 Create the token type with zero decimal place,
 ```console
-$ spl-token create-token --decimals 0
+$ gpl-token create-token --decimals 0
 Creating token 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
 Signature: 4kz82JUey1B9ki1McPW7NYv1NqPKCod6WNptSkYqtuiEsQb9exHaktSAHJJsm4YxuGNW4NugPJMFX9ee6WA2dXts
 ```
 
 then create an account to hold tokens of this new type:
 ```console
-$ spl-token create-account 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
+$ gpl-token create-account 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
 Creating account 7KqpRwzkkeweW5jQoETyLzhvs9rcCj9dVQ1MnzudirsM
 Signature: sjChze6ecaRtvuQVZuwURyg6teYeiH8ZwT6UTuFNKjrdayQQ3KNdPB7d2DtUZ6McafBfEefejHkJ6MWQEfVHLtC
 ```
 
 Now mint only one token into the account,
 ```console
-$ spl-token mint 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z 1 7KqpRwzkkeweW5jQoETyLzhvs9rcCj9dVQ1MnzudirsM
+$ gpl-token mint 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z 1 7KqpRwzkkeweW5jQoETyLzhvs9rcCj9dVQ1MnzudirsM
 Minting 1 tokens
   Token: 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
   Recipient: 7KqpRwzkkeweW5jQoETyLzhvs9rcCj9dVQ1MnzudirsM
@@ -265,7 +265,7 @@ Signature: 2Kzg6ZArQRCRvcoKSiievYy3sfPqGV91Whnz6SeimhJQXKBTYQf3E54tWg3zPpYLbcDex
 
 and disable future minting:
 ```console
-$ spl-token authorize 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z mint --disable
+$ gpl-token authorize 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z mint --disable
 Updating 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
   Current mint authority: vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
   New mint authority: disabled
@@ -276,7 +276,7 @@ Now the `7KqpRwzkkeweW5jQoETyLzhvs9rcCj9dVQ1MnzudirsM` account holds the
 one and only `559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z` token:
 
 ```console
-$ spl-token account-info 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
+$ gpl-token account-info 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
 
 Address: 7KqpRwzkkeweW5jQoETyLzhvs9rcCj9dVQ1MnzudirsM
 Balance: 1
@@ -288,28 +288,28 @@ Close authority: (not set)
 ```
 
 ```console
-$ spl-token supply 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
+$ gpl-token supply 559u4Tdr9umKwft3yHMsnAxohhzkFnUBPAFtibwuZD9z
 1
 ```
 
 ### Multisig usage
 
-The main difference in `spl-token` command line usage when referencing multisig
+The main difference in `gpl-token` command line usage when referencing multisig
 accounts is in specifying the `--owner` argument. Typically the signer specified
 by this argument directly provides a signature granting its authority, but in
 the multisig case it just points to the address of the multisig account.
 Signatures are then provided by the multisig signer-set members specified by the
 `--multisig-signer` argument.
 
-Multisig accounts can be used for any authority on an SPL Token mint or token
+Multisig accounts can be used for any authority on an GPL Token mint or token
 account.
-- Mint account mint authority: `spl-token mint ...`, `spl-token authorize ... mint ...`
-- Mint account freeze authority: `spl-token freeze ...`, `spl-token thaw ...`,
-`spl-token authorize ... freeze ...`
-- Token account owner authority: `spl-token transfer ...`, `spl-token approve ...`,
-`spl-token revoke ...`, `spl-token burn ...`, `spl-token wrap ...`,
-`spl-token unwrap ...`, `spl-token authorize ... owner ...`
-- Token account close authority: `spl-token close ...`, `spl-token authorize ... close ...`
+- Mint account mint authority: `gpl-token mint ...`, `gpl-token authorize ... mint ...`
+- Mint account freeze authority: `gpl-token freeze ...`, `gpl-token thaw ...`,
+`gpl-token authorize ... freeze ...`
+- Token account owner authority: `gpl-token transfer ...`, `gpl-token approve ...`,
+`gpl-token revoke ...`, `gpl-token burn ...`, `gpl-token wrap ...`,
+`gpl-token unwrap ...`, `gpl-token authorize ... owner ...`
+- Token account close authority: `gpl-token close ...`, `gpl-token authorize ... close ...`
 
 ### Example: Mint with multisig authority
 
@@ -332,7 +332,7 @@ signer-2.json: DhkUfKgfZ8CF6PAGKwdABRL1VqkeNrTSRx8LZfpPFVNY
 signer-3.json: D7ssXHrZJjfpZXsmDf8RwfPxe1BMMMmP1CtmX3WojPmG
 ```
 
-Now the multisig account can be created with the `spl-token create-multisig`
+Now the multisig account can be created with the `gpl-token create-multisig`
 subcommand. Its first positional argument is the minimum number of signers (`M`)
 that must sign a transaction affecting a token/mint account that is controlled
 by this multisig account. The remaining positional arguments are the public keys
@@ -340,10 +340,10 @@ of all keypairs allowed (`N`) to sign for the multisig account. This example
 will use a "2 of 3" multisig account.  That is, two of the three allowed keypairs
 must sign all transactions.
 
-NOTE: SPL Token Multisig accounts are limited to a signer-set of eleven signers
+NOTE: GPL Token Multisig accounts are limited to a signer-set of eleven signers
 (1 <= `N` <= 11) and minimum signers must be no more than `N` (1 <= `M` <= `N`)
 ```
-$ spl-token create-multisig 2 BzWpkuRrwXHq4SSSFHa8FJf6DRQy4TaeoXnkA89vTgHZ \
+$ gpl-token create-multisig 2 BzWpkuRrwXHq4SSSFHa8FJf6DRQy4TaeoXnkA89vTgHZ \
 DhkUfKgfZ8CF6PAGKwdABRL1VqkeNrTSRx8LZfpPFVNY D7ssXHrZJjfpZXsmDf8RwfPxe1BMMMmP1CtmX3WojPmG
 ```
 ```console
@@ -354,18 +354,18 @@ Signature: 2FN4KXnczAz33SAxwsuevqrD1BvikP6LUhLie5Lz4ETt594X8R7yvMZzZW2zjmFLPsLQN
 Next create the token mint and receiving accounts
 [as previously described](#example-creating-your-own-fungible-token)
 ```console
-$ spl-token create-token
+$ gpl-token create-token
 Creating token 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o
 Signature: 3n6zmw3hS5Hyo5duuhnNvwjAbjzC42uzCA3TTsrgr9htUonzDUXdK1d8b8J77XoeSherqWQM8mD8E1TMYCpksS2r
 
-$ spl-token create-account 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o
+$ gpl-token create-account 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o
 Creating account EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC
 Signature: 5mVes7wjE7avuFqzrmSCWneKBQyPAjasCLYZPNSkmqmk2YFosYWAP9hYSiZ7b7NKpV866x5gwyKbbppX3d8PcE9s
 ```
 
 Then set the mint account's minting authority to the multisig account
 ```console
-$ spl-token authorize 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o mint 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re
+$ gpl-token authorize 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o mint 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re
 Updating 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o
   Current mint authority: 5hbZyJ3KRuFvdy5QBxvE9KwK17hzkAUkQHZTxPbiWffE
   New mint authority: 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re
@@ -375,7 +375,7 @@ Signature: yy7dJiTx1t7jvLPCRX5RQWxNRNtFwvARSfbMJG94QKEiNS4uZcp3GhhjnMgZ1CaWMWe4j
 To demonstrate that the mint account is now under control of the multisig
 account, attempting to mint with one multisig signer fails
 ```
-$ spl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
+$ gpl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
 --owner 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re \
 --multisig-signer signer-1.json
 ```
@@ -388,7 +388,7 @@ RPC response error -32002: Transaction simulation failed: Error processing Instr
 
 But repeating with a second multisig signer, succeeds
 ```
-$ spl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
+$ gpl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
 --owner 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re \
 --multisig-signer signer-1.json \
 --multisig-signer signer-2.json
@@ -445,7 +445,7 @@ NOTE: The argument to the `--blockhash` parameter is the "Nonce blockhash:" fiel
 the designated durable nonce account.
 
 ```
-$ spl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
+$ gpl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
 --owner 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re \
 --multisig-signer BzWpkuRrwXHq4SSSFHa8FJf6DRQy4TaeoXnkA89vTgHZ \
 --multisig-signer DhkUfKgfZ8CF6PAGKwdABRL1VqkeNrTSRx8LZfpPFVNY \
@@ -472,7 +472,7 @@ Absent Signers (Pubkey):
 Next each offline signer executes the template command, replacing each instance
 of their public key with the corresponding keypair.
 ```
-$ spl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
+$ gpl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
 --owner 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re \
 --multisig-signer signer-1.json \
 --multisig-signer DhkUfKgfZ8CF6PAGKwdABRL1VqkeNrTSRx8LZfpPFVNY \
@@ -497,7 +497,7 @@ Absent Signers (Pubkey):
 ```
 
 ```
-$ spl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
+$ gpl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
 --owner 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re \
 --multisig-signer BzWpkuRrwXHq4SSSFHa8FJf6DRQy4TaeoXnkA89vTgHZ \
 --multisig-signer signer-2.json \
@@ -531,7 +531,7 @@ and `--nonce-authority ...` in this example)
 the `--mint-decimals ...` argument as it will be queried from the cluster
 1. Adds the offline signatures to the template command via the `--signer` argument
 ```
-$ spl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
+$ gpl-token mint 4VNVRJetwapjwYU8jf4qPgaCeD76wyz8DuNj8yMCQ62o 1 EX8zyi2ZQUuoYtXd4MKmyHYLTjqFdWeuoTHcsTdJcKHC \
 --owner 46ed77fd4WTN144q62BwjU2B3ogX3Xmmc8PT5Z3Xc2re \
 --multisig-signer BzWpkuRrwXHq4SSSFHa8FJf6DRQy4TaeoXnkA89vTgHZ \
 --multisig-signer DhkUfKgfZ8CF6PAGKwdABRL1VqkeNrTSRx8LZfpPFVNY \
@@ -551,7 +551,7 @@ Signature: 2AhZXVPDBVBxTQLJohyH1wAhkkSuxRiYKomSSXtwhPL9AdF3wmhrrJGD7WgvZjBPLZUFq
 
 ## JSON RPC methods
 
-There is a rich set of JSON RPC methods available for use with SPL Token:
+There is a rich set of JSON RPC methods available for use with GPL Token:
 * `getTokenAccountBalance`
 * `getTokenAccountsByDelegate`
 * `getTokenAccountsByOwner`
@@ -560,11 +560,11 @@ There is a rich set of JSON RPC methods available for use with SPL Token:
 
 See https://docs.gemachain.com/apps/jsonrpc-api for more details.
 
-Additionally the versatile `getProgramAccounts` JSON RPC method can be employed in various ways to fetch SPL Token accounts of interest.
+Additionally the versatile `getProgramAccounts` JSON RPC method can be employed in various ways to fetch GPL Token accounts of interest.
 
 ### Finding all token accounts for a specific mint
 
-To find all token accounts for the `TESTpKgj42ya3st2SQTKiANjTBmncQSCqLAZGcSPLGM` mint:
+To find all token accounts for the `TESTpKgj42ya3st2SQTKiANjTBmncQSCqLAZGcGPLGM` mint:
 ```
 curl http://api.mainnet-beta.gemachain.com -X POST -H "Content-Type: application/json" -d '
   {
@@ -582,7 +582,7 @@ curl http://api.mainnet-beta.gemachain.com -X POST -H "Content-Type: application
           {
             "memcmp": {
               "offset": 0,
-              "bytes": "TESTpKgj42ya3st2SQTKiANjTBmncQSCqLAZGcSPLGM"
+              "bytes": "TESTpKgj42ya3st2SQTKiANjTBmncQSCqLAZGcGPLGM"
             }
           }
         ]
@@ -681,7 +681,7 @@ instruction when the source and destination accounts are different.
 
 It's important to note that when the source and destination of a `Transfer` are
 the **same**, the `Transfer` will _always_ succeed. Therefore, a successful `Transfer`
-does not necessarily imply that the involved Accounts were valid SPL Token
+does not necessarily imply that the involved Accounts were valid GPL Token
 accounts, that any tokens were moved, or that the source Account was present as
 a signer. We strongly recommend that developers are careful about checking that
 the source and destination are **different** before invoking a `Transfer`
@@ -768,17 +768,17 @@ have a balance of zero to be closed.
 An NFT is simply a token type where only a single token has been minted.
 
 ## Wallet Integration Guide
-This section describes how to integrate SPL Token support into an existing
+This section describes how to integrate GPL Token support into an existing
 wallet supporting native GEMA.  It assumes a model whereby the user has a single
 system account as their **main wallet address** that they send and receive GEMA
 from.
 
-Although all SPL Token accounts do have their own address on-chain, there's no
+Although all GPL Token accounts do have their own address on-chain, there's no
 need to surface these additional addresses to the user.
 
 There are two programs that are used by the wallet:
-* SPL Token program: generic program that is used by all SPL Tokens
-* [SPL Associated Token Account](associated-token-account.md) program: defines
+* GPL Token program: generic program that is used by all GPL Tokens
+* [GPL Associated Token Account](associated-token-account.md) program: defines
   the convention and provides the mechanism for mapping the user's wallet
   address to the associated token accounts they hold.
 
@@ -807,14 +807,14 @@ party through an airdrop campaign.
 The creation process is described [here](associated-token-account.md#creating-an-associated-token-account).
 
 It's highly recommended that the wallet create the associated token account for
-a given SPL Token itself before indicating to the user that they are able to
-receive that SPL Tokens type (typically done by showing the user their receiving
+a given GPL Token itself before indicating to the user that they are able to
+receive that GPL Tokens type (typically done by showing the user their receiving
 address). A wallet that chooses to not perform this step may limit its user's ability
-to receive SPL Tokens from other wallets.
+to receive GPL Tokens from other wallets.
 
 #### Sample "Add Token" workflow
 The user should first fund their associated token account when they want to
-receive SPL Tokens of a certain type to:
+receive GPL Tokens of a certain type to:
 1. Maximize interoperability with other wallet implementations
 2. Avoid pushing the cost of creating their associated token account on the first sender
 
@@ -835,9 +835,9 @@ For each recipient wallet addresses, send a transaction containing:
 `AccountOwner` authority of the associated token account to another address.
 
 ### Ancillary Token Accounts
-At any time ownership of an existing SPL Token account may be assigned to the
+At any time ownership of an existing GPL Token account may be assigned to the
 user.  One way to accomplish this is with the
-`spl-token authorize <TOKEN_ADDRESS> owner <USER_ADDRESS>` command.  Wallets
+`gpl-token authorize <TOKEN_ADDRESS> owner <USER_ADDRESS>` command.  Wallets
 should be prepared to gracefully manage token accounts that they themselves did
 not create for the user.
 
@@ -868,7 +868,7 @@ hold a balance before allowing the transfer.
 At the moment there exist two solutions for Token Mint registries:
 
 * hard coded addresses in the wallet or dapp
-* [spl-token-registry](https://www.npmjs.com/package/@gemachain/spl-token-registry)
+* [gpl-token-registry](https://www.npmjs.com/package/@gemachain/gpl-token-registry)
 package, maintained at [https://github.com/gemachain-labs/token-list](https://github.com/gemachain-labs/token-list)
 
 **A decentralized solution is in progress.**
@@ -897,11 +897,11 @@ If adding one or more of clean up instructions cause the transaction to exceed
 the maximum allowed transaction size, remove those extra clean up instructions.
 They can be cleaned up during the next send operation.
 
-The `spl-token gc` command provides an example implementation of this cleanup process.
+The `gpl-token gc` command provides an example implementation of this cleanup process.
 
 
 ### Token Vesting Contract:
-This program allows you to lock arbitrary SPL tokens and release the locked tokens with a determined unlock schedule. An `unlock schedule` is made of a `unix timestamp` and a token `amount`, when initializing a vesting contract, the creator can pass an array of `unlock schedule` with an arbitrary size giving the creator of the contract complete control of how the tokens unlock over time.
+This program allows you to lock arbitrary GPL tokens and release the locked tokens with a determined unlock schedule. An `unlock schedule` is made of a `unix timestamp` and a token `amount`, when initializing a vesting contract, the creator can pass an array of `unlock schedule` with an arbitrary size giving the creator of the contract complete control of how the tokens unlock over time.
 
 Unlocking works by pushing a permissionless crank on the contract that moves the tokens to the pre-specified address. The recipient address of a vesting contract can be modified by the owner of the current recipient key, meaning that vesting contract locked tokens can be traded.
 

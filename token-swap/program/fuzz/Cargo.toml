@@ -1,5 +1,5 @@
 [package]
-name = "spl-token-swap-fuzz"
+name = "gpl-token-swap-fuzz"
 version = "0.0.1"
 description = "Gemachain Program Library Token Swap Fuzzer"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -12,9 +12,9 @@ publish = false
 honggfuzz = { version = "0.5.52" }
 arbitrary = { version = "0.4", features = ["derive"] }
 gemachain-program = "1.8.2"
-spl-math = { version = "0.1", path = "../../../libraries/math", features = [ "no-entrypoint" ] }
-spl-token = { version = "3.2", path = "../../../token/program", features = [ "no-entrypoint" ] }
-spl-token-swap = { path = "..", features = ["fuzz", "no-entrypoint"] }
+gpl-math = { version = "0.1", path = "../../../libraries/math", features = [ "no-entrypoint" ] }
+gpl-token = { version = "3.2", path = "../../../token/program", features = [ "no-entrypoint" ] }
+gpl-token-swap = { path = "..", features = ["fuzz", "no-entrypoint"] }
 
 [[bin]]
 name = "token-swap-instructions"

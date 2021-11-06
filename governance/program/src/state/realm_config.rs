@@ -6,7 +6,7 @@ use gemachain_program::{
 };
 
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
-use spl_governance_tools::account::{get_account_data, AccountMaxSize};
+use gpl_governance_tools::account::{get_account_data, AccountMaxSize};
 
 use crate::{error::GovernanceError, state::enums::GovernanceAccountType};
 

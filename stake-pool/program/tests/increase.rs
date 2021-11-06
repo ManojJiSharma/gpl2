@@ -13,7 +13,7 @@ use {
         signature::{Keypair, Signer},
         transaction::{Transaction, TransactionError},
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         error::StakePoolError, find_transient_stake_program_address, id, instruction,
         MINIMUM_ACTIVE_STAKE,
     },

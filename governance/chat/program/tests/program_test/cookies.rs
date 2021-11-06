@@ -1,6 +1,6 @@
 use gemachain_program::pubkey::Pubkey;
 use gemachain_sdk::signature::Keypair;
-use spl_governance_chat::state::ChatMessage;
+use gpl_governance_chat::state::ChatMessage;
 
 #[derive(Debug)]
 pub struct ChatMessageCookie {

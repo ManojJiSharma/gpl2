@@ -14,7 +14,7 @@ use gemachain_sdk::{
     pubkey::Pubkey,
     sysvar::rent::{self, Rent},
 };
-use spl_token::{
+use gpl_token::{
     instruction::TokenInstruction,
     state::{Account, Mint},
 };
@@ -34,7 +34,7 @@ fn run_program(
     instruction_data: &[u8],
 ) -> u64 {
     let program_account = GemachainAccount {
-        data: load_program("../../target/deploy/spl_token.so"),
+        data: load_program("../../target/deploy/gpl_token.so"),
         ..GemachainAccount::default()
     };
     let loader_id = bpf_loader::id();

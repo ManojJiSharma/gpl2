@@ -4,7 +4,7 @@ use crate::native_account_data::NativeAccountData;
 use crate::native_processor::do_process_instruction;
 use crate::native_token;
 
-use spl_token_swap::{
+use gpl_token_swap::{
     curve::{base::SwapCurve, fees::Fees},
     instruction::{
         self, DepositAllTokenTypes, DepositSingleTokenTypeExactAmountIn, Swap,
@@ -13,7 +13,7 @@ use spl_token_swap::{
     state::SwapVersion,
 };
 
-use spl_token::instruction::approve;
+use gpl_token::instruction::approve;
 
 use gemachain_program::{bpf_loader, entrypoint::ProgramResult, pubkey::Pubkey, system_program};
 
@@ -50,13 +50,13 @@ impl NativeTokenSwap {
         let mut user_account = NativeAccountData::new(0, system_program::id());
         user_account.is_signer = true;
         let mut swap_account =
-            NativeAccountData::new(SwapVersion::LATEST_LEN, spl_token_swap::id());
+            NativeAccountData::new(SwapVersion::LATEST_LEN, gpl_token_swap::id());
         let (authority_key, bump_seed) = Pubkey::find_program_address(
             &[&swap_account.key.to_bytes()[..]],
-            &spl_token_swap::id(),
+            &gpl_token_swap::id(),
         );
         let mut authority_account = create_program_account(authority_key);
-        let mut token_program_account = create_program_account(spl_token::id());
+        let mut token_program_account = create_program_account(gpl_token::id());
 
         let mut pool_mint_account = native_token::create_mint(&authority_account.key);
         let mut pool_token_account =
@@ -77,8 +77,8 @@ impl NativeTokenSwap {
         );
 
         let init_instruction = instruction::initialize(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &swap_account.key,
             &authority_account.key,
             &token_a_account.key,
@@ -170,8 +170,8 @@ impl NativeTokenSwap {
         )
         .unwrap();
         let swap_instruction = instruction::swap(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &self.swap_account.key,
             &self.authority_account.key,
             &user_transfer_account.key,
@@ -231,8 +231,8 @@ impl NativeTokenSwap {
         .unwrap();
 
         let swap_instruction = instruction::swap(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &self.swap_account.key,
             &self.authority_account.key,
             &user_transfer_account.key,
@@ -317,8 +317,8 @@ impl NativeTokenSwap {
         }
 
         let deposit_instruction = instruction::deposit_all_token_types(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &self.swap_account.key,
             &self.authority_account.key,
             &user_transfer_account.key,
@@ -383,8 +383,8 @@ impl NativeTokenSwap {
         .unwrap();
 
         let withdraw_instruction = instruction::withdraw_all_token_types(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &self.swap_account.key,
             &self.authority_account.key,
             &user_transfer_account.key,
@@ -450,8 +450,8 @@ impl NativeTokenSwap {
         }
 
         let deposit_instruction = instruction::deposit_single_token_type_exact_amount_in(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &self.swap_account.key,
             &self.authority_account.key,
             &user_transfer_account.key,
@@ -513,8 +513,8 @@ impl NativeTokenSwap {
         .unwrap();
 
         let withdraw_instruction = instruction::withdraw_single_token_type_exact_amount_out(
-            &spl_token_swap::id(),
-            &spl_token::id(),
+            &gpl_token_swap::id(),
+            &gpl_token::id(),
             &self.swap_account.key,
             &self.authority_account.key,
             &user_transfer_account.key,

@@ -65,13 +65,13 @@ function generateConfig(configType, format) {
             {
               file: 'lib/index.iife.js',
               format: 'iife',
-              name: 'splToken',
+              name: 'Token',
               sourcemap: true,
             },
             {
               file: 'lib/index.iife.min.js',
               format: 'iife',
-              name: 'splToken',
+              name: 'Token',
               sourcemap: true,
               plugins: [terser({mangle: false, compress: false})],
             },

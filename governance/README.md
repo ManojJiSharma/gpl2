@@ -43,7 +43,7 @@ of the governed program to the Governance PDA at the creation time of the Govern
 
 ### Mint Governance account
 
-A mint governance account allows a mint authority to setup governance over an SPL Mint account.
+A mint governance account allows a mint authority to setup governance over an GPL Mint account.
 The Governance program validates at creation time that the current mint authority signed the transaction to
 create the governance and optionally can transfer the authority to the Governance account.
 Once setup the Mint Governance allows governance participants to create Proposals which execute mint instructions for
@@ -51,7 +51,7 @@ the governed Mint.
 
 ### Token Governance account
 
-A token governance account allows a token account owner to setup governance over an SPL Token account.
+A token governance account allows a token account owner to setup governance over an GPL Token account.
 The Governance program validates at creation time the current owner signed the transaction to
 create the governance and optionally can transfer the owner to the Governance account.
 Once setup the Token Governance allows participants to create Proposals to execute transfer instructions

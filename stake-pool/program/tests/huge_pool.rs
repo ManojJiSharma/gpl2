@@ -20,7 +20,7 @@ use {
         self,
         vote_state::{VoteInit, VoteState, VoteStateVersions},
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         find_stake_program_address, find_transient_stake_program_address,
         find_withdraw_authority_program_address, id,
         instruction::{self, PreferredValidatorType},
@@ -28,7 +28,7 @@ use {
         state::{AccountType, Fee, StakePool, StakeStatus, ValidatorList, ValidatorStakeInfo},
         MAX_VALIDATORS_TO_UPDATE, MINIMUM_ACTIVE_STAKE,
     },
-    spl_token::state::{Account as SplAccount, AccountState as SplAccountState, Mint},
+    gpl_token::state::{Account as GplAccount, AccountState as GplAccountState, Mint},
 };
 
 const HUGE_POOL_SIZE: u32 = 3_950;
@@ -68,7 +68,7 @@ async fn setup(
         reserve_stake: stake_pool_accounts.reserve_stake.pubkey(),
         pool_mint: stake_pool_accounts.pool_mint.pubkey(),
         manager_fee_account: stake_pool_accounts.pool_fee_account.pubkey(),
-        token_program_id: spl_token::id(),
+        token_program_id: gpl_token::id(),
         total_carats: 0,
         pool_token_supply: 0,
         last_update_epoch: 0,
@@ -233,19 +233,19 @@ async fn setup(
     let stake_pool_mint = Account::create(
         ACCOUNT_RENT_EXEMPTION,
         mint_vec,
-        spl_token::id(),
+        gpl_token::id(),
         false,
         Epoch::default(),
     );
     program_test.add_account(stake_pool_accounts.pool_mint.pubkey(), stake_pool_mint);
 
-    let mut fee_account_vec = vec![0u8; SplAccount::LEN];
-    let fee_account_data = SplAccount {
+    let mut fee_account_vec = vec![0u8; GplAccount::LEN];
+    let fee_account_data = GplAccount {
         mint: stake_pool_accounts.pool_mint.pubkey(),
         owner: stake_pool_accounts.manager.pubkey(),
         amount: 0,
         delegate: COption::None,
-        state: SplAccountState::Initialized,
+        state: GplAccountState::Initialized,
         is_native: COption::None,
         delegated_amount: 0,
         close_authority: COption::None,
@@ -254,7 +254,7 @@ async fn setup(
     let fee_account = Account::create(
         ACCOUNT_RENT_EXEMPTION,
         fee_account_vec,
-        spl_token::id(),
+        gpl_token::id(),
         false,
         Epoch::default(),
     );
@@ -358,7 +358,7 @@ async fn update() {
             &stake_pool_accounts.reserve_stake.pubkey(),
             &stake_pool_accounts.pool_fee_account.pubkey(),
             &stake_pool_accounts.pool_mint.pubkey(),
-            &spl_token::id(),
+            &gpl_token::id(),
         )],
         Some(&context.payer.pubkey()),
         &[&context.payer],

@@ -7,7 +7,7 @@ mod program_test;
 
 use program_test::*;
 use gemachain_sdk::signature::{Keypair, Signer};
-use spl_governance::{error::GovernanceError, instruction::set_governance_delegate};
+use gpl_governance::{error::GovernanceError, instruction::set_governance_delegate};
 
 #[tokio::test]
 async fn test_set_community_governance_delegate() {

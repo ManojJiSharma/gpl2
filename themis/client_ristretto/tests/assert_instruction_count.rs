@@ -15,7 +15,7 @@ use gemachain_sdk::{
     process_instruction::{BpfComputeBudget, MockInvokeContext},
     pubkey::Pubkey,
 };
-use spl_themis_ristretto::{
+use gpl_themis_ristretto::{
     instruction::ThemisInstruction,
     state::{generate_keys, /*recover_scalar,*/ Policies, User},
 };
@@ -35,7 +35,7 @@ fn run_program(
     instruction_data: &[u8],
 ) -> u64 {
     let mut program_account = Account::default();
-    program_account.data = load_program("../../target/deploy/spl_themis_ristretto.so");
+    program_account.data = load_program("../../target/deploy/gpl_themis_ristretto.so");
     let loader_id = bpf_loader::id();
     let mut invoke_context = MockInvokeContext::default();
     invoke_context.bpf_compute_budget = BpfComputeBudget {

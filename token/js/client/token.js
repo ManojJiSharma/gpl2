@@ -13,13 +13,13 @@ import {
   Transaction,
   TransactionInstruction,
   SYSVAR_RENT_PUBKEY,
-} from '@gemachain/web3.js';
+} from '@solana/web3.js';
 import type {
   Connection,
   Commitment,
   Signer,
   TransactionSignature,
-} from '@gemachain/web3.js';
+} from '@solana/web3.js';
 
 import * as Layout from './layout';
 import {sendAndConfirmTransaction} from './util/send-and-confirm-transaction';
@@ -1398,7 +1398,7 @@ export class Token {
   }
 
   /**
-   * Sync amount in native SPL token account to underlying carats
+   * Sync amount in native GPL token account to underlying carats
    *
    * @param nativeAccount Account to sync
    */
@@ -1416,7 +1416,7 @@ export class Token {
   /**
    * Construct an InitializeMint instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param mint Token mint account
    * @param decimals Number of decimals in token account amounts
    * @param mintAuthority Minting authority
@@ -1465,7 +1465,7 @@ export class Token {
   /**
    * Construct an InitializeAccount instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param mint Token mint account
    * @param account New account
    * @param owner Owner of the new account
@@ -1501,7 +1501,7 @@ export class Token {
   /**
    * Construct a Transfer instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param source Source account
    * @param destination Destination account
    * @param owner Owner of the source account
@@ -1560,7 +1560,7 @@ export class Token {
   /**
    * Construct an Approve instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Public key of the account
    * @param delegate Account authorized to perform a transfer of tokens from the source account
    * @param owner Owner of the source account
@@ -1616,7 +1616,7 @@ export class Token {
   /**
    * Construct a Revoke instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Public key of the account
    * @param owner Owner of the source account
    * @param multiSigners Signing accounts if `owner` is a multiSig
@@ -1661,7 +1661,7 @@ export class Token {
   /**
    * Construct a SetAuthority instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Public key of the account
    * @param newAuthority New authority of the account
    * @param authorityType Type of authority to set
@@ -1721,7 +1721,7 @@ export class Token {
   /**
    * Construct a MintTo instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param mint Public key of the mint
    * @param dest Public key of the account to mint to
    * @param authority The mint authority
@@ -1781,7 +1781,7 @@ export class Token {
   /**
    * Construct a Burn instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param mint Mint for the account
    * @param account Account to burn tokens from
    * @param owner Owner of the account
@@ -1841,7 +1841,7 @@ export class Token {
   /**
    * Construct a Close instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Account to close
    * @param dest Account to receive the remaining balance of the closed account
    * @param authority Account Close authority
@@ -1890,7 +1890,7 @@ export class Token {
   /**
    * Construct a Freeze instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Account to freeze
    * @param mint Mint account
    * @param authority Mint freeze authority
@@ -1939,7 +1939,7 @@ export class Token {
   /**
    * Construct a Thaw instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Account to thaw
    * @param mint Mint account
    * @param authority Mint freeze authority
@@ -1988,7 +1988,7 @@ export class Token {
   /**
    * Construct a TransferChecked instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param source Source account
    * @param mint Mint account
    * @param destination Destination account
@@ -2054,7 +2054,7 @@ export class Token {
   /**
    * Construct an ApproveChecked instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param account Public key of the account
    * @param mint Mint account
    * @param delegate Account authorized to perform a transfer of tokens from the source account
@@ -2117,7 +2117,7 @@ export class Token {
   /**
    * Construct a MintToChecked instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param mint Public key of the mint
    * @param dest Public key of the account to mint to
    * @param authority The mint authority
@@ -2181,7 +2181,7 @@ export class Token {
   /**
    * Construct a BurnChecked instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param mint Mint for the account
    * @param account Account to burn tokens from
    * @param owner Owner of the account
@@ -2244,7 +2244,7 @@ export class Token {
   /**
    * Construct a SyncNative instruction
    *
-   * @param programId SPL Token program account
+   * @param programId GPL Token program account
    * @param nativeAccount Account to sync carats from
    */
   static createSyncNativeInstruction(
@@ -2268,8 +2268,8 @@ export class Token {
   /**
    * Get the address for the associated token account
    *
-   * @param associatedProgramId SPL Associated Token program account
-   * @param programId SPL Token program account
+   * @param associatedProgramId GPL Associated Token program account
+   * @param programId GPL Token program account
    * @param mint Token mint account
    * @param owner Owner of the new account
    * @return Public key of the associated token account
@@ -2296,8 +2296,8 @@ export class Token {
    * Construct the AssociatedTokenProgram instruction to create the associated
    * token account
    *
-   * @param associatedProgramId SPL Associated Token program account
-   * @param programId SPL Token program account
+   * @param associatedProgramId GPL Associated Token program account
+   * @param programId GPL Token program account
    * @param mint Token mint account
    * @param associatedAccount New associated account
    * @param owner Owner of the new account

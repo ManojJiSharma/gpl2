@@ -5,7 +5,7 @@ use {
     },
     gemachain_program_test::*,
     gemachain_sdk::{account::Account, signature::Signer, transaction::Transaction},
-    spl_example_transfer_carats::processor::process_instruction,
+    gpl_example_transfer_carats::processor::process_instruction,
     std::str::FromStr,
 };
 
@@ -15,7 +15,7 @@ async fn test_carat_transfer() {
     let source_pubkey = Pubkey::new_unique();
     let destination_pubkey = Pubkey::new_unique();
     let mut program_test = ProgramTest::new(
-        "spl_example_transfer_carats",
+        "gpl_example_transfer_carats",
         program_id,
         processor!(process_instruction),
     );

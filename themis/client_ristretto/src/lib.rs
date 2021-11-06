@@ -15,7 +15,7 @@ use gemachain_sdk::{
     transaction::Transaction,
     transport,
 };
-use spl_themis_ristretto::{
+use gpl_themis_ristretto::{
     instruction,
     state::generate_keys, // recover_scalar, User},
 };
@@ -267,7 +267,7 @@ mod tests {
         instruction::InstructionError, keyed_account::KeyedAccount,
         process_instruction::InvokeContext, program_error::ProgramError,
     };
-    use spl_themis_ristretto::processor::process_instruction;
+    use gpl_themis_ristretto::processor::process_instruction;
     use std::{
         collections::HashMap,
         sync::{Arc, RwLock},

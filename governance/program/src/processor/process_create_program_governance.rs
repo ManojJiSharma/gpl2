@@ -22,7 +22,7 @@ use gemachain_program::{
     rent::Rent,
     sysvar::Sysvar,
 };
-use spl_governance_tools::account::create_and_serialize_account_signed;
+use gpl_governance_tools::account::create_and_serialize_account_signed;
 
 /// Processes CreateProgramGovernance instruction
 pub fn process_create_program_governance(

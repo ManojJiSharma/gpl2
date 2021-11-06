@@ -8,7 +8,7 @@ mod program_test;
 use program_test::*;
 use gemachain_sdk::signature::Signer;
 
-use spl_governance::{
+use gpl_governance::{
     error::GovernanceError,
     instruction::{withdraw_governing_tokens, Vote},
     state::token_owner_record::get_token_owner_record_address,

@@ -1,7 +1,7 @@
 import pandas as pd
 from .binary_option import *
 import time
-from spl.token.client import Token
+from gpl.token.client import Token
 
 
 api_endpoint = "https://api.devnet.gemachain.com/"

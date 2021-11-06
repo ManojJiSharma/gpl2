@@ -1,6 +1,6 @@
 use gemachain_program::{instruction::Instruction, pubkey::Pubkey};
 use gemachain_sdk::signature::Keypair;
-use spl_governance::{
+use gpl_governance::{
     addins::voter_weight::VoterWeightRecord,
     state::{
         governance::Governance, proposal::Proposal, proposal_instruction::ProposalInstruction,
@@ -9,7 +9,7 @@ use spl_governance::{
     },
 };
 
-use spl_governance_test_sdk::tools::clone_keypair;
+use gpl_governance_test_sdk::tools::clone_keypair;
 
 pub trait AccountCookie {
     fn get_address(&self) -> Pubkey;

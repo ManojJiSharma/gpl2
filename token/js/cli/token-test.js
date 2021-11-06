@@ -124,11 +124,11 @@ async function GetPrograms(connection: Connection): Promise<void> {
 
     programId = await loadProgram(
       connection,
-      '../../target/deploy/spl_token.so',
+      '../../target/deploy/gpl_token.so',
     );
     associatedProgramId = await loadProgram(
       connection,
-      '../../target/deploy/spl_associated_token_account.so',
+      '../../target/deploy/gpl_associated_token_account.so',
     );
     await store.save('config.json', {
       tokenProgramId: programId.toString(),

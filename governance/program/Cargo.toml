@@ -1,5 +1,5 @@
 [package]
-name = "spl-governance"
+name = "gpl-governance"
 version = "2.1.2"
 description = "Gemachain Program Library Governance Program"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -20,8 +20,8 @@ num-traits = "0.2"
 serde = "1.0.130"
 serde_derive = "1.0.103"
 gemachain-program = "1.8.2"
-spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
-spl-governance-tools= { version = "0.1.0", path ="../tools"}
+gpl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-governance-tools= { version = "0.1.0", path ="../tools"}
 thiserror = "1.0"
 
 [dev-dependencies]
@@ -31,8 +31,8 @@ lazy_static = "1.4.0"
 proptest = "1.0"
 gemachain-program-test = "1.8.2"
 gemachain-sdk = "1.8.2"
-spl-governance-test-sdk = { version = "0.1.0", path ="../test-sdk"}
-spl-governance-v1 = {package="spl-governance", version = "1.1.1", features = [ "no-entrypoint" ] }
+gpl-governance-test-sdk = { version = "0.1.0", path ="../test-sdk"}
+gpl-governance-v1 = {package="gpl-governance", version = "1.1.1", features = [ "no-entrypoint" ] }
 
 [lib]
 crate-type = ["cdylib", "lib"]

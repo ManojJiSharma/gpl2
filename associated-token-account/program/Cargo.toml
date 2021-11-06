@@ -1,5 +1,5 @@
 [package]
-name = "spl-associated-token-account"
+name = "gpl-associated-token-account"
 version = "1.0.4"
 description = "Gemachain Program Library Associated Token Account"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -14,7 +14,7 @@ test-bpf = []
 [dependencies]
 borsh = "0.9.1"
 gemachain-program = "1.8.2" 
-spl-token = { version = "3.2", path = "../../token/program", features = ["no-entrypoint"] }
+gpl-token = { version = "3.2", path = "../../token/program", features = ["no-entrypoint"] }
 
 [dev-dependencies]
 gemachain-program-test = "1.8.2"

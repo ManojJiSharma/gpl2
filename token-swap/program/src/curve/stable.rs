@@ -12,7 +12,7 @@ use {
         program_error::ProgramError,
         program_pack::{IsInitialized, Pack, Sealed},
     },
-    spl_math::{precise_number::PreciseNumber, uint::U256},
+    gpl_math::{precise_number::PreciseNumber, uint::U256},
     std::convert::TryFrom,
 };
 

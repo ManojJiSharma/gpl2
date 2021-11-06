@@ -6,12 +6,12 @@ use gemachain_program::{
     program_pack::{IsInitialized, Pack},
     pubkey::Pubkey,
 };
-use spl_associated_token_account::get_associated_token_address;
-use spl_token;
-use spl_token::state::Account;
+use gpl_associated_token_account::get_associated_token_address;
+use gpl_token;
+use gpl_token::state::Account;
 
 pub fn assert_is_ata(ata: &AccountInfo, wallet: &Pubkey, mint: &Pubkey) -> ProgramResult {
-    assert_owned_by(ata, &spl_token::id())?;
+    assert_owned_by(ata, &gpl_token::id())?;
     let ata_account: Account = assert_initialized(ata)?;
     assert_keys_equal(ata_account.owner, *wallet)?;
     assert_keys_equal(get_associated_token_address(wallet, mint), *ata.key)?;

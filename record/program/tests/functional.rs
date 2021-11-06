@@ -15,7 +15,7 @@ use {
         transaction::{Transaction, TransactionError},
         transport,
     },
-    spl_record::{
+    gpl_record::{
         error::RecordError,
         id, instruction,
         processor::process_instruction,
@@ -24,7 +24,7 @@ use {
 };
 
 fn program_test() -> ProgramTest {
-    ProgramTest::new("spl_record", id(), processor!(process_instruction))
+    ProgramTest::new("gpl_record", id(), processor!(process_instruction))
 }
 
 async fn initialize_storage_account(

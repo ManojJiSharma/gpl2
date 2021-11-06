@@ -7,7 +7,7 @@ mod program_test;
 
 use program_test::*;
 use gemachain_sdk::signature::Keypair;
-use spl_governance::error::GovernanceError;
+use gpl_governance::error::GovernanceError;
 
 #[tokio::test]
 async fn test_create_community_proposal() {

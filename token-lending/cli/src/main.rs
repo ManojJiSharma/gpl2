@@ -17,12 +17,12 @@ use {
         system_instruction,
         transaction::Transaction,
     },
-    spl_token::{
+    gpl_token::{
         instruction::{approve, revoke},
         state::{Account as Token, Mint},
         ui_amount_to_amount,
     },
-    spl_token_lending::{
+    gpl_token_lending::{
         self,
         instruction::{init_lending_market, init_reserve},
         math::WAD,
@@ -48,7 +48,7 @@ const PYTH_PROGRAM_ID: &str = "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s";
 fn main() {
     gemachain_logger::setup_with_default("gemachain=info");
 
-    let default_lending_program_id: &str = &spl_token_lending::id().to_string();
+    let default_lending_program_id: &str = &gpl_token_lending::id().to_string();
 
     let matches = App::new(crate_name!())
         .about(crate_description!())
@@ -159,7 +159,7 @@ fn main() {
                         .value_name("KEYPAIR")
                         .takes_value(true)
                         .required(true)
-                        .help("Owner of the SPL Token account to deposit initial liquidity from"),
+                        .help("Owner of the GPL Token account to deposit initial liquidity from"),
                 )
                 .arg(
                     Arg::with_name("lending_market")
@@ -177,7 +177,7 @@ fn main() {
                         .value_name("PUBKEY")
                         .takes_value(true)
                         .required(true)
-                        .help("SPL Token account to deposit initial liquidity from"),
+                        .help("GPL Token account to deposit initial liquidity from"),
                 )
                 // @TODO: use is_amount_or_all
                 .arg(
@@ -560,21 +560,21 @@ fn command_add_reserve(
                 &collateral_mint_keypair.pubkey(),
                 collateral_mint_balance,
                 Mint::LEN as u64,
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
             create_account(
                 &config.fee_payer.pubkey(),
                 &collateral_supply_keypair.pubkey(),
                 collateral_supply_balance,
                 Token::LEN as u64,
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
             create_account(
                 &config.fee_payer.pubkey(),
                 &user_collateral_keypair.pubkey(),
                 user_collateral_balance,
                 Token::LEN as u64,
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
         ],
         Some(&config.fee_payer.pubkey()),
@@ -587,14 +587,14 @@ fn command_add_reserve(
                 &liquidity_supply_keypair.pubkey(),
                 liquidity_supply_balance,
                 Token::LEN as u64,
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
             create_account(
                 &config.fee_payer.pubkey(),
                 &liquidity_fee_receiver_keypair.pubkey(),
                 liquidity_fee_receiver_balance,
                 Token::LEN as u64,
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
         ],
         Some(&config.fee_payer.pubkey()),
@@ -603,7 +603,7 @@ fn command_add_reserve(
     let mut transaction_3 = Transaction::new_with_payer(
         &[
             approve(
-                &spl_token::id(),
+                &gpl_token::id(),
                 &source_liquidity_pubkey,
                 &user_transfer_authority_keypair.pubkey(),
                 &source_liquidity_owner_keypair.pubkey(),
@@ -630,7 +630,7 @@ fn command_add_reserve(
                 user_transfer_authority_keypair.pubkey(),
             ),
             revoke(
-                &spl_token::id(),
+                &gpl_token::id(),
                 &source_liquidity_pubkey,
                 &source_liquidity_owner_keypair.pubkey(),
                 &[],

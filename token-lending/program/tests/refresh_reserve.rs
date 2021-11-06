@@ -9,7 +9,7 @@ use gemachain_sdk::{
     signature::{Keypair, Signer},
     transaction::Transaction,
 };
-use spl_token_lending::{
+use gpl_token_lending::{
     instruction::refresh_reserve,
     math::{Decimal, Rate, TryAdd, TryDiv, TryMul},
     processor::process_instruction,
@@ -19,8 +19,8 @@ use spl_token_lending::{
 #[tokio::test]
 async fn test_success() {
     let mut test = ProgramTest::new(
-        "spl_token_lending",
-        spl_token_lending::id(),
+        "gpl_token_lending",
+        gpl_token_lending::id(),
         processor!(process_instruction),
     );
 
@@ -71,7 +71,7 @@ async fn test_success() {
             borrow_amount: BORROW_AMOUNT,
             liquidity_amount: GEMA_RESERVE_LIQUIDITY_CARATS,
             liquidity_mint_decimals: 9,
-            liquidity_mint_pubkey: spl_token::native_mint::id(),
+            liquidity_mint_pubkey: gpl_token::native_mint::id(),
             config: reserve_config,
             slots_elapsed: 1, // elapsed from 1; clock.slot = 2
             ..AddReserveArgs::default()
@@ -91,12 +91,12 @@ async fn test_success() {
     let mut transaction = Transaction::new_with_payer(
         &[
             refresh_reserve(
-                spl_token_lending::id(),
+                gpl_token_lending::id(),
                 usdc_test_reserve.pubkey,
                 usdc_oracle.price_pubkey,
             ),
             refresh_reserve(
-                spl_token_lending::id(),
+                gpl_token_lending::id(),
                 gema_test_reserve.pubkey,
                 gema_oracle.price_pubkey,
             ),

@@ -11,12 +11,12 @@ use gemachain_sdk::{
     signature::Signer,
     transaction::{Transaction, TransactionError},
 };
-use spl_associated_token_account::{
+use gpl_associated_token_account::{
     get_associated_token_address, instruction::create_associated_token_account,
 };
 
 #[allow(deprecated)]
-use spl_associated_token_account::create_associated_token_account as deprecated_create_associated_token_account;
+use gpl_associated_token_account::create_associated_token_account as deprecated_create_associated_token_account;
 
 use program_test::program_test;
 
@@ -30,7 +30,7 @@ async fn test_associated_token_address() {
     let (mut banks_client, payer, recent_blockhash) =
         program_test(token_mint_address, true).start().await;
     let rent = banks_client.get_rent().await.unwrap();
-    let expected_token_account_balance = rent.minimum_balance(spl_token::state::Account::LEN);
+    let expected_token_account_balance = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     // Associated account does not exist
     assert_eq!(
@@ -60,9 +60,9 @@ async fn test_associated_token_address() {
         .expect("associated_account not none");
     assert_eq!(
         associated_account.data.len(),
-        spl_token::state::Account::LEN
+        gpl_token::state::Account::LEN
     );
-    assert_eq!(associated_account.owner, spl_token::id());
+    assert_eq!(associated_account.owner, gpl_token::id());
     assert_eq!(associated_account.carats, expected_token_account_balance);
 }
 
@@ -76,7 +76,7 @@ async fn test_create_with_a_carat() {
     let (mut banks_client, payer, recent_blockhash) =
         program_test(token_mint_address, true).start().await;
     let rent = banks_client.get_rent().await.unwrap();
-    let expected_token_account_balance = rent.minimum_balance(spl_token::state::Account::LEN);
+    let expected_token_account_balance = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     // Transfer 1 carat into `associated_token_address` before creating it
     let mut transaction = Transaction::new_with_payer(
@@ -129,7 +129,7 @@ async fn test_create_with_excess_carats() {
     let (mut banks_client, payer, recent_blockhash) =
         program_test(token_mint_address, true).start().await;
     let rent = banks_client.get_rent().await.unwrap();
-    let expected_token_account_balance = rent.minimum_balance(spl_token::state::Account::LEN);
+    let expected_token_account_balance = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     // Transfer 1 carat into `associated_token_address` before creating it
     let mut transaction = Transaction::new_with_payer(
@@ -238,7 +238,7 @@ async fn test_create_associated_token_account_using_legacy_implicit_instruction(
     let (mut banks_client, payer, recent_blockhash) =
         program_test(token_mint_address, true).start().await;
     let rent = banks_client.get_rent().await.unwrap();
-    let expected_token_account_balance = rent.minimum_balance(spl_token::state::Account::LEN);
+    let expected_token_account_balance = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     // Associated account does not exist
     assert_eq!(
@@ -271,9 +271,9 @@ async fn test_create_associated_token_account_using_legacy_implicit_instruction(
         .expect("associated_account not none");
     assert_eq!(
         associated_account.data.len(),
-        spl_token::state::Account::LEN
+        gpl_token::state::Account::LEN
     );
-    assert_eq!(associated_account.owner, spl_token::id());
+    assert_eq!(associated_account.owner, gpl_token::id());
     assert_eq!(associated_account.carats, expected_token_account_balance);
 }
 
@@ -287,7 +287,7 @@ async fn test_create_associated_token_account_using_deprecated_instruction_creat
     let (mut banks_client, payer, recent_blockhash) =
         program_test(token_mint_address, false).start().await;
     let rent = banks_client.get_rent().await.unwrap();
-    let expected_token_account_balance = rent.minimum_balance(spl_token::state::Account::LEN);
+    let expected_token_account_balance = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     // Associated account does not exist
     assert_eq!(
@@ -318,8 +318,8 @@ async fn test_create_associated_token_account_using_deprecated_instruction_creat
         .expect("associated_account not none");
     assert_eq!(
         associated_account.data.len(),
-        spl_token::state::Account::LEN
+        gpl_token::state::Account::LEN
     );
-    assert_eq!(associated_account.owner, spl_token::id());
+    assert_eq!(associated_account.owner, gpl_token::id());
     assert_eq!(associated_account.carats, expected_token_account_balance);
 }

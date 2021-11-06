@@ -12,7 +12,7 @@ use {
         signature::{Keypair, Signer},
         transaction::TransactionError,
     },
-    spl_stake_pool::{error::StakePoolError, state::StakePool},
+    gpl_stake_pool::{error::StakePoolError, state::StakePool},
 };
 
 async fn setup() -> (

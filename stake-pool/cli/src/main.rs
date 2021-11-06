@@ -25,15 +25,15 @@ use {
     gemachain_remote_wallet::remote_wallet::RemoteWalletManager,
     gemachain_sdk::{
         commitment_config::CommitmentConfig,
-        native_token::{self, gema},
+        native_token::{self, Gema},
         signature::{Keypair, Signer},
         signers::Signers,
         system_instruction,
         transaction::Transaction,
     },
-    spl_associated_token_account::{create_associated_token_account, get_associated_token_address},
-    spl_stake_pool::state::ValidatorStakeInfo,
-    spl_stake_pool::{
+    gpl_associated_token_account::{create_associated_token_account, get_associated_token_address},
+    gpl_stake_pool::state::ValidatorStakeInfo,
+    gpl_stake_pool::{
         self, find_stake_program_address, find_transient_stake_program_address,
         find_withdraw_authority_program_address,
         instruction::{FundingType, PreferredValidatorType},
@@ -74,8 +74,8 @@ fn check_fee_payer_balance(config: &Config, required_balance: u64) -> Result<(),
         Err(format!(
             "Fee payer, {}, has insufficient balance: {} required, {} available",
             config.fee_payer.pubkey(),
-            gema(required_balance),
-            gema(balance)
+            Gema(required_balance),
+            Gema(balance)
         )
         .into())
     } else {
@@ -206,10 +206,10 @@ fn command_create_pool(
         + 1;
     let mint_account_balance = config
         .rpc_client
-        .get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
+        .get_minimum_balance_for_rent_exemption(gpl_token::state::Mint::LEN)?;
     let pool_fee_account_balance = config
         .rpc_client
-        .get_minimum_balance_for_rent_exemption(spl_token::state::Account::LEN)?;
+        .get_minimum_balance_for_rent_exemption(gpl_token::state::Account::LEN)?;
     let stake_pool_account_carats = config
         .rpc_client
         .get_minimum_balance_for_rent_exemption(get_packed_len::<StakePool>())?;
@@ -224,11 +224,11 @@ fn command_create_pool(
         + stake_pool_account_carats
         + validator_list_balance;
 
-    let default_decimals = spl_token::native_mint::DECIMALS;
+    let default_decimals = gpl_token::native_mint::DECIMALS;
 
     // Calculate withdraw authority used for minting pool tokens
     let (withdraw_authority, _) = find_withdraw_authority_program_address(
-        &spl_stake_pool::id(),
+        &gpl_stake_pool::id(),
         &stake_pool_keypair.pubkey(),
     );
 
@@ -258,12 +258,12 @@ fn command_create_pool(
             &config.fee_payer.pubkey(),
             &mint_keypair.pubkey(),
             mint_account_balance,
-            spl_token::state::Mint::LEN as u64,
-            &spl_token::id(),
+            gpl_token::state::Mint::LEN as u64,
+            &gpl_token::id(),
         ),
         // Initialize pool token mint account
-        spl_token::instruction::initialize_mint(
-            &spl_token::id(),
+        gpl_token::instruction::initialize_mint(
+            &gpl_token::id(),
             &mint_keypair.pubkey(),
             &withdraw_authority,
             None,
@@ -291,7 +291,7 @@ fn command_create_pool(
                 &validator_list.pubkey(),
                 validator_list_balance,
                 validator_list_size as u64,
-                &spl_stake_pool::id(),
+                &gpl_stake_pool::id(),
             ),
             // Account for the stake pool
             system_instruction::create_account(
@@ -299,11 +299,11 @@ fn command_create_pool(
                 &stake_pool_keypair.pubkey(),
                 stake_pool_account_carats,
                 get_packed_len::<StakePool>() as u64,
-                &spl_stake_pool::id(),
+                &gpl_stake_pool::id(),
             ),
             // Initialize stake pool
-            spl_stake_pool::instruction::initialize(
-                &spl_stake_pool::id(),
+            gpl_stake_pool::instruction::initialize(
+                &gpl_stake_pool::id(),
                 &stake_pool_keypair.pubkey(),
                 &config.manager.pubkey(),
                 &config.staker.pubkey(),
@@ -311,7 +311,7 @@ fn command_create_pool(
                 &reserve_keypair.pubkey(),
                 &mint_keypair.pubkey(),
                 &pool_fee_account,
-                &spl_token::id(),
+                &gpl_token::id(),
                 deposit_authority.as_ref().map(|x| x.pubkey()),
                 epoch_fee,
                 stake_withdrawal_fee,
@@ -365,7 +365,7 @@ fn command_vsa_add(
     vote_account: &Pubkey,
 ) -> CommandResult {
     let (stake_account_address, _) =
-        find_stake_program_address(&spl_stake_pool::id(), vote_account, stake_pool_address);
+        find_stake_program_address(&gpl_stake_pool::id(), vote_account, stake_pool_address);
     println!(
         "Adding stake account {}, delegated to {}",
         stake_account_address, vote_account
@@ -389,8 +389,8 @@ fn command_vsa_add(
     let transaction = checked_transaction_with_signers(
         config,
         &[
-            spl_stake_pool::instruction::add_validator_to_pool_with_vote(
-                &spl_stake_pool::id(),
+            gpl_stake_pool::instruction::add_validator_to_pool_with_vote(
+                &gpl_stake_pool::id(),
                 &stake_pool,
                 stake_pool_address,
                 &config.fee_payer.pubkey(),
@@ -416,7 +416,7 @@ fn command_vsa_remove(
     }
 
     let (stake_account_address, _) =
-        find_stake_program_address(&spl_stake_pool::id(), vote_account, stake_pool_address);
+        find_stake_program_address(&gpl_stake_pool::id(), vote_account, stake_pool_address);
     println!(
         "Removing stake account {}, delegated to {}",
         stake_account_address, vote_account
@@ -452,8 +452,8 @@ fn command_vsa_remove(
     }
     instructions.push(
         // Create new validator stake account address
-        spl_stake_pool::instruction::remove_validator_from_pool_with_vote(
-            &spl_stake_pool::id(),
+        gpl_stake_pool::instruction::remove_validator_from_pool_with_vote(
+            &gpl_stake_pool::id(),
             &stake_pool,
             stake_pool_address,
             vote_account,
@@ -490,8 +490,8 @@ fn command_increase_validator_stake(
     let transaction = checked_transaction_with_signers(
         config,
         &[
-            spl_stake_pool::instruction::increase_validator_stake_with_vote(
-                &spl_stake_pool::id(),
+            gpl_stake_pool::instruction::increase_validator_stake_with_vote(
+                &gpl_stake_pool::id(),
                 &stake_pool,
                 stake_pool_address,
                 vote_account,
@@ -527,8 +527,8 @@ fn command_decrease_validator_stake(
     let transaction = checked_transaction_with_signers(
         config,
         &[
-            spl_stake_pool::instruction::decrease_validator_stake_with_vote(
-                &spl_stake_pool::id(),
+            gpl_stake_pool::instruction::decrease_validator_stake_with_vote(
+                &gpl_stake_pool::id(),
                 &stake_pool,
                 stake_pool_address,
                 vote_account,
@@ -553,8 +553,8 @@ fn command_set_preferred_validator(
     unique_signers!(signers);
     let transaction = checked_transaction_with_signers(
         config,
-        &[spl_stake_pool::instruction::set_preferred_validator(
-            &spl_stake_pool::id(),
+        &[gpl_stake_pool::instruction::set_preferred_validator(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &config.staker.pubkey(),
             &stake_pool.validator_list,
@@ -581,7 +581,7 @@ fn add_associated_token_account(
 
         let min_account_balance = config
             .rpc_client
-            .get_minimum_balance_for_rent_exemption(spl_token::state::Account::LEN)
+            .get_minimum_balance_for_rent_exemption(gpl_token::state::Account::LEN)
             .unwrap();
 
         instructions.push(create_associated_token_account(
@@ -629,7 +629,7 @@ fn command_deposit_stake(
 
     // Calculate validator stake account address linked to the pool
     let (validator_stake_account, _) =
-        find_stake_program_address(&spl_stake_pool::id(), &vote_account, stake_pool_address);
+        find_stake_program_address(&gpl_stake_pool::id(), &vote_account, stake_pool_address);
 
     let validator_stake_state = get_stake_state(&config.rpc_client, &validator_stake_account)?;
     println!(
@@ -658,7 +658,7 @@ fn command_deposit_stake(
     let referrer_token_account = referrer_token_account.unwrap_or(pool_token_receiver_account);
 
     let pool_withdraw_authority =
-        find_withdraw_authority_program_address(&spl_stake_pool::id(), stake_pool_address).0;
+        find_withdraw_authority_program_address(&gpl_stake_pool::id(), stake_pool_address).0;
 
     let mut deposit_instructions =
         if let Some(stake_deposit_authority) = config.funding_authority.as_ref() {
@@ -672,8 +672,8 @@ fn command_deposit_stake(
                 return Err(error.into());
             }
 
-            spl_stake_pool::instruction::deposit_stake_with_authority(
-                &spl_stake_pool::id(),
+            gpl_stake_pool::instruction::deposit_stake_with_authority(
+                &gpl_stake_pool::id(),
                 stake_pool_address,
                 &stake_pool.validator_list,
                 &stake_deposit_authority.pubkey(),
@@ -686,11 +686,11 @@ fn command_deposit_stake(
                 &stake_pool.manager_fee_account,
                 &referrer_token_account,
                 &stake_pool.pool_mint,
-                &spl_token::id(),
+                &gpl_token::id(),
             )
         } else {
-            spl_stake_pool::instruction::deposit_stake(
-                &spl_stake_pool::id(),
+            gpl_stake_pool::instruction::deposit_stake(
+                &gpl_stake_pool::id(),
                 stake_pool_address,
                 &stake_pool.validator_list,
                 &pool_withdraw_authority,
@@ -702,7 +702,7 @@ fn command_deposit_stake(
                 &stake_pool.manager_fee_account,
                 &referrer_token_account,
                 &stake_pool.pool_mint,
-                &spl_token::id(),
+                &gpl_token::id(),
             )
         };
 
@@ -743,9 +743,9 @@ fn command_deposit_gema(
     let from_balance = config.rpc_client.get_balance(&from_pubkey)?;
     if from_balance < amount {
         return Err(format!(
-            "Not enough GEMA to deposit into pool: {}.\nMaximum deposit amount is {} GEMA.",
-            gema(amount),
-            gema(from_balance)
+            "Not enough Gema to deposit into pool: {}.\nMaximum deposit amount is {} Gema.",
+            Gema(amount),
+            Gema(from_balance)
         )
         .into());
     }
@@ -754,7 +754,7 @@ fn command_deposit_gema(
 
     let mut instructions: Vec<Instruction> = vec![];
 
-    // ephemeral GEMA account just to do the transfer
+    // ephemeral Gema account just to do the transfer
     let user_gema_transfer = Keypair::new();
     let mut signers = vec![config.fee_payer.as_ref(), &user_gema_transfer];
     if let Some(keypair) = from.as_ref() {
@@ -783,7 +783,7 @@ fn command_deposit_gema(
     let referrer_token_account = referrer_token_account.unwrap_or(pool_token_receiver_account);
 
     let pool_withdraw_authority =
-        find_withdraw_authority_program_address(&spl_stake_pool::id(), stake_pool_address).0;
+        find_withdraw_authority_program_address(&gpl_stake_pool::id(), stake_pool_address).0;
 
     let deposit_instruction = if let Some(deposit_authority) = config.funding_authority.as_ref() {
         let expected_gema_deposit_authority = stake_pool.gema_deposit_authority.ok_or_else(|| {
@@ -799,8 +799,8 @@ fn command_deposit_gema(
             return Err(error.into());
         }
 
-        spl_stake_pool::instruction::deposit_gema_with_authority(
-            &spl_stake_pool::id(),
+        gpl_stake_pool::instruction::deposit_gema_with_authority(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &deposit_authority.pubkey(),
             &pool_withdraw_authority,
@@ -810,12 +810,12 @@ fn command_deposit_gema(
             &stake_pool.manager_fee_account,
             &referrer_token_account,
             &stake_pool.pool_mint,
-            &spl_token::id(),
+            &gpl_token::id(),
             amount,
         )
     } else {
-        spl_stake_pool::instruction::deposit_gema(
-            &spl_stake_pool::id(),
+        gpl_stake_pool::instruction::deposit_gema(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &pool_withdraw_authority,
             &stake_pool.reserve_stake,
@@ -824,7 +824,7 @@ fn command_deposit_gema(
             &stake_pool.manager_fee_account,
             &referrer_token_account,
             &stake_pool.pool_mint,
-            &spl_token::id(),
+            &gpl_token::id(),
             amount,
         )
     };
@@ -851,7 +851,7 @@ fn command_list(config: &Config, stake_pool_address: &Pubkey) -> CommandResult {
     let pool_mint = get_token_mint(&config.rpc_client, &stake_pool.pool_mint)?;
     let epoch_info = config.rpc_client.get_epoch_info()?;
     let pool_withdraw_authority =
-        find_withdraw_authority_program_address(&spl_stake_pool::id(), stake_pool_address).0;
+        find_withdraw_authority_program_address(&gpl_stake_pool::id(), stake_pool_address).0;
     let gema_deposit_authority = stake_pool
         .gema_deposit_authority
         .map_or("None".into(), |pubkey| pubkey.to_string());
@@ -931,18 +931,18 @@ fn command_list(config: &Config, stake_pool_address: &Pubkey) -> CommandResult {
     println!(
         "Reserve Account: {}\tAvailable Balance: {}",
         stake_pool.reserve_stake,
-        gema(reserve_stake.carats - minimum_reserve_stake_balance),
+        Gema(reserve_stake.carats - minimum_reserve_stake_balance),
     );
 
     for validator in &validator_list.validators {
         if config.verbose {
             let (stake_account_address, _) = find_stake_program_address(
-                &spl_stake_pool::id(),
+                &gpl_stake_pool::id(),
                 &validator.vote_account_address,
                 stake_pool_address,
             );
             let (transient_stake_account_address, _) = find_transient_stake_program_address(
-                &spl_stake_pool::id(),
+                &gpl_stake_pool::id(),
                 &validator.vote_account_address,
                 stake_pool_address,
                 validator.transient_seed_suffix_start,
@@ -951,9 +951,9 @@ fn command_list(config: &Config, stake_pool_address: &Pubkey) -> CommandResult {
                 "Vote Account: {}\tStake Account: {}\tActive Balance: {}\tTransient Stake Account: {}\tTransient Balance: {}\tLast Update Epoch: {}{}",
                 validator.vote_account_address,
                 stake_account_address,
-                gema(validator.active_stake_carats),
+                Gema(validator.active_stake_carats),
                 transient_stake_account_address,
-                gema(validator.transient_stake_carats),
+                Gema(validator.transient_stake_carats),
                 validator.last_update_epoch,
                 if validator.last_update_epoch != epoch_info.epoch {
                     " [UPDATE REQUIRED]"
@@ -965,7 +965,7 @@ fn command_list(config: &Config, stake_pool_address: &Pubkey) -> CommandResult {
             println!(
                 "Vote Account: {}\tBalance: {}\tLast Update Epoch: {}",
                 validator.vote_account_address,
-                gema(validator.stake_carats()),
+                Gema(validator.stake_carats()),
                 validator.last_update_epoch,
             );
         }
@@ -976,7 +976,7 @@ fn command_list(config: &Config, stake_pool_address: &Pubkey) -> CommandResult {
     }
     println!(
         "Total Pool Stake: {}{}",
-        gema(stake_pool.total_carats),
+        Gema(stake_pool.total_carats),
         if stake_pool.last_update_epoch != epoch_info.epoch {
             " [UPDATE REQUIRED]"
         } else {
@@ -985,7 +985,7 @@ fn command_list(config: &Config, stake_pool_address: &Pubkey) -> CommandResult {
     );
     println!(
         "Total Pool Tokens: {}",
-        spl_token::amount_to_ui_amount(stake_pool.pool_token_supply, pool_mint.decimals)
+        gpl_token::amount_to_ui_amount(stake_pool.pool_token_supply, pool_mint.decimals)
     );
     println!(
         "Current Number of Validators: {}",
@@ -1024,8 +1024,8 @@ fn command_update(
     let validator_list = get_validator_list(&config.rpc_client, &stake_pool.validator_list)?;
 
     let (mut update_list_instructions, final_instructions) =
-        spl_stake_pool::instruction::update_stake_pool(
-            &spl_stake_pool::id(),
+        gpl_stake_pool::instruction::update_stake_pool(
+            &gpl_stake_pool::id(),
             &stake_pool,
             &validator_list,
             stake_pool_address,
@@ -1123,7 +1123,7 @@ fn prepare_withdraw_accounts(
         stake_pool,
         |validator| {
             let (stake_account_address, _) = find_stake_program_address(
-                &spl_stake_pool::id(),
+                &gpl_stake_pool::id(),
                 &validator.vote_account_address,
                 stake_pool_address,
             );
@@ -1137,7 +1137,7 @@ fn prepare_withdraw_accounts(
         stake_pool,
         |validator| {
             let (transient_stake_account_address, _) = find_transient_stake_program_address(
-                &spl_stake_pool::id(),
+                &gpl_stake_pool::id(),
                 &validator.vote_account_address,
                 stake_pool_address,
                 validator.transient_seed_suffix_start,
@@ -1184,7 +1184,7 @@ fn prepare_withdraw_accounts(
     if remaining_amount > 0 {
         return Err(format!(
             "No stake accounts found in this pool with enough balance to withdraw {} pool tokens.",
-            spl_token::amount_to_ui_amount(pool_amount, pool_mint.decimals)
+            gpl_token::amount_to_ui_amount(pool_amount, pool_mint.decimals)
         )
         .into());
     }
@@ -1207,10 +1207,10 @@ fn command_withdraw_stake(
 
     let stake_pool = get_stake_pool(&config.rpc_client, stake_pool_address)?;
     let pool_mint = get_token_mint(&config.rpc_client, &stake_pool.pool_mint)?;
-    let pool_amount = spl_token::ui_amount_to_amount(pool_amount, pool_mint.decimals);
+    let pool_amount = gpl_token::ui_amount_to_amount(pool_amount, pool_mint.decimals);
 
     let pool_withdraw_authority =
-        find_withdraw_authority_program_address(&spl_stake_pool::id(), stake_pool_address).0;
+        find_withdraw_authority_program_address(&gpl_stake_pool::id(), stake_pool_address).0;
 
     let pool_token_account = pool_token_account.unwrap_or(get_associated_token_address(
         &config.token_owner.pubkey(),
@@ -1229,8 +1229,8 @@ fn command_withdraw_stake(
     if token_account.amount < pool_amount {
         return Err(format!(
             "Not enough token balance to withdraw {} pool tokens.\nMaximum withdraw amount is {} pool tokens.",
-            spl_token::amount_to_ui_amount(pool_amount, pool_mint.decimals),
-            spl_token::amount_to_ui_amount(token_account.amount, pool_mint.decimals)
+            gpl_token::amount_to_ui_amount(pool_amount, pool_mint.decimals),
+            gpl_token::amount_to_ui_amount(token_account.amount, pool_mint.decimals)
         )
         .into());
     }
@@ -1243,7 +1243,7 @@ fn command_withdraw_stake(
         }]
     } else if let Some(vote_account_address) = vote_account_address {
         let (stake_account_address, _) = find_stake_program_address(
-            &spl_stake_pool::id(),
+            &gpl_stake_pool::id(),
             vote_account_address,
             stake_pool_address,
         );
@@ -1292,8 +1292,8 @@ fn command_withdraw_stake(
 
     instructions.push(
         // Approve spending token
-        spl_token::instruction::approve(
-            &spl_token::id(),
+        gpl_token::instruction::approve(
+            &gpl_token::id(),
             &pool_token_account,
             &user_transfer_authority.pubkey(),
             &config.token_owner.pubkey(),
@@ -1314,16 +1314,16 @@ fn command_withdraw_stake(
         if let Some(vote_address) = withdraw_account.vote_address {
             println!(
                 "Withdrawing {}, or {} pool tokens, from stake account {}, delegated to {}",
-                gema(gema_withdraw_amount),
-                spl_token::amount_to_ui_amount(withdraw_account.pool_amount, pool_mint.decimals),
+                Gema(gema_withdraw_amount),
+                gpl_token::amount_to_ui_amount(withdraw_account.pool_amount, pool_mint.decimals),
                 withdraw_account.stake_address,
                 vote_address,
             );
         } else {
             println!(
                 "Withdrawing {}, or {} pool tokens, from stake account {}",
-                gema(gema_withdraw_amount),
-                spl_token::amount_to_ui_amount(withdraw_account.pool_amount, pool_mint.decimals),
+                Gema(gema_withdraw_amount),
+                gpl_token::amount_to_ui_amount(withdraw_account.pool_amount, pool_mint.decimals),
                 withdraw_account.stake_address,
             );
         }
@@ -1341,8 +1341,8 @@ fn command_withdraw_stake(
             stake_pubkey
         });
 
-        instructions.push(spl_stake_pool::instruction::withdraw_stake(
-            &spl_stake_pool::id(),
+        instructions.push(gpl_stake_pool::instruction::withdraw_stake(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &stake_pool.validator_list,
             &pool_withdraw_authority,
@@ -1353,7 +1353,7 @@ fn command_withdraw_stake(
             &pool_token_account,
             &stake_pool.manager_fee_account,
             &stake_pool.pool_mint,
-            &spl_token::id(),
+            &gpl_token::id(),
             withdraw_account.pool_amount,
         ));
     }
@@ -1388,7 +1388,7 @@ fn command_withdraw_gema(
 
     let stake_pool = get_stake_pool(&config.rpc_client, stake_pool_address)?;
     let pool_mint = get_token_mint(&config.rpc_client, &stake_pool.pool_mint)?;
-    let pool_amount = spl_token::ui_amount_to_amount(pool_amount, pool_mint.decimals);
+    let pool_amount = gpl_token::ui_amount_to_amount(pool_amount, pool_mint.decimals);
 
     let pool_token_account = pool_token_account.unwrap_or(get_associated_token_address(
         &config.token_owner.pubkey(),
@@ -1404,8 +1404,8 @@ fn command_withdraw_gema(
     if token_account.amount < pool_amount {
         return Err(format!(
             "Not enough token balance to withdraw {} pool tokens.\nMaximum withdraw amount is {} pool tokens.",
-            spl_token::amount_to_ui_amount(pool_amount, pool_mint.decimals),
-            spl_token::amount_to_ui_amount(token_account.amount, pool_mint.decimals)
+            gpl_token::amount_to_ui_amount(pool_amount, pool_mint.decimals),
+            gpl_token::amount_to_ui_amount(token_account.amount, pool_mint.decimals)
         )
         .into());
     }
@@ -1420,8 +1420,8 @@ fn command_withdraw_gema(
 
     let mut instructions = vec![
         // Approve spending token
-        spl_token::instruction::approve(
-            &spl_token::id(),
+        gpl_token::instruction::approve(
+            &gpl_token::id(),
             &pool_token_account,
             &user_transfer_authority.pubkey(),
             &config.token_owner.pubkey(),
@@ -1431,7 +1431,7 @@ fn command_withdraw_gema(
     ];
 
     let pool_withdraw_authority =
-        find_withdraw_authority_program_address(&spl_stake_pool::id(), stake_pool_address).0;
+        find_withdraw_authority_program_address(&gpl_stake_pool::id(), stake_pool_address).0;
 
     let withdraw_instruction = if let Some(withdraw_authority) = config.funding_authority.as_ref() {
         let expected_gema_withdraw_authority =
@@ -1448,8 +1448,8 @@ fn command_withdraw_gema(
             return Err(error.into());
         }
 
-        spl_stake_pool::instruction::withdraw_gema_with_authority(
-            &spl_stake_pool::id(),
+        gpl_stake_pool::instruction::withdraw_gema_with_authority(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &withdraw_authority.pubkey(),
             &pool_withdraw_authority,
@@ -1459,12 +1459,12 @@ fn command_withdraw_gema(
             gema_receiver,
             &stake_pool.manager_fee_account,
             &stake_pool.pool_mint,
-            &spl_token::id(),
+            &gpl_token::id(),
             pool_amount,
         )
     } else {
-        spl_stake_pool::instruction::withdraw_gema(
-            &spl_stake_pool::id(),
+        gpl_stake_pool::instruction::withdraw_gema(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &pool_withdraw_authority,
             &user_transfer_authority.pubkey(),
@@ -1473,7 +1473,7 @@ fn command_withdraw_gema(
             gema_receiver,
             &stake_pool.manager_fee_account,
             &stake_pool.pool_mint,
-            &spl_token::id(),
+            &gpl_token::id(),
             pool_amount,
         )
     };
@@ -1526,8 +1526,8 @@ fn command_set_manager(
     unique_signers!(signers);
     let transaction = checked_transaction_with_signers(
         config,
-        &[spl_stake_pool::instruction::set_manager(
-            &spl_stake_pool::id(),
+        &[gpl_stake_pool::instruction::set_manager(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &config.manager.pubkey(),
             &new_manager_pubkey,
@@ -1548,8 +1548,8 @@ fn command_set_staker(
     unique_signers!(signers);
     let transaction = checked_transaction_with_signers(
         config,
-        &[spl_stake_pool::instruction::set_staker(
-            &spl_stake_pool::id(),
+        &[gpl_stake_pool::instruction::set_staker(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &config.manager.pubkey(),
             new_staker,
@@ -1570,8 +1570,8 @@ fn command_set_funding_authority(
     unique_signers!(signers);
     let transaction = checked_transaction_with_signers(
         config,
-        &[spl_stake_pool::instruction::set_funding_authority(
-            &spl_stake_pool::id(),
+        &[gpl_stake_pool::instruction::set_funding_authority(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &config.manager.pubkey(),
             new_authority.as_ref(),
@@ -1592,8 +1592,8 @@ fn command_set_fee(
     unique_signers!(signers);
     let transaction = checked_transaction_with_signers(
         config,
-        &[spl_stake_pool::instruction::set_fee(
-            &spl_stake_pool::id(),
+        &[gpl_stake_pool::instruction::set_fee(
+            &gpl_stake_pool::id(),
             stake_pool_address,
             &config.manager.pubkey(),
             new_fee,

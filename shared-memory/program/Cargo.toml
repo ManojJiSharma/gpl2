@@ -1,5 +1,5 @@
 [package]
-name = "spl-shared-memory"
+name = "gpl-shared-memory"
 version = "2.0.6"
 description = "Gemachain Program Library Shared-memory"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

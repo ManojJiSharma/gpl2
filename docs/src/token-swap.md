@@ -94,8 +94,8 @@ its token A and B accounts.
 
 The token A / B accounts, pool token mint, and pool token accounts must all be 
 created (using `system_instruction::create_account`) and initialized (using 
-`spl_token::instruction::initialize_mint` or 
-`spl_token::instruction::initialize_account`).  The token A and B accounts must
+`gpl_token::instruction::initialize_mint` or 
+`gpl_token::instruction::initialize_account`).  The token A and B accounts must
 be funded with tokens, and their owner set to the swap authority, and the mint
 must also be owned by the swap authority.
 
@@ -117,7 +117,7 @@ users need to gather all account information from the pool state account:
 the token A and B accounts, pool token mint, and fee account.
 
 Additionally, the user must allow for tokens to be transferred from their source
-token account.  The best practice is to `spl_token::instruction::approve` a
+token account.  The best practice is to `gpl_token::instruction::approve` a
 precise amount to a new throwaway Keypair, and then have that new Keypair sign
 the swap transaction.  This limits the amount of tokens that can be taken
 from the user's account by the program.

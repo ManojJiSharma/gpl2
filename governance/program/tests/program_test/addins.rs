@@ -7,9 +7,9 @@ lazy_static! {
 }
 
 pub fn ensure_voter_weight_addin_is_built() {
-    if find_file("spl_governance_voter_weight_addin.so").is_none() {
+    if find_file("gpl_governance_voter_weight_addin.so").is_none() {
         let _guard = VOTER_WEIGHT_ADDIN_BUILD_GUARD.lock().unwrap();
-        if find_file("spl_governance_voter_weight_addin.so").is_none() {
+        if find_file("gpl_governance_voter_weight_addin.so").is_none() {
             assert!(Command::new("cargo")
                 .args(&[
                     "build-bpf",

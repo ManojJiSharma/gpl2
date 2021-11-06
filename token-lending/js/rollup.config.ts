@@ -9,7 +9,7 @@ export default {
         { file: pkg.main, format: 'cjs', sourcemap: true },
         { file: pkg.module, format: 'es', sourcemap: true },
     ],
-    external: ['@gemachain/spl-token', '@gemachain/web3.js', 'assert', 'buffer', 'fs', 'path'],
+    external: ['@gemachain/gpl-token', '@gemachain/web3.js', 'assert', 'buffer', 'fs', 'path'],
     watch: {
         include: 'src/**',
     },

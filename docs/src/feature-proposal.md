@@ -5,7 +5,7 @@ title: Feature Proposal Program
 The Feature Proposal Program provides a workflow for activation of Gemachain
 network features through community vote based on validator stake weight.
 
-Community voting is accomplished using [SPL Tokens](token.md).  Tokens are
+Community voting is accomplished using [GPL Tokens](token.md).  Tokens are
 minted that represent the total active stake on the network, and distributed to
 all validators based on their stake.  Validators vote for feature activation by
 transferring their vote tokens to a predetermined address.  Once the vote
@@ -38,19 +38,19 @@ The Feature Proposal Program's source is available on
 [github](https://github.com/gemacoin/gemachain.git)
 
 ## Interface
-The Feature Proposal Program is written in Rust and available on [crates.io](https://crates.io/crates/spl-feature-proposal) and [docs.rs](https://docs.rs/spl-feature-proposal).
+The Feature Proposal Program is written in Rust and available on [crates.io](https://crates.io/crates/gpl-feature-proposal) and [docs.rs](https://docs.rs/gpl-feature-proposal).
 
 ## Command-line Utility
-The `spl-feature-proposal` command-line utility can be used to manage feature
+The `gpl-feature-proposal` command-line utility can be used to manage feature
 proposal.  Once you have [Rust installed](https://rustup.rs/), run:
 ```sh
-$ cargo install spl-feature-proposal-cli
+$ cargo install gpl-feature-proposal-cli
 ```
 
-Run `spl-feature-proposal --help` for a full description of available commands.
+Run `gpl-feature-proposal --help` for a full description of available commands.
 
 ### Configuration
-The `spl-feature-proposal` configuration is shared with the `gemachain` command-line tool.
+The `gpl-feature-proposal` configuration is shared with the `gemachain` command-line tool.
 
 ## Feature Proposal Life Cycle
 
@@ -71,9 +71,9 @@ $ gemachain-keygen new --outfile feature-proposal.json --silent --no-passphrase
 Wrote new keypair to feature-proposal.json
 ```
 
-Now run the `spl-feature-proposal` program to derive the *feature id*:
+Now run the `gpl-feature-proposal` program to derive the *feature id*:
 ```
-$ spl-feature-proposal address feature-proposal.json
+$ gpl-feature-proposal address feature-proposal.json
 Feature Id: HQ3baDfNU7WKCyWvtMYZmi51YPs7vhSiLn1ESYp3jhiA
 Token Mint Address: ALvA7Lv9jbo8JFhxqnRpjWWuR3aD12uCb5KBJst4uc3d
 Acceptance Token Address: AdqKm3mSJf8AtTWjfpA5ZbJszWQPcwyLA2XkRyLbf3Di
@@ -96,7 +96,7 @@ proposer* may initiate the community proposal process.
 
 This is done by running:
 ```
-$ spl-feature-proposal propose feature-proposal.json
+$ gpl-feature-proposal propose feature-proposal.json
 Feature Id: HQ3baDfNU7WKCyWvtMYZmi51YPs7vhSiLn1ESYp3jhiA
 Token Mint Address: ALvA7Lv9jbo8JFhxqnRpjWWuR3aD12uCb5KBJst4uc3d
 Distributor Token Address: GK55hNft4TGc3Hg4KzbjEmju8VfaNuXK8jQNDTZKcsNF
@@ -108,16 +108,16 @@ Token distribution file: feature-proposal.csv
 JSON RPC URL: http://api.mainnet-beta.gemachain.com
 
 Distribute the proposal tokens to all validators by running:
-    $ gemachain-tokens distribute-spl-tokens --from GK55hNft4TGc3Hg4KzbjEmju8VfaNuXK8jQNDTZKcsNF --input-csv feature-proposal.csv --db-path db.8CyUVvio --fee-payer ~/.config/gemachain/id.json --owner <FEATURE_PROPOSAL_KEYPAIR>
-    $ gemachain-tokens spl-token-balances --mint ALvA7Lv9jbo8JFhxqnRpjWWuR3aD12uCb5KBJst4uc3d --input-csv feature-proposal.csv
+    $ gemachain-tokens distribute-gpl-tokens --from GK55hNft4TGc3Hg4KzbjEmju8VfaNuXK8jQNDTZKcsNF --input-csv feature-proposal.csv --db-path db.8CyUVvio --fee-payer ~/.config/gemachain/id.json --owner <FEATURE_PROPOSAL_KEYPAIR>
+    $ gemachain-tokens gpl-token-balances --mint ALvA7Lv9jbo8JFhxqnRpjWWuR3aD12uCb5KBJst4uc3d --input-csv feature-proposal.csv
 
 Once the distribution is complete, request validators vote for the proposal. To vote, validators should first look up their token account address:
-    $ spl-token --owner ~/validator-keypair.json accounts ALvA7Lv9jbo8JFhxqnRpjWWuR3aD12uCb5KBJst4uc3d
+    $ gpl-token --owner ~/validator-keypair.json accounts ALvA7Lv9jbo8JFhxqnRpjWWuR3aD12uCb5KBJst4uc3d
 and then submit their vote by running:
-    $ spl-token --owner ~/validator-keypair.json transfer <TOKEN_ACCOUNT_ADDRESS> ALL AdqKm3mSJf8AtTWjfpA5ZbJszWQPcwyLA2XkRyLbf3Di
+    $ gpl-token --owner ~/validator-keypair.json transfer <TOKEN_ACCOUNT_ADDRESS> ALL AdqKm3mSJf8AtTWjfpA5ZbJszWQPcwyLA2XkRyLbf3Di
 
 Periodically the votes must be tallied by running:
-  $ spl-feature-proposal tally 8CyUVvio2oYAP28ZkMBPHq88ikhRgWet6i4NYsCW5Cxa
+  $ gpl-feature-proposal tally 8CyUVvio2oYAP28ZkMBPHq88ikhRgWet6i4NYsCW5Cxa
 Tallying is permissionless and may be run by anybody.
 Once this feature proposal is accepted, the HQ3baDfNU7WKCyWvtMYZmi51YPs7vhSiLn1ESYp3jhiA feature will be activated at the next epoch.
 
@@ -129,7 +129,7 @@ continue, and then follow the remaining steps in the output to distribute the
 vote tokens to all the validators.
 
 **COST:** As a part of token distribution, the *feature proposer* will be
-financing the creation of SPL Token accounts for each of the validators.  A SPL
+financing the creation of GPL Token accounts for each of the validators.  A GPL
 Token account requires 0.00203928 GEMA at creation, so the cost for initiating a
 feature proposal on a network with 500 validators is approximately 1 GEMA.
 
@@ -138,7 +138,7 @@ feature proposal on a network with 500 validators is approximately 1 GEMA.
 After advertising to the validators that a feature proposal is pending their
 acceptance, the votes are tallied by running:
 ```
-$ spl-feature-proposal tally 8CyUVvio2oYAP28ZkMBPHq88ikhRgWet6i4NYsCW5Cxa
+$ gpl-feature-proposal tally 8CyUVvio2oYAP28ZkMBPHq88ikhRgWet6i4NYsCW5Cxa
 ```
 Anybody may tally the vote.  Once the required number of votes are tallied, the
 feature will be automatically activated at the start of the next epoch.

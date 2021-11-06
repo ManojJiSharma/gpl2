@@ -11,7 +11,7 @@ use {
         signature::{Keypair, Signer},
         transaction::{Transaction, TransactionError},
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         error, id, instruction,
         state::StakePool,
         state::{Fee, FeeType},

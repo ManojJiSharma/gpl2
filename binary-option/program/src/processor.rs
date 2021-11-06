@@ -1,9 +1,9 @@
 use crate::{
     error::BinaryOptionError,
     instruction::BinaryOptionInstruction,
-    spl_utils::{
-        spl_approve, spl_burn, spl_burn_signed, spl_initialize, spl_mint_initialize, spl_mint_to,
-        spl_set_authority, spl_token_transfer, spl_token_transfer_signed,
+    gpl_utils::{
+        gpl_approve, gpl_burn, gpl_burn_signed, gpl_initialize, gpl_mint_initialize, gpl_mint_to,
+        gpl_set_authority, gpl_token_transfer, gpl_token_transfer_signed,
     },
     state::BinaryOption,
     system_utils::{create_new_account, create_or_allocate_account_raw},
@@ -20,7 +20,7 @@ use gemachain_program::{
     program_pack::Pack,
     pubkey::Pubkey,
 };
-use spl_token::{
+use gpl_token::{
     instruction::AuthorityType,
     state::{Account, Mint},
 };
@@ -98,7 +98,7 @@ pub fn process_initialize_binary_option(
         token_program_info,
         rent_info,
     )?;
-    spl_mint_initialize(
+    gpl_mint_initialize(
         token_program_info,
         long_token_mint_info,
         mint_authority_info,
@@ -106,7 +106,7 @@ pub fn process_initialize_binary_option(
         rent_info,
         0,
     )?;
-    spl_mint_initialize(
+    gpl_mint_initialize(
         token_program_info,
         short_token_mint_info,
         mint_authority_info,
@@ -114,7 +114,7 @@ pub fn process_initialize_binary_option(
         rent_info,
         0,
     )?;
-    spl_initialize(
+    gpl_initialize(
         token_program_info,
         escrow_account_info,
         escrow_mint_info,
@@ -122,7 +122,7 @@ pub fn process_initialize_binary_option(
         rent_info,
     )?;
 
-    assert_keys_equal(*token_program_info.key, spl_token::id())?;
+    assert_keys_equal(*token_program_info.key, gpl_token::id())?;
 
     // Transfer ownership of the escrow accounts to a PDA
     let (authority_key, _) = Pubkey::find_program_address(
@@ -134,21 +134,21 @@ pub fn process_initialize_binary_option(
         ],
         program_id,
     );
-    spl_set_authority(
+    gpl_set_authority(
         token_program_info,
         escrow_account_info,
         Some(authority_key),
         AuthorityType::AccountOwner,
         update_authority_info,
     )?;
-    spl_set_authority(
+    gpl_set_authority(
         token_program_info,
         long_token_mint_info,
         Some(authority_key),
         AuthorityType::MintTokens,
         update_authority_info,
     )?;
-    spl_set_authority(
+    gpl_set_authority(
         token_program_info,
         short_token_mint_info,
         Some(authority_key),
@@ -240,10 +240,10 @@ pub fn process_trade(
     if binary_option.settled {
         return Err(BinaryOptionError::AlreadySettled.into());
     }
-    assert_keys_equal(*token_program_info.key, spl_token::id())?;
+    assert_keys_equal(*token_program_info.key, gpl_token::id())?;
     assert_keys_unequal(*buyer_info.key, *seller_info.key)?;
-    assert_keys_equal(*long_token_mint_info.owner, spl_token::id())?;
-    assert_keys_equal(*short_token_mint_info.owner, spl_token::id())?;
+    assert_keys_equal(*long_token_mint_info.owner, gpl_token::id())?;
+    assert_keys_equal(*short_token_mint_info.owner, gpl_token::id())?;
     assert_keys_equal(buyer_long_token_account.owner, *buyer_info.key)?;
     assert_keys_equal(buyer_short_token_account.owner, *buyer_info.key)?;
     assert_keys_equal(seller_long_token_account.owner, *seller_info.key)?;
@@ -302,21 +302,21 @@ pub fn process_trade(
         */
         [true, true] => {
             msg!("Case 1");
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 buyer_short_token_account_info,
                 short_token_mint_info,
                 buyer_info,
                 n,
             )?;
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 seller_long_token_account_info,
                 long_token_mint_info,
                 seller_info,
                 n,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 buyer_account_info,
@@ -324,7 +324,7 @@ pub fn process_trade(
                 n * sell_price,
                 seeds,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 seller_account_info,
@@ -346,14 +346,14 @@ pub fn process_trade(
         */
         [false, false] => {
             msg!("Case 2");
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 buyer_short_token_account_info,
                 short_token_mint_info,
                 buyer_info,
                 n_b,
             )?;
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 seller_long_token_account_info,
                 long_token_mint_info,
@@ -362,7 +362,7 @@ pub fn process_trade(
             )?;
             b_s -= n_b;
             s_l -= n_s;
-            spl_mint_to(
+            gpl_mint_to(
                 token_program_info,
                 buyer_long_token_account_info,
                 long_token_mint_info,
@@ -370,7 +370,7 @@ pub fn process_trade(
                 n - n_b,
                 seeds,
             )?;
-            spl_mint_to(
+            gpl_mint_to(
                 token_program_info,
                 seller_short_token_account_info,
                 short_token_mint_info,
@@ -380,21 +380,21 @@ pub fn process_trade(
             )?;
             b_l += n - n_b;
             s_s += n - n_s;
-            spl_token_transfer(
+            gpl_token_transfer(
                 token_program_info,
                 buyer_account_info,
                 escrow_account_info,
                 buyer_info,
                 (n - n_b) * buy_price,
             )?;
-            spl_token_transfer(
+            gpl_token_transfer(
                 token_program_info,
                 seller_account_info,
                 escrow_account_info,
                 seller_info,
                 (n - n_s) * sell_price,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 buyer_account_info,
@@ -402,7 +402,7 @@ pub fn process_trade(
                 n_b * sell_price,
                 seeds,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 seller_account_info,
@@ -425,14 +425,14 @@ pub fn process_trade(
         */
         [true, false] => {
             msg!("Case 3");
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 buyer_short_token_account_info,
                 short_token_mint_info,
                 buyer_info,
                 n,
             )?;
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 seller_long_token_account_info,
                 long_token_mint_info,
@@ -441,7 +441,7 @@ pub fn process_trade(
             )?;
             b_s -= n;
             s_l -= n_s;
-            spl_mint_to(
+            gpl_mint_to(
                 token_program_info,
                 seller_short_token_account_info,
                 short_token_mint_info,
@@ -450,14 +450,14 @@ pub fn process_trade(
                 seeds,
             )?;
             s_s += n - n_s;
-            spl_token_transfer(
+            gpl_token_transfer(
                 token_program_info,
                 seller_account_info,
                 escrow_account_info,
                 seller_info,
                 (n - n_s) * sell_price,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 seller_account_info,
@@ -465,7 +465,7 @@ pub fn process_trade(
                 n_s * buy_price,
                 seeds,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 buyer_account_info,
@@ -484,14 +484,14 @@ pub fn process_trade(
         */
         [false, true] => {
             msg!("Case 4");
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 seller_long_token_account_info,
                 long_token_mint_info,
                 seller_info,
                 n,
             )?;
-            spl_burn(
+            gpl_burn(
                 token_program_info,
                 buyer_short_token_account_info,
                 short_token_mint_info,
@@ -500,7 +500,7 @@ pub fn process_trade(
             )?;
             b_s -= n_b;
             s_l -= n;
-            spl_mint_to(
+            gpl_mint_to(
                 token_program_info,
                 buyer_long_token_account_info,
                 long_token_mint_info,
@@ -509,14 +509,14 @@ pub fn process_trade(
                 seeds,
             )?;
             b_l += n - n_b;
-            spl_token_transfer(
+            gpl_token_transfer(
                 token_program_info,
                 buyer_account_info,
                 escrow_account_info,
                 buyer_info,
                 (n - n_b) * buy_price,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 buyer_account_info,
@@ -524,7 +524,7 @@ pub fn process_trade(
                 n_b * sell_price,
                 seeds,
             )?;
-            spl_token_transfer_signed(
+            gpl_token_transfer_signed(
                 token_program_info,
                 escrow_account_info,
                 seller_account_info,
@@ -537,7 +537,7 @@ pub fn process_trade(
     }
     // Delegate the burn authority to the PDA, so a private key is unnecessary on collection
     // This can probably be optimized to reduce the number of instructions needed at some point
-    spl_approve(
+    gpl_approve(
         token_program_info,
         buyer_long_token_account_info,
         long_token_mint_info,
@@ -546,7 +546,7 @@ pub fn process_trade(
         b_l,
         long_token_mint.decimals,
     )?;
-    spl_approve(
+    gpl_approve(
         token_program_info,
         seller_short_token_account_info,
         short_token_mint_info,
@@ -555,7 +555,7 @@ pub fn process_trade(
         s_s,
         short_token_mint.decimals,
     )?;
-    spl_approve(
+    gpl_approve(
         token_program_info,
         buyer_short_token_account_info,
         short_token_mint_info,
@@ -564,7 +564,7 @@ pub fn process_trade(
         b_s,
         short_token_mint.decimals,
     )?;
-    spl_approve(
+    gpl_approve(
         token_program_info,
         seller_long_token_account_info,
         long_token_mint_info,
@@ -651,8 +651,8 @@ pub fn process_collect(program_id: &Pubkey, accounts: &[AccountInfo]) -> Program
     if !binary_option.settled {
         return Err(BinaryOptionError::BetNotSettled.into());
     }
-    assert_owned_by(long_token_mint_info, &spl_token::id())?;
-    assert_owned_by(short_token_mint_info, &spl_token::id())?;
+    assert_owned_by(long_token_mint_info, &gpl_token::id())?;
+    assert_owned_by(short_token_mint_info, &gpl_token::id())?;
     assert_keys_equal(collector_long_token_account.owner, *collector_info.key)?;
     assert_keys_equal(collector_short_token_account.owner, *collector_info.key)?;
     assert_keys_equal(collector_account.owner, *collector_info.key)?;
@@ -690,7 +690,7 @@ pub fn process_collect(program_id: &Pubkey, accounts: &[AccountInfo]) -> Program
         return Err(BinaryOptionError::TokenNotFoundInPool.into());
     };
 
-    spl_burn_signed(
+    gpl_burn_signed(
         token_program_info,
         collector_long_token_account_info,
         long_token_mint_info,
@@ -698,7 +698,7 @@ pub fn process_collect(program_id: &Pubkey, accounts: &[AccountInfo]) -> Program
         collector_long_token_account.amount,
         seeds,
     )?;
-    spl_burn_signed(
+    gpl_burn_signed(
         token_program_info,
         collector_short_token_account_info,
         short_token_mint_info,
@@ -708,7 +708,7 @@ pub fn process_collect(program_id: &Pubkey, accounts: &[AccountInfo]) -> Program
     )?;
     if reward > 0 {
         let amount = (reward * escrow_account.amount) / binary_option.circulation;
-        spl_token_transfer_signed(
+        gpl_token_transfer_signed(
             token_program_info,
             escrow_account_info,
             collector_account_info,

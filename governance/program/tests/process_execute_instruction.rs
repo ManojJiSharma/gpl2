@@ -10,7 +10,7 @@ use gemachain_program::{
 use gemachain_program_test::tokio;
 
 use program_test::*;
-use spl_governance::{
+use gpl_governance::{
     error::GovernanceError,
     instruction::Vote,
     state::enums::{InstructionExecutionStatus, ProposalState},

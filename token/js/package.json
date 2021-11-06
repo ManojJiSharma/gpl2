@@ -1,7 +1,7 @@
 {
-  "name": "@gemachain/spl-token",
+  "name": "@gemachain/gpl-token",
   "version": "0.1.8",
-  "description": "SPL Token JavaScript API",
+  "description": "GPL Token JavaScript API",
   "license": "MIT",
   "author": "Gemachain Maintainers <maintainers@gemachain.com>",
   "homepage": "https://gemachain.com/",

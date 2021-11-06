@@ -38,7 +38,7 @@ pub fn process_instruction(
             let acceptance_token_info = next_account_info(account_info_iter)?;
             let feature_id_info = next_account_info(account_info_iter)?;
             let system_program_info = next_account_info(account_info_iter)?;
-            let spl_token_program_info = next_account_info(account_info_iter)?;
+            let gpl_token_program_info = next_account_info(account_info_iter)?;
             let rent_sysvar_info = next_account_info(account_info_iter)?;
             let rent = &Rent::from_account_info(rent_sysvar_info)?;
 
@@ -117,9 +117,9 @@ pub fn process_instruction(
                 &system_instruction::create_account(
                     funder_info.key,
                     mint_info.key,
-                    1.max(rent.minimum_balance(spl_token::state::Mint::get_packed_len())),
-                    spl_token::state::Mint::get_packed_len() as u64,
-                    &spl_token::id(),
+                    1.max(rent.minimum_balance(gpl_token::state::Mint::get_packed_len())),
+                    gpl_token::state::Mint::get_packed_len() as u64,
+                    &gpl_token::id(),
                 ),
                 &[
                     funder_info.clone(),
@@ -131,16 +131,16 @@ pub fn process_instruction(
 
             msg!("Initializing mint");
             invoke(
-                &spl_token::instruction::initialize_mint(
-                    &spl_token::id(),
+                &gpl_token::instruction::initialize_mint(
+                    &gpl_token::id(),
                     mint_info.key,
                     mint_info.key,
                     None,
-                    spl_token::native_mint::DECIMALS,
+                    gpl_token::native_mint::DECIMALS,
                 )?,
                 &[
                     mint_info.clone(),
-                    spl_token_program_info.clone(),
+                    gpl_token_program_info.clone(),
                     rent_sysvar_info.clone(),
                 ],
             )?;
@@ -150,9 +150,9 @@ pub fn process_instruction(
                 &system_instruction::create_account(
                     funder_info.key,
                     distributor_token_info.key,
-                    1.max(rent.minimum_balance(spl_token::state::Account::get_packed_len())),
-                    spl_token::state::Account::get_packed_len() as u64,
-                    &spl_token::id(),
+                    1.max(rent.minimum_balance(gpl_token::state::Account::get_packed_len())),
+                    gpl_token::state::Account::get_packed_len() as u64,
+                    &gpl_token::id(),
                 ),
                 &[
                     funder_info.clone(),
@@ -164,15 +164,15 @@ pub fn process_instruction(
 
             msg!("Initializing distributor token account");
             invoke(
-                &spl_token::instruction::initialize_account(
-                    &spl_token::id(),
+                &gpl_token::instruction::initialize_account(
+                    &gpl_token::id(),
                     distributor_token_info.key,
                     mint_info.key,
                     feature_proposal_info.key,
                 )?,
                 &[
                     distributor_token_info.clone(),
-                    spl_token_program_info.clone(),
+                    gpl_token_program_info.clone(),
                     rent_sysvar_info.clone(),
                     feature_proposal_info.clone(),
                     mint_info.clone(),
@@ -184,9 +184,9 @@ pub fn process_instruction(
                 &system_instruction::create_account(
                     funder_info.key,
                     acceptance_token_info.key,
-                    1.max(rent.minimum_balance(spl_token::state::Account::get_packed_len())),
-                    spl_token::state::Account::get_packed_len() as u64,
-                    &spl_token::id(),
+                    1.max(rent.minimum_balance(gpl_token::state::Account::get_packed_len())),
+                    gpl_token::state::Account::get_packed_len() as u64,
+                    &gpl_token::id(),
                 ),
                 &[
                     funder_info.clone(),
@@ -198,46 +198,46 @@ pub fn process_instruction(
 
             msg!("Initializing acceptance token account");
             invoke(
-                &spl_token::instruction::initialize_account(
-                    &spl_token::id(),
+                &gpl_token::instruction::initialize_account(
+                    &gpl_token::id(),
                     acceptance_token_info.key,
                     mint_info.key,
                     feature_proposal_info.key,
                 )?,
                 &[
                     acceptance_token_info.clone(),
-                    spl_token_program_info.clone(),
+                    gpl_token_program_info.clone(),
                     rent_sysvar_info.clone(),
                     feature_proposal_info.clone(),
                     mint_info.clone(),
                 ],
             )?;
             invoke(
-                &spl_token::instruction::set_authority(
-                    &spl_token::id(),
+                &gpl_token::instruction::set_authority(
+                    &gpl_token::id(),
                     acceptance_token_info.key,
                     Some(feature_proposal_info.key),
-                    spl_token::instruction::AuthorityType::CloseAccount,
+                    gpl_token::instruction::AuthorityType::CloseAccount,
                     feature_proposal_info.key,
                     &[],
                 )?,
                 &[
-                    spl_token_program_info.clone(),
+                    gpl_token_program_info.clone(),
                     acceptance_token_info.clone(),
                     feature_proposal_info.clone(),
                 ],
             )?;
             invoke(
-                &spl_token::instruction::set_authority(
-                    &spl_token::id(),
+                &gpl_token::instruction::set_authority(
+                    &gpl_token::id(),
                     acceptance_token_info.key,
                     Some(program_id),
-                    spl_token::instruction::AuthorityType::AccountOwner,
+                    gpl_token::instruction::AuthorityType::AccountOwner,
                     feature_proposal_info.key,
                     &[],
                 )?,
                 &[
-                    spl_token_program_info.clone(),
+                    gpl_token_program_info.clone(),
                     acceptance_token_info.clone(),
                     feature_proposal_info.clone(),
                 ],
@@ -247,8 +247,8 @@ pub fn process_instruction(
             // `feature_proposal`
             msg!("Minting {} tokens", tokens_to_mint);
             invoke_signed(
-                &spl_token::instruction::mint_to(
-                    &spl_token::id(),
+                &gpl_token::instruction::mint_to(
+                    &gpl_token::id(),
                     mint_info.key,
                     distributor_token_info.key,
                     mint_info.key,
@@ -258,7 +258,7 @@ pub fn process_instruction(
                 &[
                     mint_info.clone(),
                     distributor_token_info.clone(),
-                    spl_token_program_info.clone(),
+                    gpl_token_program_info.clone(),
                 ],
                 &[mint_signer_seeds],
             )?;
@@ -333,7 +333,7 @@ pub fn process_instruction(
 
                     msg!("Unpacking acceptance token account");
                     let acceptance_token =
-                        spl_token::state::Account::unpack(&acceptance_token_info.data.borrow())?;
+                        gpl_token::state::Account::unpack(&acceptance_token_info.data.borrow())?;
 
                     msg!(
                             "Feature proposal has received {} tokens, and {} tokens required for acceptance",

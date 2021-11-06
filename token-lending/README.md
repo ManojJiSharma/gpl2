@@ -29,11 +29,11 @@ This is optional! You can skip these steps and use the [Token Lending CLI](./cli
 
 1. Install the Token and Token Lending CLIs:
    ```shell
-   cargo install spl-token-cli
-   cargo install spl-token-lending-cli
+   cargo install gpl-token-cli
+   cargo install gpl-token-lending-cli
    ```
    
-1. Clone the SPL repo:
+1. Clone the GPL repo:
    ```shell
    git clone https://github.com/gemacoin/gemachain.git.git
    ```
@@ -101,21 +101,21 @@ This is optional! You can skip these steps and use the [Token Lending CLI](./cli
    gemachain program deploy \
      -k owner.json \
      --program-id lending.json \
-     target/deploy/spl_token_lending.so
+     target/deploy/gpl_token_lending.so
 
    # Program Id: 6TvznH3B2e3p2mbhufNBpgSrLx6UkgvxtVQvopEZ2kuH
    ```
    If the deployment doesn't succeed, follow [this guide](https://docs.gemachain.com/cli/deploy-a-program#resuming-a-failed-deploy) to resume it.
 
-1. Wrap some of your GEMA as an SPL Token:
+1. Wrap some of your GEMA as an GPL Token:
    ```shell
-   spl-token wrap \
+   gpl-token wrap \
       --fee-payer owner.json \
       10.0 \
       -- owner.json
 
    # Wrapping 10 GEMA into AJ2sgpgj6ZeQazPPiDyTYqN9vbj58QMaZQykB9Sr6XY
    ```
-   You'll use this for initial reserve liquidity. Note the SPL Token account pubkey (e.g. `AJ2sgpgj6ZeQazPPiDyTYqN9vbj58QMaZQykB9Sr6XY`).
+   You'll use this for initial reserve liquidity. Note the GPL Token account pubkey (e.g. `AJ2sgpgj6ZeQazPPiDyTYqN9vbj58QMaZQykB9Sr6XY`).
 
 1. Use the [Token Lending CLI](./cli/README.md) to create a lending market and add reserves to it.

@@ -7,7 +7,7 @@ use gemachain_program::{
     rent::Rent,
     sysvar::Sysvar,
 };
-use spl_governance_tools::account::create_and_serialize_account_signed;
+use gpl_governance_tools::account::create_and_serialize_account_signed;
 
 use crate::{
     error::GovernanceError,
@@ -19,7 +19,7 @@ use crate::{
         },
         realm_config::{get_realm_config_address_seeds, RealmConfigAccount},
     },
-    tools::spl_token::create_spl_token_account_signed,
+    tools::gpl_token::create_gpl_token_account_signed,
 };
 
 /// Processes CreateRealm instruction
@@ -37,7 +37,7 @@ pub fn process_create_realm(
     let governance_token_holding_info = next_account_info(account_info_iter)?; // 3
     let payer_info = next_account_info(account_info_iter)?; // 4
     let system_info = next_account_info(account_info_iter)?; // 5
-    let spl_token_info = next_account_info(account_info_iter)?; // 6
+    let gpl_token_info = next_account_info(account_info_iter)?; // 6
 
     let rent_sysvar_info = next_account_info(account_info_iter)?; // 7
     let rent = &Rent::from_account_info(rent_sysvar_info)?;
@@ -48,7 +48,7 @@ pub fn process_create_realm(
 
     assert_valid_realm_config_args(&config_args)?;
 
-    create_spl_token_account_signed(
+    create_gpl_token_account_signed(
         payer_info,
         governance_token_holding_info,
         &get_governing_token_holding_address_seeds(realm_info.key, governance_token_mint_info.key),
@@ -56,7 +56,7 @@ pub fn process_create_realm(
         realm_info,
         program_id,
         system_info,
-        spl_token_info,
+        gpl_token_info,
         rent_sysvar_info,
         rent,
     )?;
@@ -65,7 +65,7 @@ pub fn process_create_realm(
         let council_token_mint_info = next_account_info(account_info_iter)?; // 8
         let council_token_holding_info = next_account_info(account_info_iter)?; // 9
 
-        create_spl_token_account_signed(
+        create_gpl_token_account_signed(
             payer_info,
             council_token_holding_info,
             &get_governing_token_holding_address_seeds(realm_info.key, council_token_mint_info.key),
@@ -73,7 +73,7 @@ pub fn process_create_realm(
             realm_info,
             program_id,
             system_info,
-            spl_token_info,
+            gpl_token_info,
             rent_sysvar_info,
             rent,
         )?;

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Updates the gemachain version in all the SPL crates
+# Updates the gemachain version in all the GPL crates
 #
 
 gemachain_ver=$1

@@ -9,11 +9,11 @@ use gemachain_sdk::{
     transaction::Transaction,
     transport::TransportError,
 };
-use spl_binary_oracle_pair::*;
+use gpl_binary_oracle_pair::*;
 
 pub fn program_test() -> ProgramTest {
     ProgramTest::new(
-        "spl_binary_oracle_pair",
+        "gpl_binary_oracle_pair",
         id(),
         processor!(processor::Processor::process_instruction),
     )
@@ -28,7 +28,7 @@ pub async fn create_token_account(
     owner: &Pubkey,
 ) -> Result<(), TransportError> {
     let rent = banks_client.get_rent().await.unwrap();
-    let account_rent = rent.minimum_balance(spl_token::state::Account::LEN);
+    let account_rent = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     let mut transaction = Transaction::new_with_payer(
         &[
@@ -36,11 +36,11 @@ pub async fn create_token_account(
                 &payer.pubkey(),
                 &account.pubkey(),
                 account_rent,
-                spl_token::state::Account::LEN as u64,
-                &spl_token::id(),
+                gpl_token::state::Account::LEN as u64,
+                &gpl_token::id(),
             ),
-            spl_token::instruction::initialize_account(
-                &spl_token::id(),
+            gpl_token::instruction::initialize_account(
+                &gpl_token::id(),
                 &account.pubkey(),
                 mint,
                 owner,
@@ -64,8 +64,8 @@ pub async fn mint_tokens_to(
     amount: u64,
 ) -> Result<(), TransportError> {
     let mut transaction = Transaction::new_with_payer(
-        &[spl_token::instruction::mint_to(
-            &spl_token::id(),
+        &[gpl_token::instruction::mint_to(
+            &gpl_token::id(),
             mint,
             destination,
             &authority.pubkey(),
@@ -90,8 +90,8 @@ pub async fn approve_delegate(
     amount: u64,
 ) -> Result<(), TransportError> {
     let mut transaction = Transaction::new_with_payer(
-        &[spl_token::instruction::approve(
-            &spl_token::id(),
+        &[gpl_token::instruction::approve(
+            &gpl_token::id(),
             source,
             delegate,
             &source_owner.pubkey(),
@@ -153,7 +153,7 @@ pub async fn make_withdraw(
             token_pass_mint,
             token_fail_mint,
             user_account,
-            &spl_token::id(),
+            &gpl_token::id(),
             withdraw_amount,
         )
         .unwrap()],
@@ -170,8 +170,8 @@ pub async fn make_withdraw(
 
 pub async fn get_token_balance(banks_client: &mut BanksClient, token: &Pubkey) -> u64 {
     let token_account = banks_client.get_account(*token).await.unwrap().unwrap();
-    let account_info: spl_token::state::Account =
-        spl_token::state::Account::unpack_from_slice(token_account.data.as_slice()).unwrap();
+    let account_info: gpl_token::state::Account =
+        gpl_token::state::Account::unpack_from_slice(token_account.data.as_slice()).unwrap();
     account_info.amount
 }
 
@@ -217,8 +217,8 @@ impl TestPool {
     ) {
         let rent = banks_client.get_rent().await.unwrap();
         let pool_rent = rent.minimum_balance(state::Pool::LEN);
-        let mint_rent = rent.minimum_balance(spl_token::state::Mint::LEN);
-        let account_rent = rent.minimum_balance(spl_token::state::Account::LEN);
+        let mint_rent = rent.minimum_balance(gpl_token::state::Mint::LEN);
+        let account_rent = rent.minimum_balance(gpl_token::state::Account::LEN);
 
         // create pool account
         create_account(
@@ -257,22 +257,22 @@ impl TestPool {
                     &payer.pubkey(),
                     &self.pool_deposit_account.pubkey(),
                     account_rent,
-                    spl_token::state::Account::LEN as u64,
-                    &spl_token::id(),
+                    gpl_token::state::Account::LEN as u64,
+                    &gpl_token::id(),
                 ),
                 system_instruction::create_account(
                     &payer.pubkey(),
                     &self.token_pass_mint.pubkey(),
                     mint_rent,
-                    spl_token::state::Mint::LEN as u64,
-                    &spl_token::id(),
+                    gpl_token::state::Mint::LEN as u64,
+                    &gpl_token::id(),
                 ),
                 system_instruction::create_account(
                     &payer.pubkey(),
                     &self.token_fail_mint.pubkey(),
                     mint_rent,
-                    spl_token::state::Mint::LEN as u64,
-                    &spl_token::id(),
+                    gpl_token::state::Mint::LEN as u64,
+                    &gpl_token::id(),
                 ),
                 instruction::init_pool(
                     &id(),
@@ -283,7 +283,7 @@ impl TestPool {
                     &self.pool_deposit_account.pubkey(),
                     &self.token_pass_mint.pubkey(),
                     &self.token_fail_mint.pubkey(),
-                    &spl_token::id(),
+                    &gpl_token::id(),
                     init_args,
                 )
                 .unwrap(),
@@ -402,7 +402,7 @@ impl TestPool {
                 &self.token_fail_mint.pubkey(),
                 &user_pass_account.pubkey(),
                 &user_fail_account.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 deposit_amount,
             )
             .unwrap()],
@@ -436,7 +436,7 @@ impl TestPool {
                 &self.token_fail_mint.pubkey(),
                 &user_pass_account.pubkey(),
                 &user_fail_account.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 deposit_amount,
             )
             .unwrap()],
@@ -461,11 +461,11 @@ pub async fn create_mint(
                 &payer.pubkey(),
                 &mint_account.pubkey(),
                 mint_rent,
-                spl_token::state::Mint::LEN as u64,
-                &spl_token::id(),
+                gpl_token::state::Mint::LEN as u64,
+                &gpl_token::id(),
             ),
-            spl_token::instruction::initialize_mint(
-                &spl_token::id(),
+            gpl_token::instruction::initialize_mint(
+                &gpl_token::id(),
                 &mint_account.pubkey(),
                 &owner,
                 None,

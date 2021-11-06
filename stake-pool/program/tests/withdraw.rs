@@ -19,8 +19,8 @@ use {
         transaction::{Transaction, TransactionError},
         transport::TransportError,
     },
-    spl_stake_pool::{error::StakePoolError, id, instruction, minimum_stake_carats, state},
-    spl_token::error::TokenError,
+    gpl_stake_pool::{error::StakePoolError, id, instruction, minimum_stake_carats, state},
+    gpl_token::error::TokenError,
 };
 
 async fn setup() -> (
@@ -173,7 +173,7 @@ async fn _success(test_type: SuccessTestType) {
     .unwrap();
 
     if let SuccessTestType::UninitializedManagerFee = test_type {
-        transfer_spl_tokens(
+        transfer_gpl_tokens(
             &mut banks_client,
             &payer,
             &recent_blockhash,
@@ -341,7 +341,7 @@ async fn fail_with_wrong_stake_program() {
         AccountMeta::new(stake_pool_accounts.pool_fee_account.pubkey(), false),
         AccountMeta::new(stake_pool_accounts.pool_mint.pubkey(), false),
         AccountMeta::new_readonly(sysvar::clock::id(), false),
-        AccountMeta::new_readonly(spl_token::id(), false),
+        AccountMeta::new_readonly(gpl_token::id(), false),
         AccountMeta::new_readonly(wrong_stake_program, false),
     ];
     let instruction = Instruction {
@@ -1372,7 +1372,7 @@ async fn success_withdraw_all_fee_tokens() {
     ) = setup().await;
 
     // move tokens to fee account
-    transfer_spl_tokens(
+    transfer_gpl_tokens(
         &mut banks_client,
         &payer,
         &recent_blockhash,

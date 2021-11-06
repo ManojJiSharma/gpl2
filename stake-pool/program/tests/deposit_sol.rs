@@ -14,12 +14,12 @@ use {
         transaction::TransactionError,
         transport::TransportError,
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         error, id,
         instruction::{self, FundingType},
         state,
     },
-    spl_token::error as token_error,
+    gpl_token::error as token_error,
 };
 
 async fn setup() -> (ProgramTestContext, StakePoolAccounts, Keypair, Pubkey) {
@@ -410,7 +410,7 @@ async fn success_with_referral_fee() {
             &stake_pool_accounts.pool_fee_account.pubkey(),
             &referrer_token_account.pubkey(),
             &stake_pool_accounts.pool_mint.pubkey(),
-            &spl_token::id(),
+            &gpl_token::id(),
             TEST_STAKE_AMOUNT,
         )],
         Some(&context.payer.pubkey()),
@@ -448,7 +448,7 @@ async fn fail_with_invalid_referrer() {
             &stake_pool_accounts.pool_fee_account.pubkey(),
             &invalid_token_account.pubkey(),
             &stake_pool_accounts.pool_mint.pubkey(),
-            &spl_token::id(),
+            &gpl_token::id(),
             TEST_STAKE_AMOUNT,
         )],
         Some(&context.payer.pubkey()),

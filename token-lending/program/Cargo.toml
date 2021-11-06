@@ -1,5 +1,5 @@
 [package]
-name = "spl-token-lending"
+name = "gpl-token-lending"
 version = "0.1.0"
 description = "Gemachain Program Library Token Lending"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -17,7 +17,7 @@ bytemuck = "1.7.2"
 num-derive = "0.3"
 num-traits = "0.2"
 gemachain-program = "1.8.2"
-spl-token = { path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-token = { path = "../../token/program", features = [ "no-entrypoint" ] }
 thiserror = "1.0"
 uint = "0.9"
 

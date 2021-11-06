@@ -5,12 +5,12 @@ use {
     gemachain_program::pubkey::Pubkey,
     gemachain_program_test::*,
     gemachain_sdk::{signature::Signer, transaction::Transaction},
-    spl_math::{id, instruction, processor::process_instruction},
+    gpl_math::{id, instruction, processor::process_instruction},
 };
 
 #[tokio::test]
 async fn test_precise_sqrt_u64_max() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     // This is way too big!  It's possible to dial down the numbers to get to
     // something reasonable, but the better option is to do everything in u64
@@ -28,7 +28,7 @@ async fn test_precise_sqrt_u64_max() {
 
 #[tokio::test]
 async fn test_precise_sqrt_u32_max() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(170_000);
 
@@ -44,7 +44,7 @@ async fn test_precise_sqrt_u32_max() {
 
 #[tokio::test]
 async fn test_sqrt_u64() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     // Dial down the BPF compute budget to detect if the operation gets bloated in the future
     pc.set_bpf_compute_max_units(2_500);
@@ -59,7 +59,7 @@ async fn test_sqrt_u64() {
 
 #[tokio::test]
 async fn test_sqrt_u128() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     // Dial down the BPF compute budget to detect if the operation gets bloated in the future
     pc.set_bpf_compute_max_units(4_000);
@@ -76,7 +76,7 @@ async fn test_sqrt_u128() {
 
 #[tokio::test]
 async fn test_sqrt_u128_max() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(6_000);
 
@@ -90,7 +90,7 @@ async fn test_sqrt_u128_max() {
 
 #[tokio::test]
 async fn test_u64_multiply() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(1350);
 
@@ -104,7 +104,7 @@ async fn test_u64_multiply() {
 
 #[tokio::test]
 async fn test_u64_divide() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(1650);
 
@@ -118,7 +118,7 @@ async fn test_u64_divide() {
 
 #[tokio::test]
 async fn test_f32_multiply() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(1600);
 
@@ -134,7 +134,7 @@ async fn test_f32_multiply() {
 
 #[tokio::test]
 async fn test_f32_divide() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(1650);
 
@@ -150,7 +150,7 @@ async fn test_f32_divide() {
 
 #[tokio::test]
 async fn test_noop() {
-    let mut pc = ProgramTest::new("spl_math", id(), processor!(process_instruction));
+    let mut pc = ProgramTest::new("gpl_math", id(), processor!(process_instruction));
 
     pc.set_bpf_compute_max_units(1200);
 

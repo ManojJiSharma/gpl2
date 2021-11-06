@@ -1,6 +1,6 @@
 //! Program state processor
 
-use metaplex_token_metadata::state::Metadata;
+use gpl_metaplex_token_metadata::state::Metadata;
 use gemachain_program::program_option::COption;
 use std::slice::Iter;
 
@@ -69,7 +69,7 @@ fn process_accept_offer(
     let transfer_authority = next_account_info(account_info_iter)?;
     let token_program_info = next_account_info(account_info_iter)?;
     let mut system_program_info: Option<&AccountInfo> = None;
-    let is_native = *taker_src_mint.key == spl_token::native_mint::id();
+    let is_native = *taker_src_mint.key == gpl_token::native_mint::id();
     if is_native {
         assert_keys_equal(*taker_wallet.key, *taker_src_account.key)?;
         assert_keys_equal(*maker_wallet.key, *maker_dst_account.key)?;
@@ -89,18 +89,18 @@ fn process_accept_offer(
         let (maker_metadata_key, _) = Pubkey::find_program_address(
             &[
                 b"metadata",
-                metaplex_token_metadata::id().as_ref(),
+                gpl_metaplex_token_metadata::id().as_ref(),
                 maker_src_mint.key.as_ref(),
             ],
-            &metaplex_token_metadata::id(),
+            &gpl_metaplex_token_metadata::id(),
         );
         let (taker_metadata_key, _) = Pubkey::find_program_address(
             &[
                 b"metadata",
-                metaplex_token_metadata::id().as_ref(),
+                gpl_metaplex_token_metadata::id().as_ref(),
                 taker_src_mint.key.as_ref(),
             ],
-            &metaplex_token_metadata::id(),
+            &gpl_metaplex_token_metadata::id(),
         );
         if *metadata_info.key == maker_metadata_key {
             msg!("Taker pays for fees");
@@ -140,8 +140,8 @@ fn process_accept_offer(
         (maker_size, taker_size)
     };
 
-    let maker_src_token_account: spl_token::state::Account =
-        spl_token::state::Account::unpack(&maker_src_account.data.borrow())?;
+    let maker_src_token_account: gpl_token::state::Account =
+        gpl_token::state::Account::unpack(&maker_src_account.data.borrow())?;
     // Ensure that the delegated amount is exactly equal to the maker_size
     msg!(
         "Delegate {}",
@@ -164,7 +164,7 @@ fn process_accept_offer(
         return Err(ProgramError::InvalidAccountData);
     }
     msg!("Delegate matches");
-    assert_keys_equal(spl_token::id(), *token_program_info.key)?;
+    assert_keys_equal(gpl_token::id(), *token_program_info.key)?;
     // Both of these transfers will fail if the `transfer_authority` is the delegate of these ATA's
     // One consideration is that the taker can get tricked in the case that the maker size is greater than
     // the token amount in the maker's ATA, but these stateless offers should just be invalidated in
@@ -172,7 +172,7 @@ fn process_accept_offer(
     assert_is_ata(maker_src_account, maker_wallet.key, maker_src_mint.key)?;
     assert_is_ata(taker_dst_account, taker_wallet.key, maker_src_mint.key)?;
     invoke_signed(
-        &spl_token::instruction::transfer(
+        &gpl_token::instruction::transfer(
             token_program_info.key,
             maker_src_account.key,
             taker_dst_account.key,
@@ -189,7 +189,7 @@ fn process_accept_offer(
         &[seeds],
     )?;
     msg!("done tx from maker to taker {}", maker_pay_size);
-    if *taker_src_mint.key == spl_token::native_mint::id() {
+    if *taker_src_mint.key == gpl_token::native_mint::id() {
         match system_program_info {
             Some(sys_program_info) => {
                 assert_keys_equal(system_program::id(), *sys_program_info.key)?;
@@ -212,7 +212,7 @@ fn process_accept_offer(
         assert_is_ata(maker_dst_account, maker_wallet.key, taker_src_mint.key)?;
         assert_is_ata(taker_src_account, taker_wallet.key, taker_src_mint.key)?;
         invoke(
-            &spl_token::instruction::transfer(
+            &gpl_token::instruction::transfer(
                 token_program_info.key,
                 taker_src_account.key,
                 maker_dst_account.key,
@@ -281,7 +281,7 @@ fn pay_creator_fees<'a>(
                     if creator_fee > 0 {
                         if seeds.is_empty() {
                             invoke(
-                                &spl_token::instruction::transfer(
+                                &gpl_token::instruction::transfer(
                                     token_program_info.key,
                                     src_account_info.key,
                                     current_creator_token_account_info.key,
@@ -298,7 +298,7 @@ fn pay_creator_fees<'a>(
                             )?;
                         } else {
                             invoke_signed(
-                                &spl_token::instruction::transfer(
+                                &gpl_token::instruction::transfer(
                                     token_program_info.key,
                                     src_account_info.key,
                                     current_creator_token_account_info.key,

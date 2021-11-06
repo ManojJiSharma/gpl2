@@ -11,8 +11,8 @@ from gemachain.account import Account
 from gemachain.rpc.api import Client
 import gemachain.rpc.types as types
 from gemachain.system_program import transfer, TransferParams
-from spl.token._layouts import MINT_LAYOUT, ACCOUNT_LAYOUT
-from spl.token.instructions import (
+from gpl.token._layouts import MINT_LAYOUT, ACCOUNT_LAYOUT
+from gpl.token.instructions import (
     get_associated_token_address, create_associated_token_account,
     mint_to, MintToParams,
 )

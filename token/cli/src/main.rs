@@ -1,4 +1,4 @@
-#![allow(deprecated)] // TODO: Remove when SPL upgrades to Gemachain 1.8
+#![allow(deprecated)] // TODO: Remove when GPL upgrades to Gemachain 1.8
 use clap::{
     crate_description, crate_name, crate_version, value_t, value_t_or_exit, App, AppSettings, Arg,
     ArgMatches, SubCommand,
@@ -39,8 +39,8 @@ use gemachain_sdk::{
     system_instruction, system_program,
     transaction::Transaction,
 };
-use spl_associated_token_account::*;
-use spl_token::{
+use gpl_associated_token_account::*;
+use gpl_token::{
     self,
     instruction::*,
     native_mint,
@@ -295,10 +295,10 @@ fn command_create_token(
             &token,
             minimum_balance_for_rent_exemption,
             Mint::LEN as u64,
-            &spl_token::id(),
+            &gpl_token::id(),
         ),
         initialize_mint(
-            &spl_token::id(),
+            &gpl_token::id(),
             &token,
             &authority,
             freeze_authority_pubkey.as_ref(),
@@ -306,7 +306,7 @@ fn command_create_token(
         )?,
     ];
     if let Some(text) = memo {
-        instructions.push(spl_memo::build_memo(text.as_bytes(), &[&config.fee_payer]));
+        instructions.push(gpl_memo::build_memo(text.as_bytes(), &[&config.fee_payer]));
     }
     Ok(Some((
         minimum_balance_for_rent_exemption,
@@ -339,9 +339,9 @@ fn command_create_account(
                     &account,
                     minimum_balance_for_rent_exemption,
                     Account::LEN as u64,
-                    &spl_token::id(),
+                    &gpl_token::id(),
                 ),
-                initialize_account(&spl_token::id(), &account, &token, &owner)?,
+                initialize_account(&gpl_token::id(), &account, &token, &owner)?,
             ],
         )
     } else {
@@ -406,10 +406,10 @@ fn command_create_multisig(
             &multisig,
             minimum_balance_for_rent_exemption,
             Multisig::LEN as u64,
-            &spl_token::id(),
+            &gpl_token::id(),
         ),
         initialize_multisig(
-            &spl_token::id(),
+            &gpl_token::id(),
             &multisig,
             multisig_members.iter().collect::<Vec<_>>().as_slice(),
             minimum_signers,
@@ -440,7 +440,7 @@ fn command_authorize(
         if let Ok(mint) = Mint::unpack(&target_account.data) {
             match authority_type {
                 AuthorityType::AccountOwner | AuthorityType::CloseAccount => Err(format!(
-                    "Authority type `{}` not supported for SPL Token mints",
+                    "Authority type `{}` not supported for GPL Token mints",
                     auth_str
                 )),
                 AuthorityType::MintTokens => Ok(mint.mint_authority),
@@ -466,7 +466,7 @@ fn command_authorize(
 
             match authority_type {
                 AuthorityType::MintTokens | AuthorityType::FreezeAccount => Err(format!(
-                    "Authority type `{}` not supported for SPL Token accounts",
+                    "Authority type `{}` not supported for GPL Token accounts",
                     auth_str
                 )),
                 AuthorityType::AccountOwner => {
@@ -503,7 +503,7 @@ fn command_authorize(
     );
 
     let instructions = vec![set_authority(
-        &spl_token::id(),
+        &gpl_token::id(),
         &account,
         new_authority.as_ref(),
         authority_type,
@@ -573,7 +573,7 @@ fn command_transfer(
     };
     let (mint_pubkey, decimals) = resolve_mint_info(config, &sender, Some(token), mint_decimals)?;
     let maybe_transfer_balance =
-        ui_amount.map(|ui_amount| spl_token::ui_amount_to_amount(ui_amount, decimals));
+        ui_amount.map(|ui_amount| gpl_token::ui_amount_to_amount(ui_amount, decimals));
     let transfer_balance = if !config.sign_only {
         let sender_token_amount = config
             .rpc_client
@@ -596,7 +596,7 @@ fn command_transfer(
             config,
             format!(
                 "Transfer {} tokens\n  Sender: {}\n  Recipient: {}",
-                spl_token::amount_to_ui_amount(transfer_balance, decimals),
+                gpl_token::amount_to_ui_amount(transfer_balance, decimals),
                 sender,
                 recipient
             ),
@@ -624,7 +624,7 @@ fn command_transfer(
             .rpc_client
             .get_account_with_commitment(&recipient, config.rpc_client.commitment())?
             .value
-            .map(|account| account.owner == spl_token::id() && account.data.len() == Account::LEN);
+            .map(|account| account.owner == gpl_token::id() && account.data.len() == Account::LEN);
 
         if recipient_account_info.is_none() && !allow_unfunded_recipient {
             return Err("Error: The recipient address is not funded. \
@@ -659,7 +659,7 @@ fn command_transfer(
             {
                 if recipient_token_account_data.owner == system_program::id() {
                     true
-                } else if recipient_token_account_data.owner == spl_token::id() {
+                } else if recipient_token_account_data.owner == gpl_token::id() {
                     false
                 } else {
                     return Err(
@@ -705,7 +705,7 @@ fn command_transfer(
 
     if use_unchecked_instruction {
         instructions.push(transfer(
-            &spl_token::id(),
+            &gpl_token::id(),
             &sender,
             &recipient_token_account,
             &sender_owner,
@@ -714,7 +714,7 @@ fn command_transfer(
         )?);
     } else {
         instructions.push(transfer_checked(
-            &spl_token::id(),
+            &gpl_token::id(),
             &sender,
             &mint_pubkey,
             &recipient_token_account,
@@ -725,7 +725,7 @@ fn command_transfer(
         )?);
     }
     if let Some(text) = memo {
-        instructions.push(spl_memo::build_memo(text.as_bytes(), &[&config.fee_payer]));
+        instructions.push(gpl_memo::build_memo(text.as_bytes(), &[&config.fee_payer]));
     }
     Ok(Some((
         minimum_balance_for_rent_exemption,
@@ -750,11 +750,11 @@ fn command_burn(
     );
 
     let (mint_pubkey, decimals) = resolve_mint_info(config, &source, mint_address, mint_decimals)?;
-    let amount = spl_token::ui_amount_to_amount(ui_amount, decimals);
+    let amount = gpl_token::ui_amount_to_amount(ui_amount, decimals);
 
     let mut instructions = if use_unchecked_instruction {
         vec![burn(
-            &spl_token::id(),
+            &gpl_token::id(),
             &source,
             &mint_pubkey,
             &source_owner,
@@ -763,7 +763,7 @@ fn command_burn(
         )?]
     } else {
         vec![burn_checked(
-            &spl_token::id(),
+            &gpl_token::id(),
             &source,
             &mint_pubkey,
             &source_owner,
@@ -773,7 +773,7 @@ fn command_burn(
         )?]
     };
     if let Some(text) = memo {
-        instructions.push(spl_memo::build_memo(text.as_bytes(), &[&config.fee_payer]));
+        instructions.push(gpl_memo::build_memo(text.as_bytes(), &[&config.fee_payer]));
     }
     Ok(Some((0, vec![instructions])))
 }
@@ -796,11 +796,11 @@ fn command_mint(
     );
 
     let (_, decimals) = resolve_mint_info(config, &recipient, None, mint_decimals)?;
-    let amount = spl_token::ui_amount_to_amount(ui_amount, decimals);
+    let amount = gpl_token::ui_amount_to_amount(ui_amount, decimals);
 
     let instructions = if use_unchecked_instruction {
         vec![mint_to(
-            &spl_token::id(),
+            &gpl_token::id(),
             &token,
             &recipient,
             &mint_authority,
@@ -809,7 +809,7 @@ fn command_mint(
         )?]
     } else {
         vec![mint_to_checked(
-            &spl_token::id(),
+            &gpl_token::id(),
             &token,
             &recipient,
             &mint_authority,
@@ -835,7 +835,7 @@ fn command_freeze(
     );
 
     let instructions = vec![freeze_account(
-        &spl_token::id(),
+        &gpl_token::id(),
         &account,
         &token,
         &freeze_authority,
@@ -858,7 +858,7 @@ fn command_thaw(
     );
 
     let instructions = vec![thaw_account(
-        &spl_token::id(),
+        &gpl_token::id(),
         &account,
         &token,
         &freeze_authority,
@@ -886,10 +886,10 @@ fn command_wrap(
                 &wrapped_gema_account,
                 carats,
                 Account::LEN as u64,
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
             initialize_account(
-                &spl_token::id(),
+                &gpl_token::id(),
                 &wrapped_gema_account,
                 &native_mint::id(),
                 &wallet_address,
@@ -948,7 +948,7 @@ fn command_unwrap(
     println_display(config, format!("  Recipient: {}", &wallet_address));
 
     let instructions = vec![close_account(
-        &spl_token::id(),
+        &gpl_token::id(),
         &address,
         &wallet_address,
         &wallet_address,
@@ -977,11 +977,11 @@ fn command_approve(
     );
 
     let (mint_pubkey, decimals) = resolve_mint_info(config, &account, mint_address, mint_decimals)?;
-    let amount = spl_token::ui_amount_to_amount(ui_amount, decimals);
+    let amount = gpl_token::ui_amount_to_amount(ui_amount, decimals);
 
     let instructions = if use_unchecked_instruction {
         vec![approve(
-            &spl_token::id(),
+            &gpl_token::id(),
             &account,
             &delegate,
             &owner,
@@ -990,7 +990,7 @@ fn command_approve(
         )?]
     } else {
         vec![approve_checked(
-            &spl_token::id(),
+            &gpl_token::id(),
             &account,
             &mint_pubkey,
             &delegate,
@@ -1037,7 +1037,7 @@ fn command_revoke(
     }
 
     let instructions = vec![revoke(
-        &spl_token::id(),
+        &gpl_token::id(),
         &account,
         &owner,
         &config.multisigner_pubkeys,
@@ -1078,7 +1078,7 @@ fn command_close(
     }
 
     let instructions = vec![close_account(
-        &spl_token::id(),
+        &gpl_token::id(),
         &account,
         &recipient,
         &close_authority,
@@ -1120,7 +1120,7 @@ fn command_accounts(config: &Config, token: Option<Pubkey>, owner: Pubkey) -> Co
         &owner,
         match token {
             Some(token) => TokenAccountsFilter::Mint(token),
-            None => TokenAccountsFilter::ProgramId(spl_token::id()),
+            None => TokenAccountsFilter::ProgramId(gpl_token::id()),
         },
     )?;
     if accounts.is_empty() {
@@ -1218,7 +1218,7 @@ fn command_gc(config: &Config, owner: Pubkey) -> CommandResult {
     println_display(config, "Fetching token accounts".to_string());
     let accounts = config
         .rpc_client
-        .get_token_accounts_by_owner(&owner, TokenAccountsFilter::ProgramId(spl_token::id()))?;
+        .get_token_accounts_by_owner(&owner, TokenAccountsFilter::ProgramId(gpl_token::id()))?;
     if accounts.is_empty() {
         println_display(config, "Nothing to do".to_string());
         return Ok(None);
@@ -1236,7 +1236,7 @@ fn command_gc(config: &Config, owner: Pubkey) -> CommandResult {
 
     for keyed_account in accounts {
         if let UiAccountData::Json(parsed_account) = keyed_account.account.data {
-            if parsed_account.program == "spl-token" {
+            if parsed_account.program == "gpl-token" {
                 if let Ok(TokenAccountType::Account(ui_token_account)) =
                     serde_json::from_value(parsed_account.parsed)
                 {
@@ -1310,7 +1310,7 @@ fn command_gc(config: &Config, owner: Pubkey) -> CommandResult {
             // Transfer the account balance into the associated token account
             if amount > 0 {
                 account_instructions.push(transfer_checked(
-                    &spl_token::id(),
+                    &gpl_token::id(),
                     &address,
                     &token,
                     &associated_token_account,
@@ -1323,7 +1323,7 @@ fn command_gc(config: &Config, owner: Pubkey) -> CommandResult {
             // Close the account if config.owner is able to
             if close_authority == owner {
                 account_instructions.push(close_account(
-                    &spl_token::id(),
+                    &gpl_token::id(),
                     &address,
                     &owner,
                     &owner,
@@ -1341,7 +1341,7 @@ fn command_gc(config: &Config, owner: Pubkey) -> CommandResult {
 }
 
 fn command_sync_native(native_account_address: Pubkey) -> CommandResult {
-    let instructions = vec![sync_native(&spl_token::id(), &native_account_address)?];
+    let instructions = vec![sync_native(&gpl_token::id(), &native_account_address)?];
     Ok(Some((0, vec![instructions])))
 }
 
@@ -2081,7 +2081,7 @@ fn main() {
         )
         .subcommand(
             SubCommand::with_name("account-info")
-                .about("Query details of an SPL Token account by address")
+                .about("Query details of an GPL Token account by address")
                 .arg(
                     Arg::with_name("token")
                         .validator(is_valid_pubkey)
@@ -2113,7 +2113,7 @@ fn main() {
         )
         .subcommand(
             SubCommand::with_name("multisig-info")
-                .about("Query details about and SPL Token multisig account by address")
+                .about("Query details about and GPL Token multisig account by address")
                 .arg(
                     Arg::with_name("address")
                     .validator(is_valid_pubkey)
@@ -2121,7 +2121,7 @@ fn main() {
                     .takes_value(true)
                     .index(1)
                     .required(true)
-                    .help("The address of the SPL Token multisig account to query"),
+                    .help("The address of the GPL Token multisig account to query"),
                 ),
         )
         .subcommand(
@@ -2603,7 +2603,7 @@ fn main() {
             match config.output_format {
                 OutputFormat::Json | OutputFormat::JsonCompact => {
                     eprintln!(
-                        "`spl-token gc` does not support the `--ouput` parameter at this time"
+                        "`gpl-token gc` does not support the `--ouput` parameter at this time"
                     );
                     exit(1);
                 }

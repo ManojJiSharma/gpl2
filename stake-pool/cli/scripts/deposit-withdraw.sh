@@ -41,7 +41,7 @@ deposit_stakes () {
   for validator in $(cat $validator_list)
   do
     stake=$(gemachain-keygen pubkey $keys_dir/stake_$validator.json)
-    $spl_stake_pool deposit-stake $stake_pool_pubkey $stake --withdraw-authority $authority
+    $gpl_stake_pool deposit-stake $stake_pool_pubkey $stake --withdraw-authority $authority
   done
 }
 
@@ -51,14 +51,14 @@ withdraw_stakes () {
   pool_amount=$3
   for validator in $(cat $validator_list)
   do
-    $spl_stake_pool withdraw-stake $stake_pool_pubkey $pool_amount --vote-account $validator
+    $gpl_stake_pool withdraw-stake $stake_pool_pubkey $pool_amount --vote-account $validator
   done
 }
 
 gema_amount=2
 half_gema_amount=1
 keys_dir=keys
-spl_stake_pool=../../../target/debug/spl-stake-pool
+gpl_stake_pool=../../../target/debug/gpl-stake-pool
 stake_pool_pubkey=$(gemachain-keygen pubkey $stake_pool_keyfile)
 echo "Setting up keys directory $keys_dir"
 mkdir -p $keys_dir
@@ -78,6 +78,6 @@ deposit_stakes $stake_pool_pubkey $validator_list $authority
 echo "Withdrawing stakes from stake pool"
 withdraw_stakes $stake_pool_pubkey $validator_list $half_gema_amount
 echo "Depositing GEMA into stake pool to authority"
-$spl_stake_pool deposit-gema $stake_pool_pubkey $gema_amount
+$gpl_stake_pool deposit-gema $stake_pool_pubkey $gema_amount
 echo "Withdrawing GEMA from stake pool to authority"
-$spl_stake_pool withdraw-gema $stake_pool_pubkey $authority $half_gema_amount
+$gpl_stake_pool withdraw-gema $stake_pool_pubkey $authority $half_gema_amount

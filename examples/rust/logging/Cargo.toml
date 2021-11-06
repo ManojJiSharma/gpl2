@@ -1,5 +1,5 @@
 [package]
-name = "spl-example-logging"
+name = "gpl-example-logging"
 version = "1.0.0"
 description = "Gemachain Program Library Logging Example"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

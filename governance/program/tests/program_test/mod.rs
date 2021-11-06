@@ -14,7 +14,7 @@ use gemachain_program_test::*;
 
 use gemachain_sdk::signature::{Keypair, Signer};
 
-use spl_governance::{
+use gpl_governance::{
     addins::voter_weight::{VoterWeightAccountType, VoterWeightRecord},
     instruction::{
         add_signatory, cancel_proposal, cast_vote, create_account_governance,
@@ -59,7 +59,7 @@ use crate::program_test::cookies::{
     RealmConfigCookie, SignatoryRecordCookie, VoterWeightRecordCookie,
 };
 
-use spl_governance_test_sdk::{
+use gpl_governance_test_sdk::{
     tools::{clone_keypair, NopOverride},
     ProgramTestBench, TestBenchProgram,
 };
@@ -100,7 +100,7 @@ impl GovernanceProgramTest {
         let program_id = Pubkey::from_str("Governance111111111111111111111111111111111").unwrap();
 
         let program = TestBenchProgram {
-            program_name: "spl_governance",
+            program_name: "gpl_governance",
             program_id,
             process_instruction: processor!(process_instruction),
         };
@@ -112,7 +112,7 @@ impl GovernanceProgramTest {
                 Pubkey::from_str("VoterWeight11111111111111111111111111111111").unwrap();
 
             let vote_weight_addin = TestBenchProgram {
-                program_name: "spl_governance_voter_weight_addin",
+                program_name: "gpl_governance_voter_weight_addin",
                 program_id: voter_weight_addin_id,
                 process_instruction: None,
             };
@@ -957,7 +957,7 @@ impl GovernanceProgramTest {
             min_instruction_hold_up_time: 10,
             max_voting_time: 10,
             vote_threshold_percentage: VoteThresholdPercentage::YesVote(60),
-            vote_weight_source: spl_governance::state::enums::VoteWeightSource::Deposit,
+            vote_weight_source: gpl_governance::state::enums::VoteWeightSource::Deposit,
             proposal_cool_off_time: 0,
         }
     }
@@ -1785,8 +1785,8 @@ impl GovernanceProgramTest {
             )
             .await;
 
-        let mut instruction = spl_token::instruction::mint_to(
-            &spl_token::id(),
+        let mut instruction = gpl_token::instruction::mint_to(
+            &gpl_token::id(),
             &governed_mint_cookie.address,
             &token_account_keypair.pubkey(),
             &proposal_cookie.account.governance,
@@ -1821,8 +1821,8 @@ impl GovernanceProgramTest {
             )
             .await;
 
-        let mut instruction = spl_token::instruction::transfer(
-            &spl_token::id(),
+        let mut instruction = gpl_token::instruction::transfer(
+            &gpl_token::id(),
             &governed_token_cookie.address,
             &token_account_keypair.pubkey(),
             &proposal_cookie.account.governance,
@@ -2183,12 +2183,12 @@ impl GovernanceProgramTest {
     }
 
     #[allow(dead_code)]
-    pub async fn get_token_account(&mut self, address: &Pubkey) -> spl_token::state::Account {
+    pub async fn get_token_account(&mut self, address: &Pubkey) -> gpl_token::state::Account {
         self.get_packed_account(address).await
     }
 
     #[allow(dead_code)]
-    pub async fn get_mint_account(&mut self, address: &Pubkey) -> spl_token::state::Mint {
+    pub async fn get_mint_account(&mut self, address: &Pubkey) -> gpl_token::state::Mint {
         self.get_packed_account(address).await
     }
 

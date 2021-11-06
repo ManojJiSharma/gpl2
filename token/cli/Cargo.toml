@@ -1,10 +1,10 @@
 [package]
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
-description = "SPL-Token Command-line Utility"
+description = "GPL-Token Command-line Utility"
 edition = "2018"
-homepage = "https://spl.gemachain.com/token"
+homepage = "https://.gemachain.com/token"
 license = "Apache-2.0"
-name = "spl-token-cli"
+name = "gpl-token-cli"
 repository = "https://github.com/gemacoin/gemachain.git"
 version = "2.0.15"
 
@@ -24,10 +24,10 @@ gemachain-logger = "=1.8.2"
 gemachain-remote-wallet = "=1.8.2"
 gemachain-sdk = "=1.8.2"
 gemachain-transaction-status = "=1.8.2"
-spl-token = { version = "3.2", path="../program", features = [ "no-entrypoint" ] }
-spl-associated-token-account = { version = "1.0", path="../../associated-token-account/program", features = [ "no-entrypoint" ] }
-spl-memo = { version = "3.0.1", path="../../memo/program", features = ["no-entrypoint"] }
+gpl-token = { version = "3.2", path="../program", features = [ "no-entrypoint" ] }
+gpl-associated-token-account = { version = "1.0", path="../../associated-token-account/program", features = [ "no-entrypoint" ] }
+gpl-memo = { version = "3.0.1", path="../../memo/program", features = ["no-entrypoint"] }
 
 [[bin]]
-name = "spl-token"
+name = "gpl-token"
 path = "src/main.rs"

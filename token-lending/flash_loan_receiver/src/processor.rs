@@ -18,7 +18,7 @@ pub fn process_instruction(
     let account_info_iter = &mut accounts.iter();
     let destination_liq_info = next_account_info(account_info_iter)?;
     let source_liq_info = next_account_info(account_info_iter)?;
-    let spl_token_program_info = next_account_info(account_info_iter)?;
+    let gpl_token_program_info = next_account_info(account_info_iter)?;
     let user_transfer_authority_info = next_account_info(account_info_iter)?;
 
     let (tag, rest) = input
@@ -36,8 +36,8 @@ pub fn process_instruction(
     let amount = unpack_amount(rest)?;
 
     invoke(
-        &spl_token::instruction::transfer(
-            spl_token_program_info.key,
+        &gpl_token::instruction::transfer(
+            gpl_token_program_info.key,
             destination_liq_info.key,
             source_liq_info.key,
             user_transfer_authority_info.key,
@@ -48,7 +48,7 @@ pub fn process_instruction(
             source_liq_info.clone(),
             destination_liq_info.clone(),
             user_transfer_authority_info.clone(),
-            spl_token_program_info.clone(),
+            gpl_token_program_info.clone(),
         ],
     )?;
     Ok(())

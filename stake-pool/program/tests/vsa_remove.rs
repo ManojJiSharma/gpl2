@@ -18,7 +18,7 @@ use {
         transaction::{Transaction, TransactionError},
         transport::TransportError,
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         error::StakePoolError, find_transient_stake_program_address, id, instruction, state,
     },
 };
@@ -771,7 +771,7 @@ async fn success_with_hijacked_transient_account() {
                 &stake_pool_accounts.reserve_stake.pubkey(),
                 &stake_pool_accounts.pool_fee_account.pubkey(),
                 &stake_pool_accounts.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
             instruction::cleanup_removed_validator_entries(
                 &id(),

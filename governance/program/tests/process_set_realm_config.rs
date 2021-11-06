@@ -6,7 +6,7 @@ use gemachain_program_test::*;
 mod program_test;
 
 use program_test::*;
-use spl_governance::{
+use gpl_governance::{
     error::GovernanceError,
     state::{enums::MintMaxVoteWeightSource, realm::RealmConfigArgs},
 };

@@ -1,5 +1,5 @@
 [package]
-name = "spl-feature-proposal"
+name = "gpl-feature-proposal"
 version = "1.0.0"
 description = "Gemachain Program Library Feature Proposal Program"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -15,7 +15,7 @@ test-bpf = []
 borsh = "0.9"
 borsh-derive = "0.9.0"
 gemachain-program = "1.8.2"
-spl-token = { version = "3.2", path = "../../token/program", features = ["no-entrypoint"] }
+gpl-token = { version = "3.2", path = "../../token/program", features = ["no-entrypoint"] }
 
 [dev-dependencies]
 gemachain-program-test = "1.8.2"

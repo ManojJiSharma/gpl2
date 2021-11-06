@@ -11,12 +11,12 @@ use {
         system_instruction,
         transaction::Transaction,
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         find_transient_stake_program_address, id, instruction,
         state::{StakePool, StakeStatus, ValidatorList},
         MAX_VALIDATORS_TO_UPDATE, MINIMUM_ACTIVE_STAKE,
     },
-    spl_token::state::Mint,
+    gpl_token::state::Mint,
 };
 
 async fn setup(
@@ -755,7 +755,7 @@ async fn success_ignoring_hijacked_transient_stake() {
                 &stake_pool_accounts.reserve_stake.pubkey(),
                 &stake_pool_accounts.pool_fee_account.pubkey(),
                 &stake_pool_accounts.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
             ),
             instruction::cleanup_removed_validator_entries(
                 &id(),

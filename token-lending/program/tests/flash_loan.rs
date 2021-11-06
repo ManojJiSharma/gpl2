@@ -10,16 +10,16 @@ use gemachain_sdk::{
     signature::{Keypair, Signer},
     transaction::{Transaction, TransactionError},
 };
-use spl_token::gemachain_program::instruction::InstructionError;
-use spl_token_lending::{
+use gpl_token::gemachain_program::instruction::InstructionError;
+use gpl_token_lending::{
     error::LendingError, instruction::flash_loan, processor::process_instruction,
 };
 
 #[tokio::test]
 async fn test_success() {
     let mut test = ProgramTest::new(
-        "spl_token_lending",
-        spl_token_lending::id(),
+        "gpl_token_lending",
+        gpl_token_lending::id(),
         processor!(process_instruction),
     );
 
@@ -86,7 +86,7 @@ async fn test_success() {
 
     let mut transaction = Transaction::new_with_payer(
         &[flash_loan(
-            spl_token_lending::id(),
+            gpl_token_lending::id(),
             FLASH_LOAN_AMOUNT,
             usdc_test_reserve.liquidity_supply_pubkey,
             program_owned_token_account,
@@ -142,8 +142,8 @@ async fn test_success() {
 #[tokio::test]
 async fn test_failure() {
     let mut test = ProgramTest::new(
-        "spl_token_lending",
-        spl_token_lending::id(),
+        "gpl_token_lending",
+        gpl_token_lending::id(),
         processor!(process_instruction),
     );
 
@@ -198,7 +198,7 @@ async fn test_failure() {
 
     let mut transaction = Transaction::new_with_payer(
         &[flash_loan(
-            spl_token_lending::id(),
+            gpl_token_lending::id(),
             FLASH_LOAN_AMOUNT,
             usdc_test_reserve.liquidity_supply_pubkey,
             program_owned_token_account,

@@ -19,7 +19,7 @@ use {
         transaction::{Transaction, TransactionError},
         transport::TransportError,
     },
-    spl_stake_pool::{error::StakePoolError, find_stake_program_address, id, instruction, state},
+    gpl_stake_pool::{error::StakePoolError, find_stake_program_address, id, instruction, state},
 };
 
 async fn setup() -> (

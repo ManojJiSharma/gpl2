@@ -1,6 +1,6 @@
 //! State transition types
 
-use spl_token::state::{Account, AccountState};
+use gpl_token::state::{Account, AccountState};
 use {
     crate::{
         big_vec::BigVec, error::StakePoolError, stake_program::Lockup, MAX_WITHDRAWAL_FEE_INCREASE,
@@ -18,7 +18,7 @@ use {
         program_pack::{Pack, Sealed},
         pubkey::{Pubkey, PUBKEY_BYTES},
     },
-    spl_math::checked_ceil_div::CheckedCeilDiv,
+    gpl_math::checked_ceil_div::CheckedCeilDiv,
     std::{convert::TryFrom, fmt, matches},
 };
 

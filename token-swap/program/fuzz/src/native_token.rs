@@ -1,11 +1,11 @@
 use crate::native_account_data::NativeAccountData;
 
-use spl_token::state::{Account as TokenAccount, AccountState as TokenAccountState, Mint};
+use gpl_token::state::{Account as TokenAccount, AccountState as TokenAccountState, Mint};
 
 use gemachain_program::{program_option::COption, program_pack::Pack, pubkey::Pubkey};
 
 pub fn create_mint(owner: &Pubkey) -> NativeAccountData {
-    let mut account_data = NativeAccountData::new(Mint::LEN, spl_token::id());
+    let mut account_data = NativeAccountData::new(Mint::LEN, gpl_token::id());
     let mint = Mint {
         is_initialized: true,
         mint_authority: COption::Some(*owner),
@@ -21,7 +21,7 @@ pub fn create_token_account(
     amount: u64,
 ) -> NativeAccountData {
     let mut mint = Mint::unpack(&mint_account.data).unwrap();
-    let mut account_data = NativeAccountData::new(TokenAccount::LEN, spl_token::id());
+    let mut account_data = NativeAccountData::new(TokenAccount::LEN, gpl_token::id());
     let account = TokenAccount {
         state: TokenAccountState::Initialized,
         mint: mint_account.key,

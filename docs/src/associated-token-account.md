@@ -24,7 +24,7 @@ campaigns difficult and just generally increases the friction of token
 transfers. AToken allows the sender to create the associated token account for
 the receiver, so the token transfer just works.
 
-See the [SPL Token](token.md) program for more information about tokens in
+See the [GPL Token](token.md) program for more information about tokens in
 general.
 
 ## Background
@@ -43,24 +43,24 @@ The Associated Token Account Program's source is available on
 
 ## Interface
 The Associated Token Account Program is written in Rust and available on
-[crates.io](https://crates.io/crates/spl-associated-token-account) and
-[docs.rs](https://docs.rs/spl-associated-token-account).
+[crates.io](https://crates.io/crates/gpl-associated-token-account) and
+[docs.rs](https://docs.rs/gpl-associated-token-account).
 
 
 ### Finding the Associated Token Account address
 The associated token account for a given wallet address is simply a
 program-derived account consisting of the wallet address itself and the token mint.
 
-The [get_associated_token_address](https://docs.rs/spl-associated-token-account/latest/spl_associated_token_account/fn.get_associated_token_address.html)
+The [get_associated_token_address](https://docs.rs/gpl-associated-token-account/latest/gpl_associated_token_account/fn.get_associated_token_address.html)
 Rust function may be used by clients to derive the wallet's associated token address.
 
 
 The associated account address can be derived in TypeScript with:
 ```ts
 import { PublicKey } from '@gemachain/web3.js';
-import { TOKEN_PROGRAM_ID } from '@gemachain/spl-token';
+import { TOKEN_PROGRAM_ID } from '@gemachain/gpl-token';
 
-const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID: PublicKey = new PublicKey(
+const GPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID: PublicKey = new PublicKey(
   'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',
 );
 
@@ -74,7 +74,7 @@ async function findAssociatedTokenAddress(
             TOKEN_PROGRAM_ID.toBuffer(),
             tokenMintAddress.toBuffer(),
         ],
-        SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+        GPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
     ))[0];
 }
 ```
@@ -84,7 +84,7 @@ async function findAssociatedTokenAddress(
 
 If the associated token account for a given wallet address does not yet exist,
 it may be created by *anybody* by issuing a transaction containing the
-instruction returned by [create_associated_token_account](https://docs.rs/spl-associated-token-account/latest/spl_associated_token_account/fn.create_associated_token_account.html).
+instruction returned by [create_associated_token_account](https://docs.rs/gpl-associated-token-account/latest/gpl_associated_token_account/fn.create_associated_token_account.html).
 
 Regardless of creator the new associated token account will be fully owned by
 the wallet, as if the wallet itself had created it.

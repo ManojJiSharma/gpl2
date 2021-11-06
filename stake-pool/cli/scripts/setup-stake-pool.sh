@@ -42,7 +42,7 @@ command_args+=( --deposit-authority keys/authority.json )
 ###################################################
 
 keys_dir=keys
-spl_stake_pool=../../../target/debug/spl-stake-pool
+gpl_stake_pool=../../../target/debug/gpl-stake-pool
 
 mkdir -p $keys_dir
 
@@ -62,7 +62,7 @@ add_validator_stakes () {
   validator_list=$2
   for validator in $(cat $validator_list)
   do
-    $spl_stake_pool "${global_args[@]}" add-validator $pool $validator
+    $gpl_stake_pool "${global_args[@]}" add-validator $pool $validator
   done
 }
 
@@ -78,7 +78,7 @@ create_keypair $mint_keyfile
 create_keypair $reserve_keyfile
 
 set -ex
-$spl_stake_pool \
+$gpl_stake_pool \
   "${global_args[@]}" \
   create-pool \
   "${command_args[@]}" \

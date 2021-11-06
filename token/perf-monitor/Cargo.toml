@@ -1,7 +1,7 @@
 [package]
-name = "spl_token_perf_monitor"
+name = "gpl_token_perf_monitor"
 version = "0.0.1"
-description = "SPL Token performance monitor"
+description = "GPL Token performance monitor"
 authors = ["Gemachain Maintainers <maintainers@gemachain.com>"]
 repository = "https://github.com/gemacoin/gemachain.git"
 license = "Apache-2.0"
@@ -9,7 +9,7 @@ edition = "2018"
 
 [dev-dependencies]
 rand = { version = "0.7.0"}
-spl-token = { path = "../program", features = [ "no-entrypoint" ] }
+gpl-token = { path = "../program", features = [ "no-entrypoint" ] }
 gemachain-runtime = "1.8.2"
 gemachain-sdk = "1.8.2"
 gemachain-bpf-loader-program = "1.8.2"

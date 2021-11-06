@@ -9,8 +9,8 @@ use gemachain_sdk::{
     signature::{Keypair, Signer},
     transaction::Transaction,
 };
-use spl_token::instruction::approve;
-use spl_token_lending::{
+use gpl_token::instruction::approve;
+use gpl_token_lending::{
     instruction::{liquidate_obligation, refresh_obligation},
     processor::process_instruction,
     state::INITIAL_COLLATERAL_RATIO,
@@ -19,8 +19,8 @@ use spl_token_lending::{
 #[tokio::test]
 async fn test_success() {
     let mut test = ProgramTest::new(
-        "spl_token_lending",
-        spl_token_lending::id(),
+        "gpl_token_lending",
+        gpl_token_lending::id(),
         processor!(process_instruction),
     );
 
@@ -56,7 +56,7 @@ async fn test_success() {
         &user_accounts_owner,
         AddReserveArgs {
             collateral_amount: GEMA_RESERVE_COLLATERAL_CARATS,
-            liquidity_mint_pubkey: spl_token::native_mint::id(),
+            liquidity_mint_pubkey: gpl_token::native_mint::id(),
             liquidity_mint_decimals: 9,
             config: reserve_config,
             mark_fresh: true,
@@ -108,7 +108,7 @@ async fn test_success() {
     let mut transaction = Transaction::new_with_payer(
         &[
             approve(
-                &spl_token::id(),
+                &gpl_token::id(),
                 &usdc_test_reserve.user_liquidity_pubkey,
                 &user_transfer_authority.pubkey(),
                 &user_accounts_owner.pubkey(),
@@ -117,12 +117,12 @@ async fn test_success() {
             )
             .unwrap(),
             refresh_obligation(
-                spl_token_lending::id(),
+                gpl_token_lending::id(),
                 test_obligation.pubkey,
                 vec![gema_test_reserve.pubkey, usdc_test_reserve.pubkey],
             ),
             liquidate_obligation(
-                spl_token_lending::id(),
+                gpl_token_lending::id(),
                 USDC_LIQUIDATION_AMOUNT_FRACTIONAL,
                 usdc_test_reserve.user_liquidity_pubkey,
                 gema_test_reserve.user_collateral_pubkey,

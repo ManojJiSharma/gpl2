@@ -8,7 +8,7 @@ use {
         rpc_filter::{Memcmp, MemcmpEncodedBytes, RpcFilterType},
     },
     gemachain_program::{borsh::try_from_slice_unchecked, program_pack::Pack, pubkey::Pubkey, stake},
-    spl_stake_pool::state::{StakePool, ValidatorList},
+    gpl_stake_pool::state::{StakePool, ValidatorList},
 };
 
 type Error = Box<dyn std::error::Error>;
@@ -37,9 +37,9 @@ pub fn get_token_account(
     rpc_client: &RpcClient,
     token_account_address: &Pubkey,
     expected_token_mint: &Pubkey,
-) -> Result<spl_token::state::Account, Error> {
+) -> Result<gpl_token::state::Account, Error> {
     let account_data = rpc_client.get_account_data(token_account_address)?;
-    let token_account = spl_token::state::Account::unpack_from_slice(account_data.as_slice())
+    let token_account = gpl_token::state::Account::unpack_from_slice(account_data.as_slice())
         .map_err(|err| format!("Invalid token account {}: {}", token_account_address, err))?;
 
     if token_account.mint != *expected_token_mint {
@@ -56,9 +56,9 @@ pub fn get_token_account(
 pub fn get_token_mint(
     rpc_client: &RpcClient,
     token_mint_address: &Pubkey,
-) -> Result<spl_token::state::Mint, Error> {
+) -> Result<gpl_token::state::Mint, Error> {
     let account_data = rpc_client.get_account_data(token_mint_address)?;
-    let token_mint = spl_token::state::Mint::unpack_from_slice(account_data.as_slice())
+    let token_mint = gpl_token::state::Mint::unpack_from_slice(account_data.as_slice())
         .map_err(|err| format!("Invalid token mint {}: {}", token_mint_address, err))?;
 
     Ok(token_mint)
@@ -79,7 +79,7 @@ pub(crate) fn get_stake_pools(
 ) -> Result<Vec<(Pubkey, StakePool, ValidatorList)>, ClientError> {
     rpc_client
         .get_program_accounts_with_config(
-            &spl_stake_pool::id(),
+            &gpl_stake_pool::id(),
             RpcProgramAccountsConfig {
                 filters: Some(vec![RpcFilterType::Memcmp(Memcmp {
                     offset: 0, // 0 is the account type

@@ -19,7 +19,7 @@ use {
         self, vote_instruction,
         vote_state::{VoteInit, VoteState},
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         find_stake_program_address, find_transient_stake_program_address, id, instruction,
         processor,
         state::{self, FeeType, ValidatorList},
@@ -33,7 +33,7 @@ pub const DEFAULT_TRANSIENT_STAKE_SEED: u64 = 42;
 
 pub fn program_test() -> ProgramTest {
     ProgramTest::new(
-        "spl_stake_pool",
+        "gpl_stake_pool",
         id(),
         processor!(processor::Processor::process),
     )
@@ -55,7 +55,7 @@ pub async fn create_mint(
     manager: &Pubkey,
 ) -> Result<(), TransportError> {
     let rent = banks_client.get_rent().await.unwrap();
-    let mint_rent = rent.minimum_balance(spl_token::state::Mint::LEN);
+    let mint_rent = rent.minimum_balance(gpl_token::state::Mint::LEN);
 
     let mut transaction = Transaction::new_with_payer(
         &[
@@ -63,11 +63,11 @@ pub async fn create_mint(
                 &payer.pubkey(),
                 &pool_mint.pubkey(),
                 mint_rent,
-                spl_token::state::Mint::LEN as u64,
-                &spl_token::id(),
+                gpl_token::state::Mint::LEN as u64,
+                &gpl_token::id(),
             ),
-            spl_token::instruction::initialize_mint(
-                &spl_token::id(),
+            gpl_token::instruction::initialize_mint(
+                &gpl_token::id(),
                 &pool_mint.pubkey(),
                 manager,
                 None,
@@ -102,7 +102,7 @@ pub async fn transfer(
     banks_client.process_transaction(transaction).await.unwrap();
 }
 
-pub async fn transfer_spl_tokens(
+pub async fn transfer_gpl_tokens(
     banks_client: &mut BanksClient,
     payer: &Keypair,
     recent_blockhash: &Hash,
@@ -112,8 +112,8 @@ pub async fn transfer_spl_tokens(
     amount: u64,
 ) {
     let transaction = Transaction::new_signed_with_payer(
-        &[spl_token::instruction::transfer(
-            &spl_token::id(),
+        &[gpl_token::instruction::transfer(
+            &gpl_token::id(),
             source,
             destination,
             &authority.pubkey(),
@@ -137,7 +137,7 @@ pub async fn create_token_account(
     manager: &Pubkey,
 ) -> Result<(), TransportError> {
     let rent = banks_client.get_rent().await.unwrap();
-    let account_rent = rent.minimum_balance(spl_token::state::Account::LEN);
+    let account_rent = rent.minimum_balance(gpl_token::state::Account::LEN);
 
     let mut transaction = Transaction::new_with_payer(
         &[
@@ -145,11 +145,11 @@ pub async fn create_token_account(
                 &payer.pubkey(),
                 &account.pubkey(),
                 account_rent,
-                spl_token::state::Account::LEN as u64,
-                &spl_token::id(),
+                gpl_token::state::Account::LEN as u64,
+                &gpl_token::id(),
             ),
-            spl_token::instruction::initialize_account(
-                &spl_token::id(),
+            gpl_token::instruction::initialize_account(
+                &gpl_token::id(),
                 &account.pubkey(),
                 pool_mint,
                 manager,
@@ -172,8 +172,8 @@ pub async fn close_token_account(
     manager: &Keypair,
 ) -> Result<(), TransportError> {
     let mut transaction = Transaction::new_with_payer(
-        &[spl_token::instruction::close_account(
-            &spl_token::id(),
+        &[gpl_token::instruction::close_account(
+            &gpl_token::id(),
             account,
             carats_destination,
             &manager.pubkey(),
@@ -196,8 +196,8 @@ pub async fn freeze_token_account(
     manager: &Keypair,
 ) -> Result<(), TransportError> {
     let mut transaction = Transaction::new_with_payer(
-        &[spl_token::instruction::freeze_account(
-            &spl_token::id(),
+        &[gpl_token::instruction::freeze_account(
+            &gpl_token::id(),
             account,
             pool_mint,
             &manager.pubkey(),
@@ -221,8 +221,8 @@ pub async fn mint_tokens(
     amount: u64,
 ) -> Result<(), TransportError> {
     let transaction = Transaction::new_signed_with_payer(
-        &[spl_token::instruction::mint_to(
-            &spl_token::id(),
+        &[gpl_token::instruction::mint_to(
+            &gpl_token::id(),
             mint,
             account,
             &mint_authority.pubkey(),
@@ -248,8 +248,8 @@ pub async fn burn_tokens(
     amount: u64,
 ) -> Result<(), TransportError> {
     let transaction = Transaction::new_signed_with_payer(
-        &[spl_token::instruction::burn(
-            &spl_token::id(),
+        &[gpl_token::instruction::burn(
+            &gpl_token::id(),
             account,
             mint,
             &authority.pubkey(),
@@ -267,15 +267,15 @@ pub async fn burn_tokens(
 
 pub async fn get_token_balance(banks_client: &mut BanksClient, token: &Pubkey) -> u64 {
     let token_account = banks_client.get_account(*token).await.unwrap().unwrap();
-    let account_info: spl_token::state::Account =
-        spl_token::state::Account::unpack_from_slice(token_account.data.as_slice()).unwrap();
+    let account_info: gpl_token::state::Account =
+        gpl_token::state::Account::unpack_from_slice(token_account.data.as_slice()).unwrap();
     account_info.amount
 }
 
 pub async fn get_token_supply(banks_client: &mut BanksClient, mint: &Pubkey) -> u64 {
     let mint_account = banks_client.get_account(*mint).await.unwrap().unwrap();
     let account_info =
-        spl_token::state::Mint::unpack_from_slice(mint_account.data.as_slice()).unwrap();
+        gpl_token::state::Mint::unpack_from_slice(mint_account.data.as_slice()).unwrap();
     account_info.supply
 }
 
@@ -289,8 +289,8 @@ pub async fn delegate_tokens(
     amount: u64,
 ) {
     let transaction = Transaction::new_signed_with_payer(
-        &[spl_token::instruction::approve(
-            &spl_token::id(),
+        &[gpl_token::instruction::approve(
+            &gpl_token::id(),
             account,
             delegate,
             &manager.pubkey(),
@@ -357,7 +357,7 @@ pub async fn create_stake_pool(
                 reserve_stake,
                 pool_mint,
                 pool_token_account,
-                &spl_token::id(),
+                &gpl_token::id(),
                 stake_deposit_authority.as_ref().map(|k| k.pubkey()),
                 *epoch_fee,
                 *withdrawal_fee,
@@ -814,7 +814,7 @@ impl StakePoolAccounts {
                     &self.pool_fee_account.pubkey(),
                     referrer,
                     &self.pool_mint.pubkey(),
-                    &spl_token::id(),
+                    &gpl_token::id(),
                 )
             } else {
                 instruction::deposit_stake(
@@ -830,7 +830,7 @@ impl StakePoolAccounts {
                     &self.pool_fee_account.pubkey(),
                     referrer,
                     &self.pool_mint.pubkey(),
-                    &spl_token::id(),
+                    &gpl_token::id(),
                 )
             };
         let transaction = Transaction::new_signed_with_payer(
@@ -866,7 +866,7 @@ impl StakePoolAccounts {
                 &self.pool_fee_account.pubkey(),
                 &self.pool_fee_account.pubkey(),
                 &self.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 amount,
             )
         } else {
@@ -880,7 +880,7 @@ impl StakePoolAccounts {
                 &self.pool_fee_account.pubkey(),
                 &self.pool_fee_account.pubkey(),
                 &self.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 amount,
             )
         };
@@ -919,7 +919,7 @@ impl StakePoolAccounts {
                 pool_account,
                 &self.pool_fee_account.pubkey(),
                 &self.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 amount,
             )],
             Some(&payer.pubkey()),
@@ -954,7 +954,7 @@ impl StakePoolAccounts {
                 &user.pubkey(),
                 &self.pool_fee_account.pubkey(),
                 &self.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 amount,
             )
         } else {
@@ -968,7 +968,7 @@ impl StakePoolAccounts {
                 &user.pubkey(),
                 &self.pool_fee_account.pubkey(),
                 &self.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
                 amount,
             )
         };
@@ -1029,7 +1029,7 @@ impl StakePoolAccounts {
                 &self.reserve_stake.pubkey(),
                 &self.pool_fee_account.pubkey(),
                 &self.pool_mint.pubkey(),
-                &spl_token::id(),
+                &gpl_token::id(),
             )],
             Some(&payer.pubkey()),
             &[payer],
@@ -1087,7 +1087,7 @@ impl StakePoolAccounts {
                     &self.reserve_stake.pubkey(),
                     &self.pool_fee_account.pubkey(),
                     &self.pool_mint.pubkey(),
-                    &spl_token::id(),
+                    &gpl_token::id(),
                 ),
                 instruction::cleanup_removed_validator_entries(
                     &id(),

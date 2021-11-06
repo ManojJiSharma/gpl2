@@ -45,7 +45,7 @@ pub enum FeatureProposalInstruction {
     /// 4. `[writeable]` Acceptance token account address from `get_acceptance_token_address`
     /// 5. `[writeable]` Feature id account address from `get_feature_id_address`
     /// 6. `[]` System program
-    /// 7. `[]` SPL Token program
+    /// 7. `[]` GPL Token program
     /// 8. `[]` Rent sysvar
     ///
     Propose {
@@ -123,7 +123,7 @@ pub fn propose(
             AccountMeta::new(acceptance_token_address, false),
             AccountMeta::new(feature_id_address, false),
             AccountMeta::new_readonly(gemachain_program::system_program::id(), false),
-            AccountMeta::new_readonly(spl_token::id(), false),
+            AccountMeta::new_readonly(gpl_token::id(), false),
             AccountMeta::new_readonly(sysvar::rent::id(), false),
         ],
         data: FeatureProposalInstruction::Propose {

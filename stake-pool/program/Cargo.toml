@@ -1,5 +1,5 @@
 [package]
-name = "spl-stake-pool"
+name = "gpl-stake-pool"
 version = "0.6.1"
 description = "Gemachain Program Library Stake Pool"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
@@ -20,8 +20,8 @@ num_enum = "0.5.4"
 serde = "1.0.130"
 serde_derive = "1.0.103"
 gemachain-program = "1.8.2"
-spl-math = { version = "0.1", path = "../../libraries/math", features = [ "no-entrypoint" ] }
-spl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-math = { version = "0.1", path = "../../libraries/math", features = [ "no-entrypoint" ] }
+gpl-token = { version = "3.2", path = "../../token/program", features = [ "no-entrypoint" ] }
 thiserror = "1.0"
 bincode = "1.3.1"
 

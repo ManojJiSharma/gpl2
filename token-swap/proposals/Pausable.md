@@ -1,6 +1,6 @@
 # Pausable & Ownable 
 
-Implement two programs for SPL that can be used to extend contracts with ability to pause, resume and check for the owner before instructions are executed.
+Implement two programs for GPL that can be used to extend contracts with ability to pause, resume and check for the owner before instructions are executed.
 
 An Owner program with the instructions you've listed:
 

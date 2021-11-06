@@ -19,7 +19,7 @@ use {
         program_error::ProgramError,
         program_pack::{IsInitialized, Pack, Sealed},
     },
-    spl_math::precise_number::PreciseNumber,
+    gpl_math::precise_number::PreciseNumber,
 };
 
 /// Offset curve, uses ConstantProduct under the hood, but adds an offset to

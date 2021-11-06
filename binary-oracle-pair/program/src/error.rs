@@ -28,7 +28,7 @@ pub enum PoolError {
     /// Carat balance below rent-exempt threshold.
     #[error("Carat balance below rent-exempt threshold")]
     NotRentExempt,
-    /// Expected an SPL Token mint
+    /// Expected an GPL Token mint
     #[error("Input token mint account is not valid")]
     InvalidTokenMint,
     /// Amount should be more than zero

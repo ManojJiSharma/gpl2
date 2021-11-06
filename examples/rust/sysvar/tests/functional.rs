@@ -6,7 +6,7 @@ use {
     },
     gemachain_program_test::*,
     gemachain_sdk::{signature::Signer, transaction::Transaction},
-    spl_example_sysvar::processor::process_instruction,
+    gpl_example_sysvar::processor::process_instruction,
     std::str::FromStr,
 };
 
@@ -14,7 +14,7 @@ use {
 async fn test_sysvar() {
     let program_id = Pubkey::from_str("Sysvar1111111111111111111111111111111111111").unwrap();
     let (mut banks_client, payer, recent_blockhash) = ProgramTest::new(
-        "spl_example_sysvar",
+        "gpl_example_sysvar",
         program_id,
         processor!(process_instruction),
     )

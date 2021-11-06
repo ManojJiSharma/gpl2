@@ -19,7 +19,7 @@ async fn assert_instruction_count() {
     let shared_key = Pubkey::new_unique();
 
     let mut program_test = ProgramTest::new(
-        "spl_shared_memory", // Run the BPF version with `cargo test-bpf`
+        "gpl_shared_memory", // Run the BPF version with `cargo test-bpf`
         program_id,
         None,
     );
@@ -59,7 +59,7 @@ async fn test_helloworld() {
     let shared_key = Pubkey::new_unique();
 
     let mut program_test = ProgramTest::new(
-        "spl_shared_memory", // Run the BPF version with `cargo test-bpf`
+        "gpl_shared_memory", // Run the BPF version with `cargo test-bpf`
         program_id,
         None,
     );

@@ -7,7 +7,7 @@ use gemachain_program::{
     pubkey::Pubkey,
     sysvar::Sysvar,
 };
-use spl_governance_tools::account::dispose_account;
+use gpl_governance_tools::account::dispose_account;
 
 use crate::state::{
     enums::{ProposalState, VoteWeight},

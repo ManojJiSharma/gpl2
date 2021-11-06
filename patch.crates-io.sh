@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Patches the SPL crates for developing against a local gemachain monorepo
+# Patches the GPL crates for developing against a local gemachain monorepo
 #
 
 gemachain_dir=$1

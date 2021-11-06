@@ -7,7 +7,7 @@ mod program_test;
 
 use program_test::*;
 use gemachain_sdk::signature::{Keypair, Signer};
-use spl_governance::{error::GovernanceError, instruction::deposit_governing_tokens};
+use gpl_governance::{error::GovernanceError, instruction::deposit_governing_tokens};
 
 #[tokio::test]
 async fn test_deposit_initial_community_tokens() {

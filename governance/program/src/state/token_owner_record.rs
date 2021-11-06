@@ -19,7 +19,7 @@ use gemachain_program::{
     program_pack::IsInitialized,
     pubkey::Pubkey,
 };
-use spl_governance_tools::account::{get_account_data, AccountMaxSize};
+use gpl_governance_tools::account::{get_account_data, AccountMaxSize};
 
 /// Governance Token Owner Record
 /// Account PDA seeds: ['governance', realm, token_mint, token_owner ]
@@ -35,7 +35,7 @@ pub struct TokenOwnerRecord {
     /// Governing Token Mint the TokenOwnerRecord holds deposit for
     pub governing_token_mint: Pubkey,
 
-    /// The owner (either single or multisig) of the deposited governing SPL Tokens
+    /// The owner (either single or multisig) of the deposited governing GPL Tokens
     /// This is who can authorize a withdrawal of the tokens
     pub governing_token_owner: Pubkey,
 

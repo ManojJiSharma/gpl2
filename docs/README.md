@@ -1,6 +1,6 @@
 # Docs Readme
 
-SPL Docs are built using [Docusaurus 2](https://v2.docusaurus.io/) with `npm`.
+GPL Docs are built using [Docusaurus 2](https://v2.docusaurus.io/) with `npm`.
 Static content delivery is handled using `vercel`.
 
 ### Installing Docusaurus

@@ -5,7 +5,7 @@ use {
     },
     gemachain_program_test::*,
     gemachain_sdk::{signature::Signer, transaction::Transaction},
-    spl_example_logging::processor::process_instruction,
+    gpl_example_logging::processor::process_instruction,
     std::str::FromStr,
 };
 
@@ -13,7 +13,7 @@ use {
 async fn test_logging() {
     let program_id = Pubkey::from_str("Logging111111111111111111111111111111111111").unwrap();
     let (mut banks_client, payer, recent_blockhash) = ProgramTest::new(
-        "spl_example_logging",
+        "gpl_example_logging",
         program_id,
         processor!(process_instruction),
     )

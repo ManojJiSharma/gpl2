@@ -1,5 +1,5 @@
 const web3 = require('@gemachain/web3.js');
-const splToken = require('@gemachain/spl-token');
+const Token = require('@gemachain/gpl-token');
 
 (async () => {
   // Connect to cluster
@@ -21,13 +21,13 @@ const splToken = require('@gemachain/spl-token');
   const toWallet = web3.Keypair.generate();
 
   // Create new token mint
-  const mint = await splToken.Token.createMint(
+  const mint = await Token.Token.createMint(
     connection,
     fromWallet,
     fromWallet.publicKey,
     null,
     9,
-    splToken.TOKEN_PROGRAM_ID,
+    Token.TOKEN_PROGRAM_ID,
   );
 
   // Get the token account of the fromWallet Gemachain address, if it does not exist, create it
@@ -50,8 +50,8 @@ const splToken = require('@gemachain/spl-token');
 
   // Add token transfer instructions to transaction
   const transaction = new web3.Transaction().add(
-    splToken.Token.createTransferInstruction(
-      splToken.TOKEN_PROGRAM_ID,
+    Token.Token.createTransferInstruction(
+      Token.TOKEN_PROGRAM_ID,
       fromTokenAccount.address,
       toTokenAccount.address,
       fromWallet.publicKey,

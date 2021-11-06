@@ -1,7 +1,7 @@
 //! Program processor
 
 use borsh::BorshDeserialize;
-use spl_governance::{
+use gpl_governance::{
     addins::voter_weight::{VoterWeightAccountType, VoterWeightRecord},
     state::token_owner_record::get_token_owner_record_data_for_realm_and_governing_mint,
 };
@@ -13,7 +13,7 @@ use gemachain_program::{
     program_error::ProgramError,
     pubkey::Pubkey,
 };
-use spl_governance_tools::account::create_and_serialize_account;
+use gpl_governance_tools::account::create_and_serialize_account;
 
 use crate::instruction::VoterWeightAddinInstruction;
 

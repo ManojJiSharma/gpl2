@@ -7,7 +7,7 @@ use gemachain_cli_output::OutputFormat;
 use gemachain_client::{blockhash_query::BlockhashQuery, rpc_client::RpcClient};
 use gemachain_remote_wallet::remote_wallet::RemoteWalletManager;
 use gemachain_sdk::{pubkey::Pubkey, signature::Signer};
-use spl_associated_token_account::*;
+use gpl_associated_token_account::*;
 use std::{process::exit, sync::Arc};
 
 pub(crate) struct Config<'a> {

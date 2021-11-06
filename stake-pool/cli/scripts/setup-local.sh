@@ -20,7 +20,7 @@ build_stake_pool_program () {
 }
 
 setup_test_validator() {
-  gemachain-test-validator --bpf-program SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy ../../../target/deploy/spl_stake_pool.so --quiet --reset --slots-per-epoch 32 &
+  gemachain-test-validator --bpf-program SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy ../../../target/deploy/gpl_stake_pool.so --quiet --reset --slots-per-epoch 32 &
   pid=$!
   gemachain config set --url http://127.0.0.1:8899
   gemachain config set --commitment confirmed

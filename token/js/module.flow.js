@@ -1,5 +1,5 @@
 /**
- * Flow Library definition for spl-token
+ * Flow Library definition for gpl-token
  *
  * This file is manually maintained
  */
@@ -10,7 +10,7 @@ import {Layout} from 'buffer-layout';
 import {Connection, PublicKey, TransactionInstruction} from '@gemachain/web3.js';
 import type {Signer, TransactionSignature} from '@gemachain/web3.js';
 
-declare module '@gemachain/spl-token' {
+declare module '@gemachain/gpl-token' {
   declare export var TOKEN_PROGRAM_ID;
   declare export var ASSOCIATED_TOKEN_PROGRAM_ID;
   declare export class u64 extends BN {

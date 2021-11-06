@@ -142,7 +142,7 @@ impl fmt::Display for CliTokenAccount {
         )?;
         if !self.is_associated {
             writeln!(f)?;
-            writeln!(f, "* Please run `spl-token gc` to clean up Aux accounts")?;
+            writeln!(f, "* Please run `gpl-token gc` to clean up Aux accounts")?;
         }
         Ok(())
     }
@@ -236,7 +236,7 @@ impl VerboseDisplay for CliTokenAccounts {
         }
         if gc_alert {
             writeln!(w)?;
-            writeln!(w, "* Please run `spl-token gc` to clean up Aux accounts")?;
+            writeln!(w, "* Please run `gpl-token gc` to clean up Aux accounts")?;
         }
         Ok(())
     }
@@ -308,7 +308,7 @@ impl fmt::Display for CliTokenAccounts {
         }
         if gc_alert {
             writeln!(f)?;
-            writeln!(f, "* Please run `spl-token gc` to clean up Aux accounts")?;
+            writeln!(f, "* Please run `gpl-token gc` to clean up Aux accounts")?;
         }
         Ok(())
     }

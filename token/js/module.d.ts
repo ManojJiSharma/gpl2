@@ -1,4 +1,4 @@
-declare module '@gemachain/spl-token' {
+declare module '@gemachain/gpl-token' {
   import {Buffer} from 'buffer';
   import {Layout} from 'buffer-layout';
   import {

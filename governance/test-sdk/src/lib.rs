@@ -101,18 +101,18 @@ impl ProgramTestBench {
     }
 
     pub async fn create_mint(&mut self, mint_keypair: &Keypair, mint_authority: &Pubkey) {
-        let mint_rent = self.rent.minimum_balance(spl_token::state::Mint::LEN);
+        let mint_rent = self.rent.minimum_balance(gpl_token::state::Mint::LEN);
 
         let instructions = [
             system_instruction::create_account(
                 &self.context.payer.pubkey(),
                 &mint_keypair.pubkey(),
                 mint_rent,
-                spl_token::state::Mint::LEN as u64,
-                &spl_token::id(),
+                gpl_token::state::Mint::LEN as u64,
+                &gpl_token::id(),
             ),
-            spl_token::instruction::initialize_mint(
-                &spl_token::id(),
+            gpl_token::instruction::initialize_mint(
+                &gpl_token::id(),
                 &mint_keypair.pubkey(),
                 mint_authority,
                 None,
@@ -137,13 +137,13 @@ impl ProgramTestBench {
             &self.context.payer.pubkey(),
             &token_account_keypair.pubkey(),
             self.rent
-                .minimum_balance(spl_token::state::Account::get_packed_len()),
-            spl_token::state::Account::get_packed_len() as u64,
-            &spl_token::id(),
+                .minimum_balance(gpl_token::state::Account::get_packed_len()),
+            gpl_token::state::Account::get_packed_len() as u64,
+            &gpl_token::id(),
         );
 
-        let initialize_account_instruction = spl_token::instruction::initialize_account(
-            &spl_token::id(),
+        let initialize_account_instruction = gpl_token::instruction::initialize_account(
+            &gpl_token::id(),
             &token_account_keypair.pubkey(),
             token_mint,
             owner,
@@ -191,8 +191,8 @@ impl ProgramTestBench {
         token_account: &Pubkey,
         amount: u64,
     ) {
-        let mint_instruction = spl_token::instruction::mint_to(
-            &spl_token::id(),
+        let mint_instruction = gpl_token::instruction::mint_to(
+            &gpl_token::id(),
             token_mint,
             token_account,
             &token_mint_authority.pubkey(),
@@ -220,21 +220,21 @@ impl ProgramTestBench {
             &self.context.payer.pubkey(),
             &token_account_keypair.pubkey(),
             self.rent
-                .minimum_balance(spl_token::state::Account::get_packed_len()),
-            spl_token::state::Account::get_packed_len() as u64,
-            &spl_token::id(),
+                .minimum_balance(gpl_token::state::Account::get_packed_len()),
+            gpl_token::state::Account::get_packed_len() as u64,
+            &gpl_token::id(),
         );
 
-        let initialize_account_instruction = spl_token::instruction::initialize_account(
-            &spl_token::id(),
+        let initialize_account_instruction = gpl_token::instruction::initialize_account(
+            &gpl_token::id(),
             &token_account_keypair.pubkey(),
             token_mint,
             &owner.pubkey(),
         )
         .unwrap();
 
-        let mint_instruction = spl_token::instruction::mint_to(
-            &spl_token::id(),
+        let mint_instruction = gpl_token::instruction::mint_to(
+            &gpl_token::id(),
             token_mint,
             &token_account_keypair.pubkey(),
             &token_mint_authority.pubkey(),
@@ -243,8 +243,8 @@ impl ProgramTestBench {
         )
         .unwrap();
 
-        let approve_instruction = spl_token::instruction::approve(
-            &spl_token::id(),
+        let approve_instruction = gpl_token::instruction::approve(
+            &gpl_token::id(),
             &token_account_keypair.pubkey(),
             transfer_authority,
             &owner.pubkey(),

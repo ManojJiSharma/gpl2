@@ -2,7 +2,7 @@ pub mod entrypoint;
 pub mod error;
 pub mod instruction;
 pub mod processor;
-pub mod spl_utils;
+pub mod gpl_utils;
 pub mod state;
 pub mod system_utils;
 pub mod validation_utils;

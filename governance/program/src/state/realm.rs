@@ -5,7 +5,7 @@ use gemachain_program::{
     account_info::AccountInfo, program_error::ProgramError, program_pack::IsInitialized,
     pubkey::Pubkey,
 };
-use spl_governance_tools::account::{assert_is_valid_account, get_account_data, AccountMaxSize};
+use gpl_governance_tools::account::{assert_is_valid_account, get_account_data, AccountMaxSize};
 
 use crate::{
     error::GovernanceError,
@@ -276,14 +276,14 @@ mod test {
     #[test]
     fn test_deserialize_v2_realm_account_from_v1() {
         // Arrange
-        let realm_v1 = spl_governance_v1::state::realm::Realm {
-            account_type: spl_governance_v1::state::enums::GovernanceAccountType::Realm,
+        let realm_v1 = gpl_governance_v1::state::realm::Realm {
+            account_type: gpl_governance_v1::state::enums::GovernanceAccountType::Realm,
             community_mint: Pubkey::new_unique(),
-            config: spl_governance_v1::state::realm::RealmConfig {
+            config: gpl_governance_v1::state::realm::RealmConfig {
                 council_mint: Some(Pubkey::new_unique()),
                 reserved: [0; 8],
                 community_mint_max_vote_weight_source:
-                    spl_governance_v1::state::enums::MintMaxVoteWeightSource::Absolute(100),
+                    gpl_governance_v1::state::enums::MintMaxVoteWeightSource::Absolute(100),
                 min_community_tokens_to_create_governance: 10,
             },
             reserved: [0; 8],
@@ -326,18 +326,18 @@ mod test {
             .unwrap();
 
         // Act
-        let create_realm_ix_v1: spl_governance_v1::instruction::GovernanceInstruction =
+        let create_realm_ix_v1: gpl_governance_v1::instruction::GovernanceInstruction =
             try_from_slice_unchecked(&create_realm_ix_data).unwrap();
 
         // Assert
-        if let spl_governance_v1::instruction::GovernanceInstruction::CreateRealm {
+        if let gpl_governance_v1::instruction::GovernanceInstruction::CreateRealm {
             name,
             config_args,
         } = create_realm_ix_v1
         {
             assert_eq!("test-realm", name);
             assert_eq!(
-                spl_governance_v1::state::enums::MintMaxVoteWeightSource::FULL_SUPPLY_FRACTION,
+                gpl_governance_v1::state::enums::MintMaxVoteWeightSource::FULL_SUPPLY_FRACTION,
                 config_args.community_mint_max_vote_weight_source
             );
         } else {

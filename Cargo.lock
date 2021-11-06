@@ -177,7 +177,7 @@ dependencies = [
  "arrayref",
  "borsh",
  "gemachain-program",
- "spl-token 3.2.0",
+ "gpl-token 3.2.0",
  "thiserror",
  "uint",
 ]
@@ -229,9 +229,9 @@ dependencies = [
 
 [[package]]
 name = "blake3"
-version = "1.1.0"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2607a74355ce2e252d0c483b2d8a348e1bba36036e786ccc2dcd777213c86ffd"
+checksum = "526c210b4520e416420759af363083471656e819a75e831b8d2c9d5a584f2413"
 dependencies = [
  "arrayref",
  "arrayvec 0.7.2",
@@ -937,7 +937,7 @@ version = "1.0.0"
 dependencies = [
  "arrayref",
  "gemachain-program",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gpl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1086,7 +1086,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-token",
  "thiserror",
  "zstd",
 ]
@@ -1223,7 +1223,7 @@ dependencies = [
  "indicatif",
  "serde",
  "serde_json",
- "spl-memo 3.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-memo",
 ]
 
 [[package]]
@@ -1332,7 +1332,7 @@ dependencies = [
  "log",
  "serde",
  "serde_derive",
- "spl-memo 3.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-memo",
  "thiserror",
  "tokio",
 ]
@@ -1434,7 +1434,7 @@ dependencies = [
  "base64 0.13.0",
  "bincode",
  "bitflags",
- "blake3 1.1.0",
+ "blake3 1.2.0",
  "borsh",
  "borsh-derive",
  "bs58 0.4.0",
@@ -1545,7 +1545,7 @@ checksum = "cebe6a982dccdcf650eb21cc5301b049edf7e47a498cb444478c55c416ea7552"
 dependencies = [
  "arrayref",
  "bincode",
- "blake3 1.1.0",
+ "blake3 1.2.0",
  "bv",
  "byteorder",
  "bzip2",
@@ -1713,9 +1713,9 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "spl-associated-token-account 1.0.3",
- "spl-memo 3.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-associated-token-account",
+ "spl-memo",
+ "spl-token",
  "thiserror",
 ]
 
@@ -1855,6 +1855,508 @@ dependencies = [
  "log",
  "plain",
  "scroll",
+]
+
+[[package]]
+name = "gpl-associated-token-account"
+version = "1.0.4"
+dependencies = [
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-token 3.2.0",
+]
+
+[[package]]
+name = "gpl-associated-token-account"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2778649517b0af7d5db1630d2a9773fb6afe0368b9efc673738a9efe153c7a68"
+dependencies = [
+ "borsh",
+ "gemachain-program",
+ "gpl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "gpl-binary-oracle-pair"
+version = "0.1.0"
+dependencies = [
+ "arbitrary 0.4.7",
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "thiserror",
+ "uint",
+]
+
+[[package]]
+name = "gpl-example-cross-program-invocation"
+version = "1.0.0"
+dependencies = [
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-example-custom-heap"
+version = "1.0.0"
+dependencies = [
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-example-logging"
+version = "1.0.0"
+dependencies = [
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-example-sysvar"
+version = "1.0.0"
+dependencies = [
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-example-transfer-carats"
+version = "1.0.0"
+dependencies = [
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-feature-proposal"
+version = "1.0.0"
+dependencies = [
+ "borsh",
+ "borsh-derive",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-token 3.2.0",
+]
+
+[[package]]
+name = "gpl-feature-proposal-cli"
+version = "1.2.0"
+dependencies = [
+ "chrono",
+ "clap",
+ "gemachain-clap-utils",
+ "gemachain-cli-config",
+ "gemachain-client",
+ "gemachain-logger",
+ "gemachain-sdk",
+ "gpl-feature-proposal",
+]
+
+[[package]]
+name = "gpl-governance"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7c474d72a286841a8514899fbb79e002e4fb7624c02218bccd05e1e56ae93f1b"
+dependencies = [
+ "arrayref",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gpl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num-derive",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-governance"
+version = "2.1.2"
+dependencies = [
+ "arrayref",
+ "assert_matches",
+ "base64 0.13.0",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-governance 1.1.1",
+ "gpl-governance-test-sdk",
+ "gpl-governance-tools",
+ "gpl-token 3.2.0",
+ "lazy_static",
+ "num-derive",
+ "num-traits",
+ "proptest",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-governance-chat"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "assert_matches",
+ "base64 0.13.0",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-governance 2.1.2",
+ "gpl-governance-test-sdk",
+ "gpl-governance-tools",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "proptest",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-governance-test-sdk"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-governance-tools"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-governance-voter-weight-addin"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "assert_matches",
+ "base64 0.13.0",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-governance 2.1.2",
+ "gpl-governance-test-sdk",
+ "gpl-governance-tools",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "proptest",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-math"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "borsh-derive",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "num-derive",
+ "num-traits",
+ "proptest",
+ "thiserror",
+ "uint",
+]
+
+[[package]]
+name = "gpl-memo"
+version = "3.0.1"
+dependencies = [
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-metaplex-token-metadata"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "18e056a8bcc3e60a070456c4836046f1d674a292285e5eea03598a3af98e821e"
+dependencies = [
+ "arrayref",
+ "borsh",
+ "gemachain-program",
+ "gpl-metaplex-token-vault",
+ "gpl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num-derive",
+ "num-traits",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-metaplex-token-vault"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ac394ee894ace88bcebe8b821513d2245cc9cf7e4069a0d3905a6ed1c232fa75"
+dependencies = [
+ "borsh",
+ "gemachain-program",
+ "gpl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num-derive",
+ "num-traits",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-name-service"
+version = "0.1.1"
+dependencies = [
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "num-derive",
+ "num-traits",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-record"
+version = "0.1.0"
+dependencies = [
+ "borsh",
+ "borsh-derive",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "num-derive",
+ "num-traits",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-shared-memory"
+version = "2.0.6"
+dependencies = [
+ "arrayref",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+]
+
+[[package]]
+name = "gpl-stake-pool"
+version = "0.6.1"
+dependencies = [
+ "arrayref",
+ "bincode",
+ "borsh",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gemachain-vote-program",
+ "gpl-math",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "num_enum",
+ "proptest",
+ "serde",
+ "serde_derive",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-stake-pool-cli"
+version = "0.6.2"
+dependencies = [
+ "bincode",
+ "borsh",
+ "bs58 0.4.0",
+ "clap",
+ "gemachain-account-decoder",
+ "gemachain-clap-utils",
+ "gemachain-cli-config",
+ "gemachain-client",
+ "gemachain-logger",
+ "gemachain-program",
+ "gemachain-remote-wallet",
+ "gemachain-sdk",
+ "gpl-associated-token-account 1.0.4",
+ "gpl-stake-pool",
+ "gpl-token 3.2.0",
+ "serde_json",
+]
+
+[[package]]
+name = "gpl-token"
+version = "3.2.0"
+dependencies = [
+ "arrayref",
+ "gemachain-program",
+ "gemachain-sdk",
+ "num-derive",
+ "num-traits",
+ "num_enum",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-token"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "68ab21095b2f23ed3364430ecfd5d095219e67e39567a2deff085ab84504e0de"
+dependencies = [
+ "arrayref",
+ "gemachain-program",
+ "num-derive",
+ "num-traits",
+ "num_enum",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-token-2022"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "gemachain-program",
+ "gemachain-sdk",
+ "num-derive",
+ "num-traits",
+ "num_enum",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-token-cli"
+version = "2.0.15"
+dependencies = [
+ "clap",
+ "console 0.14.1",
+ "gemachain-account-decoder",
+ "gemachain-clap-utils",
+ "gemachain-cli-config",
+ "gemachain-cli-output",
+ "gemachain-client",
+ "gemachain-logger",
+ "gemachain-remote-wallet",
+ "gemachain-sdk",
+ "gemachain-transaction-status",
+ "gpl-associated-token-account 1.0.4",
+ "gpl-memo",
+ "gpl-token 3.2.0",
+ "indicatif",
+ "serde",
+ "serde_derive",
+ "serde_json",
+]
+
+[[package]]
+name = "gpl-token-lending"
+version = "0.1.0"
+dependencies = [
+ "arrayref",
+ "assert_matches",
+ "base64 0.13.0",
+ "bytemuck",
+ "gemachain-program",
+ "gemachain-program-test",
+ "gemachain-sdk",
+ "gpl-token 3.2.0",
+ "log",
+ "num-derive",
+ "num-traits",
+ "proptest",
+ "serde",
+ "serde_yaml",
+ "thiserror",
+ "uint",
+]
+
+[[package]]
+name = "gpl-token-lending-cli"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "gemachain-clap-utils",
+ "gemachain-cli-config",
+ "gemachain-client",
+ "gemachain-logger",
+ "gemachain-program",
+ "gemachain-sdk",
+ "gpl-token 3.2.0",
+ "gpl-token-lending",
+]
+
+[[package]]
+name = "gpl-token-swap"
+version = "2.1.0"
+dependencies = [
+ "arbitrary 0.4.7",
+ "arrayref",
+ "enum_dispatch",
+ "gemachain-program",
+ "gemachain-sdk",
+ "gpl-math",
+ "gpl-token 3.2.0",
+ "num-derive",
+ "num-traits",
+ "proptest",
+ "roots",
+ "sim",
+ "thiserror",
+]
+
+[[package]]
+name = "gpl-token-swap-fuzz"
+version = "0.0.1"
+dependencies = [
+ "arbitrary 0.4.7",
+ "gemachain-program",
+ "gpl-math",
+ "gpl-token 3.2.0",
+ "gpl-token-swap",
+ "honggfuzz",
 ]
 
 [[package]]
@@ -2394,36 +2896,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "59accc507f1338036a0477ef61afdae33cde60840f4dfe481319ce3ad116ddf9"
 dependencies = [
  "autocfg",
-]
-
-[[package]]
-name = "metaplex-token-metadata"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "abcc939f0afdc6db054b9998a1292d0a016244b382462e61cfc7c570624982cb"
-dependencies = [
- "arrayref",
- "borsh",
- "metaplex-token-vault",
- "num-derive",
- "num-traits",
- "solana-program",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "thiserror",
-]
-
-[[package]]
-name = "metaplex-token-vault"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5211991ba3273df89cd5e0f6f558bc8d7453c87c0546f915b4a319e1541df33"
-dependencies = [
- "borsh",
- "num-derive",
- "num-traits",
- "solana-program",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "thiserror",
 ]
 
 [[package]]
@@ -3314,9 +3786,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.68"
+version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f690853975602e1bfe1ccbf50504d67174e3bcf340f23b5ea9992e0587a52d8"
+checksum = "e466864e431129c7e0d3476b92f20458e5879919a0596c6472738d9fa2d342f8"
 dependencies = [
  "itoa",
  "ryu",
@@ -3544,255 +4016,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "393e2240d521c3dd770806bff25c2c00d761ac962be106e14e22dd912007f428"
 dependencies = [
  "solana-program",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "spl-associated-token-account"
-version = "1.0.4"
-dependencies = [
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "spl-token 3.2.0",
-]
-
-[[package]]
-name = "spl-binary-oracle-pair"
-version = "0.1.0"
-dependencies = [
- "arbitrary 0.4.7",
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "spl-token 3.2.0",
- "thiserror",
- "uint",
-]
-
-[[package]]
-name = "spl-example-cross-program-invocation"
-version = "1.0.0"
-dependencies = [
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
-]
-
-[[package]]
-name = "spl-example-custom-heap"
-version = "1.0.0"
-dependencies = [
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
-]
-
-[[package]]
-name = "spl-example-logging"
-version = "1.0.0"
-dependencies = [
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
-]
-
-[[package]]
-name = "spl-example-sysvar"
-version = "1.0.0"
-dependencies = [
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
-]
-
-[[package]]
-name = "spl-example-transfer-carats"
-version = "1.0.0"
-dependencies = [
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
-]
-
-[[package]]
-name = "spl-feature-proposal"
-version = "1.0.0"
-dependencies = [
- "borsh",
- "borsh-derive",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "spl-token 3.2.0",
-]
-
-[[package]]
-name = "spl-feature-proposal-cli"
-version = "1.2.0"
-dependencies = [
- "chrono",
- "clap",
- "gemachain-clap-utils",
- "gemachain-cli-config",
- "gemachain-client",
- "gemachain-logger",
- "gemachain-sdk",
- "spl-feature-proposal",
-]
-
-[[package]]
-name = "spl-governance"
-version = "1.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ae3df1aa25c5f5ce7a6595959b1b02c6ae6ea35274379ee64bcf80bae11a767"
-dependencies = [
- "arrayref",
- "bincode",
- "borsh",
- "num-derive",
- "num-traits",
- "serde",
- "serde_derive",
- "solana-program",
- "spl-token 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "thiserror",
-]
-
-[[package]]
-name = "spl-governance"
-version = "2.1.2"
-dependencies = [
- "arrayref",
- "assert_matches",
- "base64 0.13.0",
- "bincode",
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "lazy_static",
- "num-derive",
- "num-traits",
- "proptest",
- "serde",
- "serde_derive",
- "spl-governance 1.1.1",
- "spl-governance-test-sdk",
- "spl-governance-tools",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-governance-chat"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "assert_matches",
- "base64 0.13.0",
- "bincode",
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "proptest",
- "serde",
- "serde_derive",
- "spl-governance 2.1.2",
- "spl-governance-test-sdk",
- "spl-governance-tools",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-governance-test-sdk"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "bincode",
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "serde",
- "serde_derive",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-governance-tools"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "bincode",
- "borsh",
- "gemachain-program",
- "num-derive",
- "num-traits",
- "serde",
- "serde_derive",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-governance-voter-weight-addin"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "assert_matches",
- "base64 0.13.0",
- "bincode",
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "proptest",
- "serde",
- "serde_derive",
- "spl-governance 2.1.2",
- "spl-governance-test-sdk",
- "spl-governance-tools",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-math"
-version = "0.1.0"
-dependencies = [
- "borsh",
- "borsh-derive",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "proptest",
- "thiserror",
- "uint",
-]
-
-[[package]]
-name = "spl-memo"
-version = "3.0.1"
-dependencies = [
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
+ "spl-token",
 ]
 
 [[package]]
@@ -3802,100 +4026,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd0dc6f70db6bacea7ff25870b016a65ba1d1b6013536f08e4fd79a8f9005325"
 dependencies = [
  "solana-program",
-]
-
-[[package]]
-name = "spl-name-service"
-version = "0.1.1"
-dependencies = [
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "thiserror",
-]
-
-[[package]]
-name = "spl-record"
-version = "0.1.0"
-dependencies = [
- "borsh",
- "borsh-derive",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "thiserror",
-]
-
-[[package]]
-name = "spl-shared-memory"
-version = "2.0.6"
-dependencies = [
- "arrayref",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
-]
-
-[[package]]
-name = "spl-stake-pool"
-version = "0.6.1"
-dependencies = [
- "arrayref",
- "bincode",
- "borsh",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "gemachain-vote-program",
- "num-derive",
- "num-traits",
- "num_enum",
- "proptest",
- "serde",
- "serde_derive",
- "spl-math",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-stake-pool-cli"
-version = "0.6.2"
-dependencies = [
- "bincode",
- "borsh",
- "bs58 0.4.0",
- "clap",
- "gemachain-account-decoder",
- "gemachain-clap-utils",
- "gemachain-cli-config",
- "gemachain-client",
- "gemachain-logger",
- "gemachain-program",
- "gemachain-remote-wallet",
- "gemachain-sdk",
- "serde_json",
- "spl-associated-token-account 1.0.4",
- "spl-stake-pool",
- "spl-token 3.2.0",
-]
-
-[[package]]
-name = "spl-token"
-version = "3.2.0"
-dependencies = [
- "arrayref",
- "gemachain-program",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "num_enum",
- "thiserror",
 ]
 
 [[package]]
@@ -3913,111 +4043,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "spl-token-2022"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "gemachain-program",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "num_enum",
- "thiserror",
-]
-
-[[package]]
-name = "spl-token-cli"
-version = "2.0.15"
-dependencies = [
- "clap",
- "console 0.14.1",
- "gemachain-account-decoder",
- "gemachain-clap-utils",
- "gemachain-cli-config",
- "gemachain-cli-output",
- "gemachain-client",
- "gemachain-logger",
- "gemachain-remote-wallet",
- "gemachain-sdk",
- "gemachain-transaction-status",
- "indicatif",
- "serde",
- "serde_derive",
- "serde_json",
- "spl-associated-token-account 1.0.4",
- "spl-memo 3.0.1",
- "spl-token 3.2.0",
-]
-
-[[package]]
-name = "spl-token-lending"
-version = "0.1.0"
-dependencies = [
- "arrayref",
- "assert_matches",
- "base64 0.13.0",
- "bytemuck",
- "gemachain-program",
- "gemachain-program-test",
- "gemachain-sdk",
- "log",
- "num-derive",
- "num-traits",
- "proptest",
- "serde",
- "serde_yaml",
- "spl-token 3.2.0",
- "thiserror",
- "uint",
-]
-
-[[package]]
-name = "spl-token-lending-cli"
-version = "0.1.0"
-dependencies = [
- "clap",
- "gemachain-clap-utils",
- "gemachain-cli-config",
- "gemachain-client",
- "gemachain-logger",
- "gemachain-program",
- "gemachain-sdk",
- "spl-token 3.2.0",
- "spl-token-lending",
-]
-
-[[package]]
-name = "spl-token-swap"
-version = "2.1.0"
-dependencies = [
- "arbitrary 0.4.7",
- "arrayref",
- "enum_dispatch",
- "gemachain-program",
- "gemachain-sdk",
- "num-derive",
- "num-traits",
- "proptest",
- "roots",
- "sim",
- "spl-math",
- "spl-token 3.2.0",
- "thiserror",
-]
-
-[[package]]
-name = "spl-token-swap-fuzz"
-version = "0.0.1"
-dependencies = [
- "arbitrary 0.4.7",
- "gemachain-program",
- "honggfuzz",
- "spl-math",
- "spl-token 3.2.0",
- "spl-token-swap",
-]
-
-[[package]]
 name = "stable_deref_trait"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4031,9 +4056,9 @@ dependencies = [
  "gemachain-program",
  "gemachain-program-test",
  "gemachain-sdk",
- "metaplex-token-metadata",
- "spl-associated-token-account 1.0.3",
- "spl-token 3.2.0",
+ "gpl-associated-token-account 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gpl-metaplex-token-metadata",
+ "gpl-token 3.2.0",
  "thiserror",
 ]
 
@@ -4179,9 +4204,9 @@ name = "test-client"
 version = "0.1.0"
 dependencies = [
  "gemachain-sdk",
- "spl-memo 3.0.1",
- "spl-token 3.2.0",
- "spl-token-swap",
+ "gpl-memo",
+ "gpl-token 3.2.0",
+ "gpl-token-swap",
 ]
 
 [[package]]
@@ -4767,18 +4792,18 @@ dependencies = [
 
 [[package]]
 name = "zeroize"
-version = "1.4.2"
+version = "1.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf68b08513768deaa790264a7fac27a58cbf2705cfcdc9448362229217d7e970"
+checksum = "d68d9dcec5f9b43a30d38c49f91dfedfaac384cb8f085faca366c26207dd1619"
 dependencies = [
  "zeroize_derive",
 ]
 
 [[package]]
 name = "zeroize_derive"
-version = "1.2.0"
+version = "1.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bdff2024a851a322b08f179173ae2ba620445aef1e838f0c196820eade4ae0c7"
+checksum = "65f1a51723ec88c66d5d1fe80c841f17f63587d6691901d66be9bec6c3b51f73"
 dependencies = [
  "proc-macro2 1.0.32",
  "quote 1.0.10",

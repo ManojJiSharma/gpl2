@@ -5,10 +5,10 @@ use gemachain_program_test::*;
 
 use program_test::*;
 use gemachain_sdk::{signature::Keypair, signer::Signer};
-use spl_governance::error::GovernanceError;
-use spl_governance_tools::error::GovernanceToolsError;
+use gpl_governance::error::GovernanceError;
+use gpl_governance_tools::error::GovernanceToolsError;
 
-use spl_token::error::TokenError;
+use gpl_token::error::TokenError;
 
 #[tokio::test]
 async fn test_create_token_governance() {

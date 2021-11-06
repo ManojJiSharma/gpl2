@@ -1,12 +1,12 @@
-# SPL Token Lending CLI
+# GPL Token Lending CLI
 
-A basic command line interface for initializing lending markets and reserves for SPL Token Lending.
+A basic command line interface for initializing lending markets and reserves for GPL Token Lending.
 
 See https://spl.gemachain.com/token-lending for more details
 
 ## Install the CLI
 ```shell
-cargo install spl-token-lending-cli
+cargo install gpl-token-lending-cli
 ```
 
 ## Deploy a lending program (optional)
@@ -23,7 +23,7 @@ The lending market owner must sign to add reserves.
 
 ### Usage
 ```shell
-spl-token-lending \
+gpl-token-lending \
   --program      PUBKEY \
   --fee-payer    SIGNER \
   create-market \
@@ -33,11 +33,11 @@ spl-token-lending \
 - `--fee-payer` will sign to pay transaction fees.
 - `--market-owner` is the lending market owner pubkey.
 
-Run `spl-token-lending create-market --help` for more details and options.
+Run `gpl-token-lending create-market --help` for more details and options.
 
 ### Example
 ```shell
-spl-token-lending \
+gpl-token-lending \
   --program      6TvznH3B2e3p2mbhufNBpgSrLx6UkgvxtVQvopEZ2kuH \
   --fee-payer    owner.json \
   create-market \
@@ -54,7 +54,7 @@ A reserve is a liquidity pool that can be deposited into, borrowed from, and opt
 
 ### Usage
 ```shell
-spl-token-lending \
+gpl-token-lending \
   --program      PUBKEY \
   --fee-payer    SIGNER \
   add-reserve \
@@ -71,16 +71,16 @@ spl-token-lending \
 - `--market-owner` will sign as the lending market owner.
 - `--source-owner` will sign as the source liquidity owner.
 - `--market` is the lending market pubkey.
-- `--source` is the SPL Token account pubkey (owned by `--source-owner`).
+- `--source` is the GPL Token account pubkey (owned by `--source-owner`).
 - `--amount` is the amount of tokens to deposit.
 - `--pyth-product` and `--pyth-price` are oracle
   accounts [provided by Pyth](https://pyth.network/developers/consumers/accounts).
 
-Run `spl-token-lending add-reserve --help` for more details and options.
+Run `gpl-token-lending add-reserve --help` for more details and options.
 
 ### Example
 ```shell
-spl-token-lending \
+gpl-token-lending \
   --program      6TvznH3B2e3p2mbhufNBpgSrLx6UkgvxtVQvopEZ2kuH \
   --fee-payer    owner.json \
   add-reserve \

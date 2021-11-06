@@ -12,7 +12,7 @@ use gemachain_program::{
     account_info::AccountInfo, program_error::ProgramError, program_pack::IsInitialized,
     pubkey::Pubkey,
 };
-use spl_governance_tools::{
+use gpl_governance_tools::{
     account::{get_account_data, AccountMaxSize},
     error::GovernanceToolsError,
 };

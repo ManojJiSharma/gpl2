@@ -9,10 +9,10 @@ use gemachain_sdk::{
     signature::{Keypair, Signer},
     transaction::{Transaction, TransactionError},
 };
-use spl_memo::*;
+use gpl_memo::*;
 
 fn program_test() -> ProgramTest {
-    ProgramTest::new("spl_memo", id(), processor!(processor::process_instruction))
+    ProgramTest::new("gpl_memo", id(), processor!(processor::process_instruction))
 }
 
 #[tokio::test]

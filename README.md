@@ -6,7 +6,7 @@ https://travis-ci.org/gemachain-labs/gemachain-program-library.svg?branch=master
 
 # Gemachain Program Library
 
-The Gemachain Program Library (SPL) is a collection of on-chain programs targeting
+The Gemachain Program Library (GPL) is a collection of on-chain programs targeting
 the [Sealevel parallel
 runtime](https://medium.com/gemachain-labs/sealevel-parallel-processing-thousands-of-smart-contracts-d814b378192).
 These programs are tested against Gemachain's implementation of Sealevel,
@@ -14,7 +14,7 @@ gemachain-runtime, and deployed to its mainnet.  As others implement Sealevel, w
 will graciously accept patches to ensure the programs here are portable across
 all implementations.
 
-Full documentation is available at https://spl.gemachain.com
+Full documentation is available at https://gpl.gemachain.com
 
 ## Development
 
@@ -31,7 +31,7 @@ The normal cargo build is available for building programs against your host mach
 $ cargo build
 ```
 
-To build a specific program, such as SPL Token, for the Gemachain BPF target:
+To build a specific program, such as GPL Token, for the Gemachain BPF target:
 ```
 $ cd token/program
 $ cargo build-bpf
@@ -45,7 +45,7 @@ $ cargo test      # <-- runs host-based tests
 $ cargo test-bpf  # <-- runs BPF program tests
 ```
 
-To run a specific program's tests, such as SPL Token:
+To run a specific program's tests, such as GPL Token:
 ```
 $ cd token/program
 $ cargo test      # <-- runs host-based tests
@@ -67,7 +67,7 @@ $ ./coverage.sh  # Please help! Coverage build currently fails on MacOS due to a
 
 
 ## Release Process
-SPL programs are currently tagged and released manually. Each program is
+GPL programs are currently tagged and released manually. Each program is
 versioned independently of the others, with all new development occurring on
 master. Once a program is tested and deemed ready for release:
 
@@ -76,7 +76,7 @@ master. Once a program is tested and deemed ready for release:
   * Increment the version number in the program's Cargo.toml
   * Generate a new program ID and replace in `<program>/program-id.md` and `<program>/src/lib.rs`
   * Run `cargo build-bpf <program>` to update relevant C bindings. (Note the
-    location of the generated `spl_<program>.so` for attaching to the Github
+    location of the generated `gpl_<program>.so` for attaching to the Github
     release.)
   * Open a PR with these version changes and merge after passing CI.
 
@@ -95,7 +95,7 @@ $ git push upstream --tags
 
   * Go to [GitHub Releases UI](https://github.com/gemacoin/gemachain.git/releases)
   * Click "Draft new release", and enter the new tag in the "Tag version" box.
-  * Title the release "SPL <Program> vX.Y.Z", complete the description, and attach the `spl_<program>.so` binary
+  * Title the release "GPL <Program> vX.Y.Z", complete the description, and attach the `gpl_<program>.so` binary
   * Click "Publish release"
 
 ### Publish to Crates.io

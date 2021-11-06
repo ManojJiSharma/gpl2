@@ -12,10 +12,10 @@ use {
     gemachain_client::rpc_client::RpcClient,
     gemachain_remote_wallet::remote_wallet::RemoteWalletManager,
     gemachain_sdk::{
-        message::Message, native_token::gema, program_pack::Pack, pubkey::Pubkey, signature::Signer,
+        message::Message, native_token::Gema, program_pack::Pack, pubkey::Pubkey, signature::Signer,
         system_instruction,
     },
-    spl_associated_token_account::*,
+    gpl_associated_token_account::*,
     std::{sync::Arc, time::Instant},
 };
 
@@ -235,7 +235,7 @@ pub(crate) fn bench_process_command(
 fn get_token_address_with_seed(token: &Pubkey, owner: &Pubkey, i: usize) -> (Pubkey, String) {
     let seed = format!("{}{}", i, token)[..31].to_string();
     (
-        Pubkey::create_with_seed(owner, &seed, &spl_token::id()).unwrap(),
+        Pubkey::create_with_seed(owner, &seed, &gpl_token::id()).unwrap(),
         seed,
     )
 }
@@ -264,7 +264,7 @@ fn is_valid_token(rpc_client: &RpcClient, token: &Pubkey) -> Result<(), Error> {
         .get_account_data(token)
         .map_err(|err| format!("Token mint {} does not exist: {}", token, err))?;
 
-    spl_token::state::Mint::unpack(&mint_account_data)
+    gpl_token::state::Mint::unpack(&mint_account_data)
         .map(|_| ())
         .map_err(|err| format!("Invalid token mint {}: {}", token, err).into())
 }
@@ -282,7 +282,7 @@ fn command_create_accounts(
     is_valid_token(rpc_client, token)?;
 
     let minimum_balance_for_rent_exemption = rpc_client
-        .get_minimum_balance_for_rent_exemption(spl_token::state::Account::get_packed_len())?;
+        .get_minimum_balance_for_rent_exemption(gpl_token::state::Account::get_packed_len())?;
 
     let mut carats_required = 0;
 
@@ -303,11 +303,11 @@ fn command_create_accounts(
                             owner,
                             seed,
                             minimum_balance_for_rent_exemption,
-                            spl_token::state::Account::get_packed_len() as u64,
-                            &spl_token::id(),
+                            gpl_token::state::Account::get_packed_len() as u64,
+                            &gpl_token::id(),
                         ),
-                        spl_token::instruction::initialize_account(
-                            &spl_token::id(),
+                        gpl_token::instruction::initialize_account(
+                            &gpl_token::id(),
                             address,
                             token,
                             owner,
@@ -342,7 +342,7 @@ fn command_close_accounts(
 
         for (account, (address, _seed)) in accounts_chunk.iter().zip(address_chunk) {
             if let Some(account) = account {
-                match spl_token::state::Account::unpack(&account.data) {
+                match gpl_token::state::Account::unpack(&account.data) {
                     Ok(token_account) => {
                         if token_account.amount != 0 {
                             eprintln!(
@@ -351,8 +351,8 @@ fn command_close_accounts(
                             );
                         } else {
                             messages.push(Message::new(
-                                &[spl_token::instruction::close_account(
-                                    &spl_token::id(),
+                                &[gpl_token::instruction::close_account(
+                                    &gpl_token::id(),
                                     address,
                                     owner,
                                     owner,
@@ -393,7 +393,7 @@ fn command_deposit_into_or_withdraw_from(
     if mint_pubkey != *token {
         return Err(format!("Source account {} is not a {} token", from_or_to, token).into());
     }
-    let amount = spl_token::ui_amount_to_amount(ui_amount, decimals);
+    let amount = gpl_token::ui_amount_to_amount(ui_amount, decimals);
 
     let token_addresses_with_seed = get_token_addresses_with_seed(token, owner, n);
     let mut messages = vec![];
@@ -404,8 +404,8 @@ fn command_deposit_into_or_withdraw_from(
         for (account, (address, _seed)) in accounts_chunk.iter().zip(address_chunk) {
             if account.is_some() {
                 messages.push(Message::new(
-                    &[spl_token::instruction::transfer_checked(
-                        &spl_token::id(),
+                    &[gpl_token::instruction::transfer_checked(
+                        &gpl_token::id(),
                         if deposit_into { from_or_to } else { address },
                         token,
                         if deposit_into { address } else { from_or_to },
@@ -449,7 +449,7 @@ fn send_messages(
     println!(
         "Sending {:?} messages for ~{}",
         messages.len(),
-        gema(carats_required)
+        Gema(carats_required)
     );
 
     crate::check_fee_payer_balance(config, carats_required)?;

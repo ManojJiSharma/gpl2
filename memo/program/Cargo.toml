@@ -1,5 +1,5 @@
 [package]
-name = "spl-memo"
+name = "gpl-memo"
 version = "3.0.1"
 description = "Gemachain Program Library Memo"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

@@ -1,5 +1,5 @@
 [package]
-name = "spl-math"
+name = "gpl-math"
 version = "0.1.0"
 description = "Gemachain Program Library Math"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

@@ -1,7 +1,7 @@
 {
-  "name": "@gemachain/spl-stake-pool",
+  "name": "@gemachain/gpl-stake-pool",
   "version": "0.1.0",
-  "description": "SPL Stake Pool Program JS API",
+  "description": "GPL Stake Pool Program JS API",
   "scripts": {
     "lint": "npx prettier src/*.ts -w",
     "build": "tsc",

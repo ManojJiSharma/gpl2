@@ -1,5 +1,5 @@
 [package]
-name = "spl-token-2022"
+name = "gpl-token-2022"
 version = "0.1.0"
 description = "Gemachain Program Library Token 2022"
 authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]

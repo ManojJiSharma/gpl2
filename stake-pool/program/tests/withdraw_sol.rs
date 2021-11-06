@@ -13,7 +13,7 @@ use {
         transaction::Transaction,
         transaction::TransactionError,
     },
-    spl_stake_pool::{
+    gpl_stake_pool::{
         error::StakePoolError,
         id,
         instruction::{self, FundingType},

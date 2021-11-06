@@ -5,10 +5,10 @@ authors = ["Gemachain Maintainers <maintainers@gemachain.foundation>"]
 publish = false
 edition = "2018"
 
-# Used to ensure that SPL programs are buildable by external clients
+# Used to ensure that GPL programs are buildable by external clients
 
 [dependencies]
 gemachain-sdk = "1.8.2"
-spl-memo = { path = "../../memo/program", features = [ "no-entrypoint" ] }
-spl-token = { path = "../../token/program", features = [ "no-entrypoint" ] }
-spl-token-swap = { path = "../../token-swap/program", features = [ "no-entrypoint" ] }
+gpl-memo = { path = "../../memo/program", features = [ "no-entrypoint" ] }
+gpl-token = { path = "../../token/program", features = [ "no-entrypoint" ] }
+gpl-token-swap = { path = "../../token-swap/program", features = [ "no-entrypoint" ] }
